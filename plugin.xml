@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Libgdx Visual Editor"
+            extensions="gdx"
+            icon="icons/sample.gif"
+            contributorClass="libgdxpluginv01.editors.LibgdxVisualEditorContributor"
+            class="libgdxpluginv01.editors.LibgdxVisualEditor"
+            id="libgdxpluginv01.editors.LibgdxVisualEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Libgdx Views"
+            id="libgdx-plugin-v01">
+      </category>
+      <view
+            name="Palette"
+            icon="icons/sample.gif"
+            category="libgdx-plugin-v01"
+            class="libgdxpluginv01.views.PaletteView"
+            id="libgdxpluginv01.views.PaletteView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.ProblemView"
+               relationship="right"
+               id="libgdxpluginv01.views.PaletteView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>
