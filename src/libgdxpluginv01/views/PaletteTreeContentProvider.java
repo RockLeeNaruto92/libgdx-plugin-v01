@@ -23,7 +23,7 @@ public class PaletteTreeContentProvider implements ITreeContentProvider{
 
 	@Override
 	public Object[] getElements(Object inputElement) {
-		List<String> list = (List<String>) inputElement;
+		List<List> list = (List<List>) inputElement;
 		return list.toArray();
 	}
 

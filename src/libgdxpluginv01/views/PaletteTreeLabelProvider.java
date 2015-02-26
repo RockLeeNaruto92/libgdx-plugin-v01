@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import libgdxpluginv01.constant.Utility;
+
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
@@ -17,9 +19,9 @@ public class PaletteTreeLabelProvider implements ILabelProvider{
 		listeners = new ArrayList();
 		
 		try {
-			icon = new Image(null, new FileInputStream("icons/sample.gif"));
-		} catch (FileNotFoundException e){
-			
+			icon = new Image(null, new FileInputStream(Utility.getFile("icons/sample.gif")));
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: icons/sample.gif" );
 		}
 	}
 	
@@ -56,7 +58,7 @@ public class PaletteTreeLabelProvider implements ILabelProvider{
 	@Override
 	public String getText(Object element) {
 		// TODO Auto-generated method stub
-		return (String)element;
+		return element.toString();
 	}
 
 }

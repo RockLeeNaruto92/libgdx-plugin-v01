@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.eclipse.swt.graphics.Image;
+
 import libgdxpluginv01.constant.StaticFile;
+import libgdxpluginv01.constant.Utility;
 
 public enum UIElementPaletteContentProvider {
 	INSTANCE;
@@ -17,23 +20,22 @@ public enum UIElementPaletteContentProvider {
 		List group = null;
 		
 		try {
-			scanner = new Scanner(new File(StaticFile.UI_ELEMENTS_LIST));
+			scanner = new Scanner(Utility.getFile(StaticFile.UI_ELEMENTS_LIST));
+			while (scanner.hasNextLine()){
+				String line = scanner.nextLine();
+				if (!line.startsWith("\t")){
+					group = new ArrayList<>();
+					list.add(group);
+				} else {
+					line = line.substring(1);
+				}
+				
+				group.add(line);
+			}
+			scanner.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + StaticFile.UI_ELEMENTS_LIST);
 		}
-		
-		while (scanner.hasNextLine()){
-			String line = scanner.nextLine();
-			if (!line.startsWith("\t")){
-				group = new ArrayList<>();
-				list.add(group);
-			} else {
-				line = line.substring(1);
-			}
-			
-			group.add(line);
-		}
-		scanner.close();
 		
 		return list;
 	}
