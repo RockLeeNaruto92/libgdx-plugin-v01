@@ -13,30 +13,32 @@ import libgdxpluginv01.constant.Utility;
 
 public enum UIElementPaletteContentProvider {
 	INSTANCE;
-	
-	public List getModel(){
+
+	public List getModel() {
 		Scanner scanner = null;
 		List list = new ArrayList<>();
-		List group = null;
-		
+		Group group = null;
+		Element element = null;
+
 		try {
 			scanner = new Scanner(Utility.getFile(StaticFile.UI_ELEMENTS_LIST));
-			while (scanner.hasNextLine()){
+			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
-				if (!line.startsWith("\t")){
-					group = new ArrayList<>();
+				if (!line.startsWith("\t")) {
+					group = new Group(line);
 					list.add(group);
 				} else {
 					line = line.substring(1);
+					group.addChild(new Element(line, group));
 				}
-				
-				group.add(line);
 			}
+
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found: " + StaticFile.UI_ELEMENTS_LIST);
+			System.out
+					.println("File not found: " + StaticFile.UI_ELEMENTS_LIST);
 		}
-		
+
 		return list;
 	}
 }

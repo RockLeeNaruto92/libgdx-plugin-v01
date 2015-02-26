@@ -2,12 +2,13 @@ package libgdxpluginv01.views;
 
 import java.util.List;
 
-import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.models.Element;
+import libgdxpluginv01.models.Group;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-public class PaletteTreeContentProvider implements ITreeContentProvider{
+public class PaletteTreeContentProvider implements ITreeContentProvider {
 
 	@Override
 	public void dispose() {
@@ -19,17 +20,11 @@ public class PaletteTreeContentProvider implements ITreeContentProvider{
 
 	@Override
 	public Object[] getChildren(Object element) {
-		Object[] childrens = null;
-		
-		if (element instanceof List){
-			childrens = ((List)element).toArray();
-			childrens = Utility.removeArrayElement(childrens, 0);
-		} else {
-			childrens = new Object[1];
-			childrens[0] = element;
+		if (element instanceof Group){
+			return ((Group)element).getChildrens().toArray();
 		}
-		
-		return childrens;
+
+		return new Object[0];
 	}
 
 	@Override
@@ -40,12 +35,18 @@ public class PaletteTreeContentProvider implements ITreeContentProvider{
 
 	@Override
 	public Object getParent(Object element) {
+		if (element instanceof Element) {
+			return ((Element) element).getParent();
+		}
 		
 		return null;
 	}
 
 	@Override
 	public boolean hasChildren(Object element) {
+		if (element instanceof Group)
+			if (((Group)element).getChildrens().size() != 0)
+				return true;
 		return false;
 	}
 

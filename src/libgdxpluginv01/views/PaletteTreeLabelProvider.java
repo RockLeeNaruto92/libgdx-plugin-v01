@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.models.Element;
+import libgdxpluginv01.models.Group;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -57,8 +59,12 @@ public class PaletteTreeLabelProvider implements ILabelProvider{
 
 	@Override
 	public String getText(Object element) {
-		// TODO Auto-generated method stub
-		return element.toString();
+		if (element instanceof Group)
+			return ((Group)element).getName();
+		else if (element instanceof Element)
+			return ((Element)element).getName();
+		
+		return null;
 	}
 
 }
