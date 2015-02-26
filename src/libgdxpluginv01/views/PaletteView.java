@@ -1,6 +1,7 @@
 package libgdxpluginv01.views;
 
 
+import libgdxpluginv01.dnd.UIElementDragListener;
 import libgdxpluginv01.dnd.UIElementDropListener;
 import libgdxpluginv01.models.UIElementPaletteContentProvider;
 
@@ -32,7 +33,7 @@ public class PaletteView extends ViewPart {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		int operations = DND.DROP_COPY | DND.DROP_MOVE;
 		Transfer[] transferTypes = new Transfer[]{TextTransfer.getInstance()};
-		viewer.addDropSupport(operations, transferTypes, new UIElementDropListener(viewer));
+		viewer.addDragSupport(operations, transferTypes, new UIElementDragListener(viewer));
 		viewer.setContentProvider(new PaletteTreeContentProvider());
 		viewer.setLabelProvider(new PaletteTreeLabelProvider());
 		viewer.setInput(UIElementPaletteContentProvider.INSTANCE.getModel());
