@@ -1,12 +1,9 @@
 package libgdxpluginv01.models;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import org.eclipse.swt.graphics.Image;
 
 import libgdxpluginv01.constant.StaticFile;
 import libgdxpluginv01.constant.Utility;

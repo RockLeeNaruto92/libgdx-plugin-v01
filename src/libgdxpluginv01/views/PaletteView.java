@@ -2,9 +2,9 @@ package libgdxpluginv01.views;
 
 
 import libgdxpluginv01.dnd.UIElementDragListener;
-import libgdxpluginv01.dnd.UIElementDropListener;
 import libgdxpluginv01.models.UIElementPaletteContentProvider;
 
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -32,7 +32,7 @@ public class PaletteView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		int operations = DND.DROP_COPY | DND.DROP_MOVE;
-		Transfer[] transferTypes = new Transfer[]{TextTransfer.getInstance()};
+		Transfer[] transferTypes = new Transfer[]{LocalSelectionTransfer.getTransfer()};
 		viewer.addDragSupport(operations, transferTypes, new UIElementDragListener(viewer));
 		viewer.setContentProvider(new PaletteTreeContentProvider());
 		viewer.setLabelProvider(new PaletteTreeLabelProvider());
