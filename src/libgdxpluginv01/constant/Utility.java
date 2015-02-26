@@ -25,4 +25,11 @@ public class Utility {
 		
 		return file;
 	}
+	
+	
+	public static Object[] removeArrayElement(Object[] array, int index){
+		System.arraycopy(array, index + 1, array, index, array.length - 1);
+		
+		return array;
+	}
 }
