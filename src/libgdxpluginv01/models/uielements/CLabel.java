@@ -7,8 +7,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -20,34 +18,11 @@ public class CLabel extends UIElement{
 		super(root, location);
 		
 		setSize(getDefaultSize());
-		
-		displayBounds();
 	}
 	
-	public void displayBounds(){
-		label.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				Point size = getSize();
-				
-				e.gc.setForeground(getContainer().getDisplay().getSystemColor(SWT.COLOR_BLACK));
-				e.gc.drawRectangle(Parameter.R, Parameter.R, size.x - 1 - 2 * Parameter.R, size.y - 1 - 2 * Parameter.R);
-				System.out.println("data: " + size.x + "-" + size.y);
-				// draw circle
-				e.gc.drawOval(0, 0, 2 * Parameter.R, 2 * Parameter.R);
-				e.gc.drawOval(0, size.y - 1 - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
-				e.gc.drawOval(size.x - 1 - 2 * Parameter.R, 0, 2 * Parameter.R, 2 * Parameter.R);
-				e.gc.drawOval(size.x - 1 - 2 * Parameter.R, size.y - 1 - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
-				
-				Point centerPoint = new Point(size.x / 2, size.y / 2);
-				e.gc.drawOval(0, centerPoint.y - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
-				e.gc.drawOval(centerPoint.x - 2 * Parameter.R, 0, 2 * Parameter.R, 2 * Parameter.R);
-				e.gc.drawOval(size.x - 1 - 2 * Parameter.R, centerPoint.y - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
-				e.gc.drawOval(centerPoint.x - 2 * Parameter.R, size.y - 1 - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
-				e.gc.drawOval(centerPoint.x - 2 * Parameter.R, centerPoint.y - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
-			}
-		});
+	@Override
+	public void displayBound(boolean display){
+		label.addPaintListener(getPaintListener());
 	}
 	
 	@Override
@@ -76,6 +51,8 @@ public class CLabel extends UIElement{
 			public void mouseDown(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				getContainer().onMouseDown(arg0);
+				setClicked(true);
+				label.redraw();
 			}
 			
 			@Override
@@ -121,5 +98,6 @@ public class CLabel extends UIElement{
 		label = new Label(getContainer(), SWT.NONE);
 		label.setText(getName());
 	}
+
 	
 }
