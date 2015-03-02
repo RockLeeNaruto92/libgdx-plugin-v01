@@ -1,6 +1,7 @@
 package libgdxpluginv01.views;
 
 
+import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.dnd.UIElementDragListener;
 import libgdxpluginv01.models.UIElementPaletteContentProvider;
 
@@ -20,12 +21,14 @@ public class PaletteView extends ViewPart {
 	 */
 	public static final String ID = "libgdxpluginv01.views.PaletteView";
 	
-	TreeViewer viewer;
+	private TreeViewer viewer;
+	private UIController uiController;
 
 	/**
 	 * The constructor.
 	 */
 	public PaletteView() {
+		uiController = UIController.getInstance();
 	}
 
 	@Override

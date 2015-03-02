@@ -34,9 +34,8 @@ public abstract class UIElement {
 
 		setBound(new Rectangle(location.x, location.y, defaultSize.x,
 				defaultSize.y));
-		// displayBound();
-		displayBound(true);
-
+		
+		addPaintListener();
 		addMouseListener();
 	}
 
@@ -46,9 +45,15 @@ public abstract class UIElement {
 
 	public abstract void createControls();
 
-	public abstract void displayBound(boolean display);
-
 	public abstract void addMouseListener();
+	
+	public abstract void addPaintListener();
+	
+	public abstract void displayBound(boolean display);
+	
+	public void remove(){
+		container.dispose();
+	}
 
 	public Rectangle getBound() {
 		return bound;

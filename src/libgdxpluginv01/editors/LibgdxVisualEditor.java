@@ -9,8 +9,13 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -22,6 +27,7 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 public class LibgdxVisualEditor extends MultiPageEditorPart implements IResourceChangeListener{
 	
 	EditorInterface editorInterface;
+	int index;
 	
 	/*---------------------------------------------------------------------------------------------------------------*/
 	public LibgdxVisualEditor() {
@@ -36,7 +42,7 @@ public class LibgdxVisualEditor extends MultiPageEditorPart implements IResource
 		composite.setLayout(layout);
 		
 		editorInterface = new EditorInterface(composite);
-		int index = addPage(composite);
+		index = addPage(composite);
 		setPageText(index, Word.PAGE_VISUAL_EDITOR);
 	}
 	

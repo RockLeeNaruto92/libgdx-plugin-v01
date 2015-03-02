@@ -3,6 +3,8 @@ package libgdxpluginv01.models.uielements;
 import libgdxpluginv01.constant.Parameter;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
@@ -21,11 +23,6 @@ public class CLabel extends UIElement{
 	}
 	
 	@Override
-	public void displayBound(boolean display){
-		label.addPaintListener(getPaintListener());
-	}
-	
-	@Override
 	public Point getDefaultSize() {
 		// TODO Auto-generated method stub
 		return label.computeSize(Parameter.DEFAULT_LABEL_SIZE.x, Parameter.DEFAULT_LABEL_SIZE.y);
@@ -37,13 +34,18 @@ public class CLabel extends UIElement{
 		return Parameter.DEFAULT_LABEL_NAME_PATTERN;
 	}
 
-	public void addMouseListener() {
+	@Override
+	public void createControls() {
 		// TODO Auto-generated method stub
+		label = new Label(getContainer(), SWT.NONE);
+		label.setText(getName());
+	}
+	
+	@Override
+	public void addMouseListener() {
 		label.addMouseListener(new MouseListener() {
-			
 			@Override
 			public void mouseUp(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				getContainer().onMouseUp(arg0);
 			}
 			
@@ -93,11 +95,14 @@ public class CLabel extends UIElement{
 	}
 
 	@Override
-	public void createControls() {
-		// TODO Auto-generated method stub
-		label = new Label(getContainer(), SWT.NONE);
-		label.setText(getName());
+	public void addPaintListener() {
+		label.addPaintListener(getPaintListener());
 	}
-
+	
+	@Override
+	public void displayBound(boolean display){
+		setClicked(display);
+		label.redraw();
+	}
 	
 }
