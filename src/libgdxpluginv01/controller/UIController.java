@@ -19,9 +19,11 @@ public class UIController {
 	
 	private static UIController _instance;
 	private List<UIElement> uiElements;
+	private List<UIElement> selectedUIElements;
 	
 	public UIController(){
 		uiElements = new ArrayList<UIElement>();
+		selectedUIElements = new ArrayList<UIElement>();
 	}
 	
 	public static UIController getInstance(){
@@ -54,5 +56,12 @@ public class UIController {
 	
 	public void setPropertyView(UIElement uielement){
 		
+	}
+	
+	public void removeAll(){
+		System.out.println(uiElements.size());
+		while (uiElements.size() != 0){
+			removeUIElement(uiElements.get(0));
+		}
 	}
 }
