@@ -1,13 +1,11 @@
 package libgdxpluginv01.models.uielements;
 
-import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.swt.custom.CustomComposite;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class UIElement {
@@ -25,10 +23,13 @@ public abstract class UIElement {
 		container.setLayout(new FillLayout());
 		
 		setBound(new Rectangle(location.x, location.y, size.x, size.y));
+		
+//		addMouseListener();
 	}
 	
 	public abstract String getDefaultNamePattern();
 	public abstract Point getDefaultSize();
+//	public abstract void addMouseListener();
 	
 	public Rectangle getBound() {
 		return bound;

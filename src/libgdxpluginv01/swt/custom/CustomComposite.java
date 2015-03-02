@@ -143,4 +143,55 @@ public class CustomComposite extends Composite{
 		
 		getParent().layout(changed);
 	}
+	
+	public void onMouseDown(MouseEvent e){
+		System.out.println("UIController.clicked down");
+		UIController.clicked = true;
+		Point cursorLocation = getDisplay().getCursorLocation();
+		setClickedPoint(cursorLocation);
+	}
+	
+	public void onMouseUp(MouseEvent e){
+		System.out.println("UIController.clicked up");
+		UIController.clicked = false;
+	}
+	
+	public void onMouseDoubleClick(MouseEvent e){
+	}
+	
+	public void onMouseMove(MouseEvent e){
+		if (UIController.clicked){
+			Point cursorLocation = getDisplay().getCursorLocation();
+			Point newPoint = getParent().toControl(cursorLocation.x, cursorLocation.y);
+			
+			
+			FormData data = (FormData)getLayoutData();
+			data.left = new FormAttachment(getParent(), data.left.offset + newPoint.x - UIController.clickedPoint.x);
+			data.top = new FormAttachment(getParent(), data.top.offset + newPoint.y - UIController.clickedPoint.y);
+			UIController.clickedPoint = newPoint;
+			System.out.println(UIController.clickedPoint);
+			setLayoutData(data);
+			
+			
+			refresh();
+		}
+	}
+	
+	public void onMouseHover(MouseEvent e){
+		System.out.println("hover");
+		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_SIZEALL);
+		setCursor(UIController.cursor);
+	}
+	
+	public void onMouseExit(MouseEvent e){
+		System.out.println("Exit");
+		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_ARROW);
+		setCursor(UIController.cursor);
+	}
+	
+	public void onMouseEnter(MouseEvent e){
+		System.out.println("Mouse enter");
+		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_SIZEALL);
+		setCursor(UIController.cursor);
+	}
 }
