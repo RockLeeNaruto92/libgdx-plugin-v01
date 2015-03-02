@@ -42,7 +42,6 @@
    <extension
          point="org.eclipse.help.contexts">
       <contexts
-      		id="libgdxpluginv01.context"
             file="contexts.xml">
       </contexts>
    </extension>
@@ -55,6 +54,7 @@
       <command
             id="libgdxpluginv01.commands.Delete"
             categoryId="libgdxpluginv01.commands.category"
+            schemeId="libgdxpluginv01.scheme"
             name="Delete">
       </command>
    </extension>
@@ -73,10 +73,9 @@
       />
       <key
             commandId="libgdxpluginv01.commands.Delete"
-            contextId="org.eclipse.ui.contexts.window"
+            contextId="viewer"
             sequence="Delete"
             schemeId="libgdxpluginv01.scheme">
       </key>
    </extension>
-   
 </plugin>
