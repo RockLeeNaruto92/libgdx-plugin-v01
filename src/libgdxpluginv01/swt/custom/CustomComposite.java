@@ -1,5 +1,6 @@
 package libgdxpluginv01.swt.custom;
 
+import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.controller.UIController;
 
 import org.eclipse.swt.SWT;
@@ -7,10 +8,13 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -29,6 +33,7 @@ public class CustomComposite extends Composite{
 		
 		setLocation(location);
 		addMouseListener();
+		addPaintListener();
 	}
 	
 	public CustomComposite(Composite parent, int style, Point location, Point size){
@@ -40,6 +45,7 @@ public class CustomComposite extends Composite{
 		setLocation(location);
 		setSize(size);
 		addMouseListener();
+		addPaintListener();
 	}
 	
 	public void setLocation(Point location){
@@ -56,6 +62,32 @@ public class CustomComposite extends Composite{
 		data.width = size.x;
 		data.height = size.y;
 		setLayoutData(data);
+	}
+	
+	public void addPaintListener(){
+		this.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
+				// TODO Auto-generated method stub
+				FormData data = (FormData)getLayoutData();
+				
+				e.gc.setForeground(getDisplay().getSystemColor(SWT.COLOR_BLACK));
+				e.gc.drawRectangle(Parameter.R, Parameter.R, data.width - 1 - 2 * Parameter.R, data.height - 1 - 2 * Parameter.R);
+				// draw circle
+				e.gc.drawOval(0, 0, 2 * Parameter.R, 2 * Parameter.R);
+				e.gc.drawOval(0, data.height - 1 - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
+				e.gc.drawOval(data.width - 1 - 2 * Parameter.R, 0, 2 * Parameter.R, 2 * Parameter.R);
+				e.gc.drawOval(data.width - 1 - 2 * Parameter.R, data.height - 1 - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
+				
+				Point centerPoint = new Point(data.width / 2, data.height / 2);
+				e.gc.drawOval(0, centerPoint.y - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
+				e.gc.drawOval(centerPoint.x - 2 * Parameter.R, 0, 2 * Parameter.R, 2 * Parameter.R);
+				e.gc.drawOval(data.width - 1 - 2 * Parameter.R, centerPoint.y - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
+				e.gc.drawOval(centerPoint.x - 2 * Parameter.R, data.height - 1 - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
+				e.gc.drawOval(centerPoint.x - 2 * Parameter.R, centerPoint.y - 2 * Parameter.R, 2 * Parameter.R, 2 * Parameter.R);
+			}
+		});
 	}
 	
 	private void addMouseListener(){

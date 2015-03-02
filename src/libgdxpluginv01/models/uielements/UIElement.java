@@ -14,22 +14,27 @@ public abstract class UIElement {
 	private Rectangle bound;
 	private CustomComposite container;
 	private String name;
+	private Point size;
 	
 	public UIElement(Composite root, Point location){
-		Point size = getDefaultSize();
-		
 		name = getDefaultNamePattern() + (i++);
-		container = new CustomComposite(root, SWT.NONE, location, size);
+		container = new CustomComposite(root, SWT.NO_TRIM, location);
 		container.setLayout(new FillLayout());
 		
-		setBound(new Rectangle(location.x, location.y, size.x, size.y));
+		createControls();
 		
-//		addMouseListener();
+		Point defaultSize = getDefaultSize();
+		container.setSize(defaultSize);
+		
+		setBound(new Rectangle(location.x, location.y, defaultSize.x, defaultSize.y));
+		
+		addMouseListener();
 	}
 	
 	public abstract String getDefaultNamePattern();
 	public abstract Point getDefaultSize();
-//	public abstract void addMouseListener();
+	public abstract void createControls();
+	public abstract void addMouseListener();
 	
 	public Rectangle getBound() {
 		return bound;
@@ -53,5 +58,13 @@ public abstract class UIElement {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Point getSize() {
+		return size;
+	}
+
+	public void setSize(Point size) {
+		this.size = size;
 	}
 }
