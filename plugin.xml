@@ -26,6 +26,13 @@
             class="libgdxpluginv01.views.PaletteView"
             id="libgdxpluginv01.views.PaletteView">
       </view>
+      <view 
+      		name="Properties"
+      		icon="icons/sample.gif"
+      		category="libgdx-lugin-v01"
+      		class="libgdxpluginv01.views.PropertyView"
+      		id="libgdxpluginv01.views.PropertyView">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

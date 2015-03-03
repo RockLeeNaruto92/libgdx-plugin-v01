@@ -3,46 +3,41 @@ package libgdxpluginv01.models.uielements;
 import libgdxpluginv01.constant.Parameter;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
-public class CLabel extends UIElement{
+public class CCheckbox extends UIElement{
 	public static int i = 0;
-	Label label;
-	
-	public CLabel(Composite root, Point location) {
+	private Button checkbox;
+
+	public CCheckbox(Composite root, Point location) {
 		super(root, location);
-	}
-	
-	@Override
-	public Point getDefaultSize() {
-		// TODO Auto-generated method stub
-		return label.computeSize(Parameter.DEFAULT_LABEL_SIZE.x, Parameter.DEFAULT_LABEL_SIZE.y);
 	}
 
 	@Override
 	public String getDefaultNamePattern() {
-		// TODO Auto-generated method stub
-		return Parameter.DEFAULT_LABEL_NAME_PATTERN + i;
+		return Parameter.DEFAULT_CHECKBOX_NAME_PATTERN + i;
+	}
+
+	@Override
+	public Point getDefaultSize() {
+		return checkbox.computeSize(Parameter.DEFAULT_CHECKBOX_SIZE.x, Parameter.DEFAULT_CHECKBOX_SIZE.y);
 	}
 
 	@Override
 	public void createControls() {
-		// TODO Auto-generated method stub
-		label = new Label(getContainer(), SWT.NONE);
-		label.setText(getName());
+		checkbox = new Button(getContainer(), SWT.CHECK);
+		checkbox.setText(getName());
 	}
-	
+
 	@Override
 	public void addMouseListener() {
-		label.addMouseListener(new MouseListener() {
+		checkbox.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseUp(MouseEvent arg0) {
 				getContainer().onMouseUp(arg0);
@@ -53,7 +48,7 @@ public class CLabel extends UIElement{
 				// TODO Auto-generated method stub
 				getContainer().onMouseDown(arg0);
 				setClicked(true);
-				label.redraw();
+				checkbox.redraw();
 			}
 			
 			@Override
@@ -62,7 +57,7 @@ public class CLabel extends UIElement{
 			}
 		});
 		
-		label.addMouseMoveListener(new MouseMoveListener() {
+		checkbox.addMouseMoveListener(new MouseMoveListener() {
 			
 			@Override
 			public void mouseMove(MouseEvent arg0) {
@@ -71,7 +66,7 @@ public class CLabel extends UIElement{
 			}
 		});
 		
-		label.addMouseTrackListener(new MouseTrackListener() {
+		checkbox.addMouseTrackListener(new MouseTrackListener() {
 			
 			@Override
 			public void mouseHover(MouseEvent arg0) {
@@ -95,13 +90,13 @@ public class CLabel extends UIElement{
 
 	@Override
 	public void addPaintListener() {
-		label.addPaintListener(getPaintListener());
+		checkbox.addPaintListener(getPaintListener());
 	}
-	
+
 	@Override
-	public void displayBound(boolean display){
+	public void displayBound(boolean display) {
 		setClicked(display);
-		label.redraw();
+		checkbox.redraw();
 	}
-	
+
 }

@@ -18,12 +18,12 @@ public abstract class UIElement {
 	private CustomComposite container;
 	private String name;
 	private Point size;
-	private boolean clicked;
+	private boolean clicked = true;
 
 	private PaintListener paintListener;
 
 	public UIElement(Composite root, Point location) {
-		name = getDefaultNamePattern() + (i++);
+		name = getDefaultNamePattern();
 		container = new CustomComposite(root, SWT.NO_TRIM, location);
 		container.setLayout(new FillLayout());
 
@@ -31,6 +31,7 @@ public abstract class UIElement {
 
 		Point defaultSize = getDefaultSize();
 		container.setSize(defaultSize);
+		setSize(defaultSize);
 
 		setBound(new Rectangle(location.x, location.y, defaultSize.x,
 				defaultSize.y));
