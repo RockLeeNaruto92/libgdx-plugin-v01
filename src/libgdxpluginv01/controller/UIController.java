@@ -3,6 +3,7 @@ package libgdxpluginv01.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
@@ -48,6 +49,13 @@ public class UIController {
 			addUIElement(checkbox);
 			
 			return checkbox.getContainer();
+		}
+		
+		if (type == UIElementType.BUTTON){
+			CButton button = new CButton(dragComposite, location);
+			addUIElement(button);
+			
+			return button.getContainer();
 		}
 		
 		return null;

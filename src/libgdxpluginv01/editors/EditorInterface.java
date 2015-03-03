@@ -45,7 +45,6 @@ public class EditorInterface {
 		dragComposite.getShell().setMinimumSize(Parameter.DEFAULT_DESIGN_PART_MIN_SIZE);
 		dragComposite.setSize(Parameter.DEFAULT_DESIGN_PART_MIN_SIZE);
 		addDropListener(dragComposite);
-		addKeyListener(dragComposite);
 	}
 
 	private void createScrolledLayout(Composite parent) {
@@ -60,31 +59,6 @@ public class EditorInterface {
 		dropTarget.addDropListener(new UIElementDropAdapter(dragComposite, this));
 	}
 	
-	private void addKeyListener(Composite composite){
-//		Shell shell = composite.getShell();
-//		shell.addKeyListener(new KeyListener() {
-//			
-//			@Override
-//			public void keyReleased(KeyEvent arg0) {
-//				System.out.println("key up");
-//			}
-//			
-//			@Override
-//			public void keyPressed(KeyEvent arg0) {
-//				System.out.println("key down: " + arg0.character);
-//			}
-//		});
-		Display d = composite.getDisplay();
-		d.addFilter(SWT.KeyDown, new Listener() {
-
-            public void handleEvent(Event e) {
-                if(((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == 'f'))
-                {
-                    System.out.println("From Display I am the Key down !!" + e.keyCode);
-                }
-            }
-        });
-	}
 	
 	public void drop(DropTargetEvent e){
 		UIElementType type = identifyType();
@@ -110,6 +84,9 @@ public class EditorInterface {
 		
 		if (name.equals("Slider"))
 			return UIElementType.SLIDER;
+		
+		if (name.equals("Button"))
+			return UIElementType.BUTTON;
 		
 		// TO DO
 		return null;

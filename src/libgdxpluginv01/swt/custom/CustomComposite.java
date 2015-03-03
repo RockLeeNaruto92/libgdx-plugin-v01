@@ -96,14 +96,12 @@ public class CustomComposite extends Canvas{
 			@Override
 			public void mouseUp(MouseEvent e) {
 				// TODO Auto-generated method stub
-//				System.out.println("UIController.clicked up");
 				UIController.clicked = false;
 			}
 			
 			@Override
 			public void mouseDown(MouseEvent e) {
 				// TODO Auto-generated method stub
-//				System.out.println("UIController.clicked down");
 				UIController.clicked = true;
 				Point cursorLocation = getDisplay().getCursorLocation();
 				setClickedPoint(cursorLocation);
@@ -129,7 +127,6 @@ public class CustomComposite extends Canvas{
 					data.left = new FormAttachment(getParent(), data.left.offset + newPoint.x - UIController.clickedPoint.x);
 					data.top = new FormAttachment(getParent(), data.top.offset + newPoint.y - UIController.clickedPoint.y);
 					UIController.clickedPoint = newPoint;
-					System.out.println(UIController.clickedPoint);
 					setLayoutData(data);
 					
 					
@@ -143,7 +140,6 @@ public class CustomComposite extends Canvas{
 			@Override
 			public void mouseHover(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("hover");
 				UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_SIZEALL);
 				setCursor(UIController.cursor);
 			}
@@ -151,7 +147,6 @@ public class CustomComposite extends Canvas{
 			@Override
 			public void mouseExit(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Exit");
 				UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_ARROW);
 				setCursor(UIController.cursor);
 			}
@@ -159,7 +154,6 @@ public class CustomComposite extends Canvas{
 			@Override
 			public void mouseEnter(MouseEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Mouse enter");
 				UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_SIZEALL);
 				setCursor(UIController.cursor);
 			}
@@ -177,14 +171,12 @@ public class CustomComposite extends Canvas{
 	}
 	
 	public void onMouseDown(MouseEvent e){
-//		System.out.println("UIController.clicked down");
 		UIController.clicked = true;
 		Point cursorLocation = getDisplay().getCursorLocation();
 		setClickedPoint(cursorLocation);
 	}
 	
 	public void onMouseUp(MouseEvent e){
-//		System.out.println("UIController.clicked up");
 		UIController.clicked = false;
 	}
 	
@@ -201,7 +193,6 @@ public class CustomComposite extends Canvas{
 			data.left = new FormAttachment(getParent(), data.left.offset + newPoint.x - UIController.clickedPoint.x);
 			data.top = new FormAttachment(getParent(), data.top.offset + newPoint.y - UIController.clickedPoint.y);
 			UIController.clickedPoint = newPoint;
-//			System.out.println(UIController.clickedPoint);
 			setLayoutData(data);
 			
 			
@@ -210,13 +201,11 @@ public class CustomComposite extends Canvas{
 	}
 	
 	public void onMouseHover(MouseEvent e){
-//		System.out.println("hover");
 		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_SIZEALL);
 		setCursor(UIController.cursor);
 	}
 	
 	public void onMouseExit(MouseEvent e){
-//		System.out.println("Exit");
 		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_ARROW);
 		setCursor(UIController.cursor);
 	}
