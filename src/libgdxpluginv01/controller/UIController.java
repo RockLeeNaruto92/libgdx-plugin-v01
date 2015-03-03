@@ -6,6 +6,7 @@ import java.util.List;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CLabel;
+import libgdxpluginv01.models.uielements.CSlider;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
 
@@ -56,6 +57,13 @@ public class UIController {
 			addUIElement(button);
 			
 			return button.getContainer();
+		}
+		
+		if (type == UIElementType.SLIDER){
+			CSlider slider = new CSlider(dragComposite, location);
+			addUIElement(slider);
+			
+			return slider.getContainer();
 		}
 		
 		return null;
