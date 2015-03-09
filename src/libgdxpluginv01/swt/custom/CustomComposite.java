@@ -1,16 +1,7 @@
 package libgdxpluginv01.swt.custom;
 
-import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.controller.UIController;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -66,50 +57,5 @@ public class CustomComposite extends Canvas{
 		Control[] changed = new Control[]{this};
 		
 		getParent().layout(changed);
-	}
-	
-	public void onMouseDown(MouseEvent e){
-		UIController.clicked = true;
-		Point cursorLocation = getDisplay().getCursorLocation();
-		setClickedPoint(cursorLocation);
-	}
-	
-	public void onMouseUp(MouseEvent e){
-		UIController.clicked = false;
-	}
-	
-	public void onMouseDoubleClick(MouseEvent e){
-	}
-	
-	public void onMouseMove(MouseEvent e){
-		if (UIController.clicked){
-			Point cursorLocation = getDisplay().getCursorLocation();
-			Point newPoint = getParent().toControl(cursorLocation.x, cursorLocation.y);
-			
-			
-			FormData data = (FormData)getLayoutData();
-			data.left = new FormAttachment(getParent(), data.left.offset + newPoint.x - UIController.clickedPoint.x);
-			data.top = new FormAttachment(getParent(), data.top.offset + newPoint.y - UIController.clickedPoint.y);
-			UIController.clickedPoint = newPoint;
-			setLayoutData(data);
-			
-			
-			refresh();
-		}
-	}
-	
-	public void onMouseHover(MouseEvent e){
-		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_SIZEALL);
-		setCursor(UIController.cursor);
-	}
-	
-	public void onMouseExit(MouseEvent e){
-		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_ARROW);
-		setCursor(UIController.cursor);
-	}
-	
-	public void onMouseEnter(MouseEvent e){
-		UIController.cursor = new Cursor(getDisplay(), SWT.CURSOR_SIZEALL);
-		setCursor(UIController.cursor);
 	}
 }

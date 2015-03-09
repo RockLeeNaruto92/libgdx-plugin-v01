@@ -92,11 +92,10 @@ public abstract class UIElement {
 			
 			@Override
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
 				UIController.clicked = true;
 				
 				Point cursorLocation = container.getDisplay().getCursorLocation();
-				container.setClickedPoint(cursorLocation);
+				container.setClickedPoint(container.getParent().toControl(cursorLocation));
 				onMouseDown();
 			}
 			
@@ -115,8 +114,7 @@ public abstract class UIElement {
 					Point cursorLocation = container.getDisplay().getCursorLocation();
 					Point newPoint = container.getParent().toControl(cursorLocation.x, cursorLocation.y);
 					
-					container.setLocation(newPoint);
-					container.refresh();
+					container.setLocation(newPoint.x + UIController.clickedPoint.x, newPoint.y + UIController.clickedPoint.y);
 					
 					onMouseMove();
 				}
@@ -127,21 +125,18 @@ public abstract class UIElement {
 			
 			@Override
 			public void mouseHover(MouseEvent e) {
-				// TODO Auto-generated method stub
 				UIController.cursor = new Cursor(container.getDisplay(), SWT.CURSOR_SIZEALL);
 				container.setCursor(UIController.cursor);
 			}
 			
 			@Override
 			public void mouseExit(MouseEvent e) {
-				// TODO Auto-generated method stub
 				UIController.cursor = new Cursor(container.getDisplay(), SWT.CURSOR_ARROW);
 				container.setCursor(UIController.cursor);
 			}
 			
 			@Override
 			public void mouseEnter(MouseEvent e) {
-				// TODO Auto-generated method stub
 				UIController.cursor = new Cursor(container.getDisplay(), SWT.CURSOR_SIZEALL);
 				container.setCursor(UIController.cursor);
 			}
@@ -258,7 +253,6 @@ public abstract class UIElement {
 								.getSystemColor(SWT.COLOR_BLACK));
 						e.gc.drawRectangle(Parameter.R, Parameter.R, size.x - 1
 								- 2 * Parameter.R, size.y - 1 - 2 * Parameter.R);
-						System.out.println("data: " + size.x + "-" + size.y);
 						// draw circle
 						e.gc.drawOval(0, 0, 2 * Parameter.R, 2 * Parameter.R);
 						e.gc.drawOval(0, size.y - 1 - 2 * Parameter.R,
