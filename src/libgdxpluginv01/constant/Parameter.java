@@ -13,6 +13,6 @@ public class Parameter {
 	
 	public static String DEFAULT_LABEL_NAME_PATTERN = "Label";
 	public static String DEFAULT_CHECKBOX_NAME_PATTERN = "Checkbox";
-	public static String DEFAULT_BUTTON_NAME_PATTERN = "BUTTON";
-	public static String DEFAULT_SLIDER_NAME_PATTERN = "SLIDER";
+	public static String DEFAULT_BUTTON_NAME_PATTERN = "Button";
+	public static String DEFAULT_SLIDER_NAME_PATTERN = "Slider";
 }

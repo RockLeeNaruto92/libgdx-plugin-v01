@@ -79,7 +79,6 @@ public class UIController {
 	}
 	
 	public void setPropertyView(UIElement uielement){
-		
 	}
 	
 	public void removeAll(){

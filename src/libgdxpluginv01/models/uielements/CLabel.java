@@ -103,5 +103,11 @@ public class CLabel extends UIElement{
 		setClicked(display);
 		label.redraw();
 	}
+
+	@Override
+	public void drawContent() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -105,5 +105,11 @@ public class CSlider extends UIElement {
 		slider.redraw();
 	}
 
+	@Override
+	public void drawContent() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

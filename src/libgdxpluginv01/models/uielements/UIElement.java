@@ -52,6 +52,8 @@ public abstract class UIElement {
 	
 	public abstract void displayBound(boolean display);
 	
+	public abstract void drawContent();
+	
 	public void remove(){
 		container.dispose();
 	}

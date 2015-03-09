@@ -107,5 +107,11 @@ public class CButton extends UIElement{
 		button.redraw();
 	}
 
+	@Override
+	public void drawContent() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

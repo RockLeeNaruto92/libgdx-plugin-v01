@@ -80,9 +80,9 @@
       />
       <key
             commandId="libgdxpluginv01.commands.Delete"
-            contextId="viewer"
+            contextId="org.eclipse.ui.contexts.window"
             sequence="Delete"
-            schemeId="libgdxpluginv01.scheme">
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
    </extension>
 </plugin>
