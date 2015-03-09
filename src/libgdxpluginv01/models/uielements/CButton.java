@@ -1,24 +1,36 @@
 package libgdxpluginv01.models.uielements;
 
-import libgdxpluginv01.constant.Parameter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackListener;
+import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
+
 import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
-public class CButton extends UIElement{
+public class CButton extends UIElement {
 	public static int i = 0;
-	Button button;
+	
+	private enum State {
+		UP,
+		DOWN,
+		CHECKED,
+		OVER,
+		CHECKED_OVER,
+		DISABLED
+	}
+	
+	private State state = State.UP;
+	private ButtonStyle style;
 
 	public CButton(Composite root, Point location) {
 		super(root, location);
+		
+		style = new ButtonStyle();
 	}
 
 	@Override
@@ -29,90 +41,93 @@ public class CButton extends UIElement{
 
 	@Override
 	public Point getDefaultSize() {
-		return button.computeSize(Parameter.DEFAULT_BUTTON_SIZE.x, Parameter.DEFAULT_BUTTON_SIZE.y);
+		return Parameter.DEFAULT_BUTTON_SIZE;
 	}
 
 	@Override
 	public void createControls() {
-		button = new Button(getContainer(), SWT.PUSH);
-		button.setBackground(getContainer().getDisplay().getSystemColor(SWT.COLOR_BLACK));
-	}
-
-	@Override
-	public void addMouseListener() {
-		// TODO Auto-generated method stub
-		button.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseUp(MouseEvent arg0) {
-				getContainer().onMouseUp(arg0);
-				
-				button.setBackground(getContainer().getDisplay().getSystemColor(SWT.COLOR_WHITE));
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				button.setBackground(getContainer().getDisplay().getSystemColor(SWT.COLOR_BLACK));
-				getContainer().onMouseDown(arg0);
-				setClicked(true);
-				button.redraw();
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-			}
-		});
-		
-		button.addMouseMoveListener(new MouseMoveListener() {
-			
-			@Override
-			public void mouseMove(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				getContainer().onMouseMove(arg0);
-			}
-		});
-		
-		button.addMouseTrackListener(new MouseTrackListener() {
-			
-			@Override
-			public void mouseHover(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				getContainer().onMouseHover(arg0);
-			}
-			
-			@Override
-			public void mouseExit(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				getContainer().onMouseExit(arg0);
-			}
-			
-			@Override
-			public void mouseEnter(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				getContainer().onMouseEnter(arg0);
-			}
-		});
 	}
 
 	@Override
 	public void addPaintListener() {
 		// TODO Auto-generated method stub
-		button.addPaintListener(getPaintListener());
+		getContainer().addPaintListener(getPaintListener());
 	}
 
 	@Override
 	public void displayBound(boolean display) {
 		// TODO Auto-generated method stub
 		setClicked(display);
-		button.redraw();
+	}
+	
+	@Override
+	public void onMouseUp() {
+		if (style.up != null){
+			state = State.UP;
+			redraw();
+		}
+	}
+
+	@Override
+	public void onMouseDown() {
+		if (style.down != null){
+			state = State.DOWN;
+			redraw();
+		}
+	}
+
+	@Override
+	public void onMouseHover() {
+		if (style.over != null){
+			state = State.OVER;
+			redraw();
+		}
+	}
+
+	@Override
+	public void onMouseMove() {
+		
 	}
 
 	@Override
 	public void drawContent(PaintEvent e) {
-		// TODO Auto-generated method stub
+		Image drawable = null;
+		if (state == State.UP){
+			drawable = style.up;
+		} else if (state == State.DOWN){
+			drawable = style.down;
+		} else if (state == State.CHECKED){
+			drawable = style.checked;
+		} else if (state == State.CHECKED_OVER){
+			drawable = style.checkedOver;
+		} else if (state == State.DISABLED){
+			drawable = style.disabled;
+		}
 		
+		Rectangle bound = drawable.getBounds();
+		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height,
+				0, 0, getSize().x, getSize().y);
 	}
 
-
+	static class ButtonStyle {
+		public Image checked;
+		public Image checkedOver;
+		public Image disabled;
+		public Image up;
+		public Image down;
+		public Image over;
+		public float pressedOffsetX;
+		public float pressedOffsetY;
+		public float unpressedOffsetX;
+		public float unpressedOffsetY;
+		
+		public ButtonStyle(){
+			try {
+				up = new Image(null, new FileInputStream(Utility.getFile("datas/default/ButtonStyle/up.png")));
+				down = new Image(null, new FileInputStream(Utility.getFile("datas/default/ButtonStyle/down.png")));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

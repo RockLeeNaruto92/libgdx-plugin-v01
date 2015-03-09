@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.models.uielements.CButton;
-import libgdxpluginv01.models.uielements.CCheckbox;
-import libgdxpluginv01.models.uielements.CLabel;
-import libgdxpluginv01.models.uielements.CSlider;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
 
@@ -38,19 +35,19 @@ public class UIController {
 	}
 
 	public Control createUIElement(Canvas dragComposite, UIElementType type, Point location) {
-		if (type == UIElementType.LABEL){
-			CLabel label = new CLabel(dragComposite, location);
-			addUIElement(label);
-			
-			return label.getContainer();
-		}
+//		if (type == UIElementType.LABEL){
+//			CLabel label = new CLabel(dragComposite, location);
+//			addUIElement(label);
+//			
+//			return label.getContainer();
+//		}
 		
-		if (type == UIElementType.CHECKBOX){
-			CCheckbox checkbox = new CCheckbox(dragComposite, location);
-			addUIElement(checkbox);
-			
-			return checkbox.getContainer();
-		}
+//		if (type == UIElementType.CHECKBOX){
+//			CCheckbox checkbox = new CCheckbox(dragComposite, location);
+//			addUIElement(checkbox);
+//			
+//			return checkbox.getContainer();
+//		}
 		
 		if (type == UIElementType.BUTTON){
 			CButton button = new CButton(dragComposite, location);
@@ -59,12 +56,12 @@ public class UIController {
 			return button.getContainer();
 		}
 		
-		if (type == UIElementType.SLIDER){
-			CSlider slider = new CSlider(dragComposite, location);
-			addUIElement(slider);
-			
-			return slider.getContainer();
-		}
+//		if (type == UIElementType.SLIDER){
+//			CSlider slider = new CSlider(dragComposite, location);
+//			addUIElement(slider);
+//			
+//			return slider.getContainer();
+//		}
 		
 		return null;
 	}
