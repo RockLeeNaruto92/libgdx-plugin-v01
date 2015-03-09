@@ -51,6 +51,15 @@ public class CustomComposite extends Canvas{
 		setLayoutData(data);
 	}
 	
+	public void setLocation(int x, int y){
+		FormData data = (FormData)getLayoutData();
+		
+		if (data == null) return;
+		data.left = new FormAttachment(getParent(), x);
+		data.top = new FormAttachment(getParent(), y);
+		setLayoutData(data);
+	}
+	
 	public void setSize(Point size){
 		FormData data = (FormData)getLayoutData();
 		data.width = size.x;
