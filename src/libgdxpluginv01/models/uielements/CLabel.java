@@ -24,7 +24,6 @@ public class CLabel extends UIElement{
 	private static int i = 0;
 	private LabelStyle style;
 	
-	
 	Label label;
 	
 	public CLabel(Composite root, Point location) {
@@ -130,6 +129,11 @@ public class CLabel extends UIElement{
 			e.gc.drawImage(style.background, 0, 0, bound.width, bound.height, 
 					0, 0, getSize().x, getSize().y);
 		}
+		
+		// draw string
+		// To do
+		
+		
 	}
 	
 	
@@ -142,7 +146,6 @@ public class CLabel extends UIElement{
 			try {
 				background = new Image(null, new FileInputStream(Utility.getFile("icons/sample.gif")));
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
