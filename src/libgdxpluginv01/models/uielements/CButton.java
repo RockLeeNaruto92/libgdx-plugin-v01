@@ -7,6 +7,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
@@ -108,7 +109,7 @@ public class CButton extends UIElement{
 	}
 
 	@Override
-	public void drawContent() {
+	public void drawContent(PaintEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

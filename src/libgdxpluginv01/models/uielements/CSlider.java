@@ -7,6 +7,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.internal.ole.win32.DISPPARAMS;
 import org.eclipse.swt.widgets.Composite;
@@ -106,7 +107,7 @@ public class CSlider extends UIElement {
 	}
 
 	@Override
-	public void drawContent() {
+	public void drawContent(PaintEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

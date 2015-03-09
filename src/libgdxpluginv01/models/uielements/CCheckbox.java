@@ -7,6 +7,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -97,6 +98,12 @@ public class CCheckbox extends UIElement{
 	public void displayBound(boolean display) {
 		setClicked(display);
 		checkbox.redraw();
+	}
+
+	@Override
+	public void drawContent(PaintEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

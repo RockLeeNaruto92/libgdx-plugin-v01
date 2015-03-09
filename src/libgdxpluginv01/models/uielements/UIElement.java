@@ -6,6 +6,7 @@ import libgdxpluginv01.swt.custom.CustomComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -18,6 +19,11 @@ public abstract class UIElement {
 	private CustomComposite container;
 	private String name;
 	private Point size;
+	private Point scale;
+	private float rotation;
+	private Color color;
+	private boolean visible;
+	private boolean debug;
 	private boolean clicked = true;
 
 	private PaintListener paintListener;
@@ -52,7 +58,7 @@ public abstract class UIElement {
 	
 	public abstract void displayBound(boolean display);
 	
-	public abstract void drawContent();
+	public abstract void drawContent(PaintEvent e);
 	
 	public void remove(){
 		container.dispose();
@@ -88,6 +94,46 @@ public abstract class UIElement {
 
 	public void setSize(Point size) {
 		this.size = size;
+	}
+
+	public Point getScale() {
+		return scale;
+	}
+
+	public void setScale(Point scale) {
+		this.scale = scale;
+	}
+
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 
 	public PaintListener getPaintListener() {
