@@ -16,7 +16,6 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 
@@ -33,6 +32,8 @@ public abstract class UIElement {
 	private boolean visible;
 	private boolean debug;
 	private boolean clicked = true;
+	
+	private Point distanceClick;
 
 	private PaintListener paintListener;
 
@@ -95,7 +96,9 @@ public abstract class UIElement {
 				UIController.clicked = true;
 				
 				Point cursorLocation = container.getDisplay().getCursorLocation();
-				container.setClickedPoint(container.getParent().toControl(cursorLocation));
+				container.setClickedPoint(cursorLocation);
+				distanceClick = container.toControl(cursorLocation);
+				
 				onMouseDown();
 			}
 			
@@ -114,7 +117,8 @@ public abstract class UIElement {
 					Point cursorLocation = container.getDisplay().getCursorLocation();
 					Point newPoint = container.getParent().toControl(cursorLocation.x, cursorLocation.y);
 					
-					container.setLocation(newPoint.x + UIController.clickedPoint.x, newPoint.y + UIController.clickedPoint.y);
+					container.setLocation(newPoint.x - distanceClick.x, newPoint.y - distanceClick.y);
+					container.refresh();
 					
 					onMouseMove();
 				}
