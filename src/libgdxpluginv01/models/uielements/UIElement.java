@@ -143,6 +143,8 @@ public abstract class UIElement {
 				@Override
 				public void paintControl(PaintEvent e) {
 					// TODO Auto-generated method stub
+					drawContent(e);
+					
 					if (clicked) {
 						Point size = getSize();
 
