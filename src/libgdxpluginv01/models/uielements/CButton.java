@@ -49,12 +49,6 @@ public class CButton extends UIElement {
 	}
 
 	@Override
-	public void addPaintListener() {
-		// TODO Auto-generated method stub
-		getContainer().addPaintListener(getPaintListener());
-	}
-
-	@Override
 	public void displayBound(boolean display) {
 		// TODO Auto-generated method stub
 		setClicked(display);
@@ -86,6 +80,12 @@ public class CButton extends UIElement {
 
 	@Override
 	public void onMouseMove() {
+		
+	}
+	
+	@Override
+	public void onMouseDoubleClick() {
+		// TODO Auto-generated method stub
 		
 	}
 

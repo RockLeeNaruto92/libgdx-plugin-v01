@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 
@@ -32,6 +33,7 @@ public abstract class UIElement {
 	private boolean visible;
 	private boolean debug;
 	private boolean clicked = true;
+	private boolean resize;
 	
 	private Point distanceClick;
 
@@ -60,7 +62,8 @@ public abstract class UIElement {
 			
 			@Override
 			public void paintControl(PaintEvent e) {
-				// TODO Auto-generated method stub
+				drawContent(e);
+				
 				FormData data = (FormData)(container.getLayoutData());
 				
 				e.gc.setForeground(container.getDisplay().getSystemColor(SWT.COLOR_BLACK));
@@ -88,6 +91,7 @@ public abstract class UIElement {
 			public void mouseUp(MouseEvent e) {
 				// TODO Auto-generated method stub
 				UIController.clicked = false;
+				resize = false;
 				onMouseUp();
 			}
 			
@@ -96,16 +100,18 @@ public abstract class UIElement {
 				UIController.clicked = true;
 				
 				Point cursorLocation = container.getDisplay().getCursorLocation();
-				container.setClickedPoint(cursorLocation);
 				distanceClick = container.toControl(cursorLocation);
+				
+				if (getMouseStyle(distanceClick) != SWT.CURSOR_SIZEALL){
+					resize = true;
+				}
 				
 				onMouseDown();
 			}
 			
 			@Override
 			public void mouseDoubleClick(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				onMouseDoubleClick();
 			}
 		});
 		
@@ -115,10 +121,60 @@ public abstract class UIElement {
 			public void mouseMove(MouseEvent e) {
 				if (UIController.clicked){
 					Point cursorLocation = container.getDisplay().getCursorLocation();
-					Point newPoint = container.getParent().toControl(cursorLocation.x, cursorLocation.y);
+					Point location = container.getParent().toControl(cursorLocation);
+					int style = getMouseStyle(location);
+					FormData data = (FormData)(container.getLayoutData());
+					Composite parent = container.getParent();
 					
-					container.setLocation(newPoint.x - distanceClick.x, newPoint.y - distanceClick.y);
+					if (resize){
+						switch (style){
+						case SWT.CURSOR_SIZENW:
+							System.out.println("top left");
+							data.width += data.left.offset - location.x;
+							data.height += data.top.offset - location.y;
+							container.setLocation(location);
+							break;
+						case SWT.CURSOR_SIZESW:
+							data.height += location.y - data.top.offset - data.height;
+							data.width += data.left.offset - location.x;
+							data.left = new FormAttachment(parent, location.x);
+							break;
+						case SWT.CURSOR_SIZEN:
+							data.height += data.top.offset - location.y;
+							data.top = new FormAttachment(parent, location.y);
+							break;
+						case SWT.CURSOR_SIZENE:
+							data.width += location.x - data.left.offset - data.width;
+							data.height += data.top.offset - location.y;
+							data.top = new FormAttachment(parent, location.y);
+							break;
+						case SWT.CURSOR_SIZESE:
+							data.width += location.x - data.left.offset - data.width;
+							data.height += location.y - data.top.offset - data.height;
+							break;
+						case SWT.CURSOR_SIZEE:
+							data.width += location.x - data.left.offset - data.width;
+							break;
+						case SWT.CURSOR_SIZEW:
+							data.width += data.left.offset - location.x;
+							data.left = new FormAttachment(parent, location.x);
+							break;
+						case SWT.CURSOR_SIZES:
+							System.out.println("bottom");
+							data.height += location.y - data.top.offset - data.height;
+							break;
+						default: 
+							container.setLocation(location.x - distanceClick.x, location.y - distanceClick.y);
+							break;
+						}
+					}
 					container.refresh();
+					redraw();
+					
+					bound.x = data.left.offset;
+					bound.y = data.top.offset;
+					bound.width = data.width;
+					bound.height = data.height;
 					
 					onMouseMove();
 				}
@@ -131,6 +187,8 @@ public abstract class UIElement {
 			public void mouseHover(MouseEvent e) {
 				UIController.cursor = new Cursor(container.getDisplay(), SWT.CURSOR_SIZEALL);
 				container.setCursor(UIController.cursor);
+				
+				onMouseHover();
 			}
 			
 			@Override
@@ -141,10 +199,37 @@ public abstract class UIElement {
 			
 			@Override
 			public void mouseEnter(MouseEvent e) {
-				UIController.cursor = new Cursor(container.getDisplay(), SWT.CURSOR_SIZEALL);
+				Point cursorLocation = container.toControl(container.getDisplay().getCursorLocation());
+				int mouseStyle = getMouseStyle(cursorLocation);
+				
+				UIController.cursor = new Cursor(container.getDisplay(), mouseStyle);
 				container.setCursor(UIController.cursor);
 			}
 		});
+	}
+	
+	private int getMouseStyle(Point location){
+		if (location.x <= Parameter.PADDING)
+			if (location.y <= Parameter.PADDING)
+				return SWT.CURSOR_SIZENW;
+			else if (location.y >= getSize().y - Parameter.PADDING)
+				return SWT.CURSOR_SIZESW;
+			else 
+				return SWT.CURSOR_SIZEW;
+		else if (location.x >= getSize().x - Parameter.PADDING)
+			if (location.y <= Parameter.PADDING)
+				return SWT.CURSOR_SIZENE;
+			else if (location.y >= getSize().y - Parameter.PADDING)
+				return SWT.CURSOR_SIZESE;
+			else 
+				return SWT.CURSOR_SIZEE;
+		else 
+			if (location.y <= Parameter.PADDING)
+				return SWT.CURSOR_SIZEN;
+			else if (location.y >= getSize().y - Parameter.PADDING)
+				return SWT.CURSOR_SIZES;
+			else 
+				return SWT.CURSOR_SIZEALL;
 	}
 
 	public abstract String getDefaultNamePattern();
@@ -160,6 +245,8 @@ public abstract class UIElement {
 	public abstract void onMouseUp();
 	
 	public abstract void onMouseDown();
+	
+	public abstract void onMouseDoubleClick();
 	
 	public abstract void onMouseHover();
 	
@@ -194,6 +281,8 @@ public abstract class UIElement {
 	}
 
 	public Point getSize() {
+		size.x = bound.width;
+		size.y = bound.height;
 		return size;
 	}
 
@@ -242,50 +331,6 @@ public abstract class UIElement {
 	}
 
 	public PaintListener getPaintListener() {
-		if (paintListener == null) {
-			paintListener = new PaintListener() {
-
-				@Override
-				public void paintControl(PaintEvent e) {
-					// TODO Auto-generated method stub
-					drawContent(e);
-					
-					if (clicked) {
-						Point size = getSize();
-
-						e.gc.setForeground(getContainer().getDisplay()
-								.getSystemColor(SWT.COLOR_BLACK));
-						e.gc.drawRectangle(Parameter.R, Parameter.R, size.x - 1
-								- 2 * Parameter.R, size.y - 1 - 2 * Parameter.R);
-						// draw circle
-						e.gc.drawOval(0, 0, 2 * Parameter.R, 2 * Parameter.R);
-						e.gc.drawOval(0, size.y - 1 - 2 * Parameter.R,
-								2 * Parameter.R, 2 * Parameter.R);
-						e.gc.drawOval(size.x - 1 - 2 * Parameter.R, 0,
-								2 * Parameter.R, 2 * Parameter.R);
-						e.gc.drawOval(size.x - 1 - 2 * Parameter.R, size.y - 1
-								- 2 * Parameter.R, 2 * Parameter.R,
-								2 * Parameter.R);
-
-						Point centerPoint = new Point(size.x / 2, size.y / 2);
-						e.gc.drawOval(0, centerPoint.y - 2 * Parameter.R,
-								2 * Parameter.R, 2 * Parameter.R);
-						e.gc.drawOval(centerPoint.x - 2 * Parameter.R, 0,
-								2 * Parameter.R, 2 * Parameter.R);
-						e.gc.drawOval(size.x - 1 - 2 * Parameter.R,
-								centerPoint.y - 2 * Parameter.R,
-								2 * Parameter.R, 2 * Parameter.R);
-						e.gc.drawOval(centerPoint.x - 2 * Parameter.R, size.y
-								- 1 - 2 * Parameter.R, 2 * Parameter.R,
-								2 * Parameter.R);
-						e.gc.drawOval(centerPoint.x - 2 * Parameter.R,
-								centerPoint.y - 2 * Parameter.R,
-								2 * Parameter.R, 2 * Parameter.R);
-					}
-				}
-			};
-		}
-
 		return paintListener;
 	}
 
