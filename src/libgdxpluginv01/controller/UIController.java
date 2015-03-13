@@ -307,7 +307,6 @@ public class UIController {
 	}
 	
 	private void setDistanceOfClickedPointForSelectedUiElements(Point clickedPoint) {
-		System.out.println(selectedUIElements.size());
 		for (UIElement uielement : selectedUIElements) {
 			Point distance = uielement.getContainer().toControl(clickedPoint);
 			uielement.setDistanceWithClickedPoint(distance);
