@@ -12,13 +12,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 public class UIController {
 	public static boolean clicked = false;
-	public static Point clickedPoint;
+	public Point clickedPoint;
 	public Cursor cursor;
 	
 	private boolean mouseDown = false;
@@ -122,6 +123,8 @@ public class UIController {
 
 	public void onMouseDown(MouseEvent e, UIElement element) {
 		mouseDown = true;
+		clickedPoint = Display.getCurrent().getCursorLocation();
+		setDistanceOfClickedPointForSelectedUiElements(clickedPoint);
 		
 		if (!isSelected(element))
 			addSelectedUIElement(element);
@@ -142,22 +145,45 @@ public class UIController {
 	}
 
 	private void onUIElementMouseMove(MouseEvent e, UIElement uiElement) {
-		Point location = uiElement.getContainer().toControl(Display.getCurrent().getCursorLocation());
-		System.out.println(location);
-		int mouseStyle = getMouseStyle(uiElement.getSize(), location);
+		Point cursorLocation = Display.getCurrent().getCursorLocation();
+		Point cursorLocationOnEditor = uiElement.getContainer().getParent().toControl(cursorLocation);
+		int mouseStyle = getMouseStyle(uiElement.getSize(), uiElement.getContainer().toControl(cursorLocation));
+		Rectangle bound = uiElement.getBound();
 		
 		uiElement.getContainer().setCursor(new Cursor(null, mouseStyle));
-//		if (mouseDown)
-//			switch (mouseStyle) {
-//			case SWT.CURSOR_SIZENW:
-//				break;
-//			case SWT.CURSOR_SIZEALL: // move
-//				uiElement.getContainer().setLocation(location);
-//				uiElement.getContainer().refresh();
-//				break;
-//			default:
-//				break;
-//			}
+		
+		if (mouseDown){
+			Point distance = uiElement.getDistanceWithClickedPoint();
+			
+			switch (mouseStyle) {
+			case SWT.CURSOR_SIZENW: // top left
+				
+				break;
+			case SWT.CURSOR_SIZESW: // bottom left
+				break;
+			case SWT.CURSOR_SIZEW: // left
+				break;
+			case SWT.CURSOR_SIZENE: // top right
+				break;
+			case SWT.CURSOR_SIZESE: // bottom right
+				break;
+			case SWT.CURSOR_SIZEE: // right
+				break;
+			case SWT.CURSOR_SIZEN: // top
+				break;
+			case SWT.CURSOR_SIZES: // bottom
+				break;
+			case SWT.CURSOR_SIZEALL: // move
+				bound.x = cursorLocationOnEditor.x - distance.x;
+				bound.y = cursorLocationOnEditor.y - distance.y;
+				break;
+			default:
+				break;
+			}
+			uiElement.setBound(bound);
+			uiElement.getContainer().refresh();
+		}
+		
 	}
 	
 	private int getMouseStyle(Point size, Point location){
@@ -182,5 +208,12 @@ public class UIController {
 				return SWT.CURSOR_SIZES;
 			else 
 				return SWT.CURSOR_SIZEALL;
+	}
+	
+	private void setDistanceOfClickedPointForSelectedUiElements(Point clickedPoint) {
+		for (UIElement uielement : selectedUIElements) {
+			Point distance = uielement.getContainer().toControl(clickedPoint);
+			uielement.setDistanceWithClickedPoint(distance);
+		}
 	}
 }

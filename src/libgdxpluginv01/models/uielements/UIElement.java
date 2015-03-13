@@ -8,11 +8,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -32,10 +30,9 @@ public abstract class UIElement {
 	private boolean visible;
 	private boolean debug;
 	private boolean clicked = true;
-	private boolean resize;
 	private UIController uiController;
 	
-	private Point distanceClick;
+	private Point distanceWithClickedPoint;
 
 	private PaintListener paintListener;
 
@@ -115,30 +112,6 @@ public abstract class UIElement {
 
 	}
 	
-	private int getMouseStyle(Point location){
-		if (location.x <= Parameter.PADDING)
-			if (location.y <= Parameter.PADDING)
-				return SWT.CURSOR_SIZENW;
-			else if (location.y >= getSize().y - Parameter.PADDING)
-				return SWT.CURSOR_SIZESW;
-			else 
-				return SWT.CURSOR_SIZEW;
-		else if (location.x >= getSize().x - Parameter.PADDING)
-			if (location.y <= Parameter.PADDING)
-				return SWT.CURSOR_SIZENE;
-			else if (location.y >= getSize().y - Parameter.PADDING)
-				return SWT.CURSOR_SIZESE;
-			else 
-				return SWT.CURSOR_SIZEE;
-		else 
-			if (location.y <= Parameter.PADDING)
-				return SWT.CURSOR_SIZEN;
-			else if (location.y >= getSize().y - Parameter.PADDING)
-				return SWT.CURSOR_SIZES;
-			else 
-				return SWT.CURSOR_SIZEALL;
-	}
-
 	public abstract String getDefaultNamePattern();
 
 	public abstract Point getDefaultSize();
@@ -168,6 +141,8 @@ public abstract class UIElement {
 	}
 
 	public void setBound(Rectangle bound) {
+		container.setLocation(bound.x, bound.y);
+		container.setSize(bound.width, bound.height);
 		this.bound = bound;
 	}
 
@@ -253,6 +228,14 @@ public abstract class UIElement {
 		this.clicked = clicked;
 	}
 	
+	public Point getDistanceWithClickedPoint() {
+		return distanceWithClickedPoint;
+	}
+
+	public void setDistanceWithClickedPoint(Point distanceWithClickedPoint) {
+		this.distanceWithClickedPoint = distanceWithClickedPoint;
+	}
+
 	public void redraw(){
 		container.redraw();
 	}

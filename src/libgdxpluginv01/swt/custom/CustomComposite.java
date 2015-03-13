@@ -1,7 +1,5 @@
 package libgdxpluginv01.swt.custom;
 
-import libgdxpluginv01.controller.UIController;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -53,13 +51,10 @@ public class CustomComposite extends Canvas{
 	
 	public void setSize(Point size){
 		FormData data = (FormData)getLayoutData();
+		
 		data.width = size.x;
 		data.height = size.y;
 		setLayoutData(data);
-	}
-	
-	public void setClickedPoint(Point p){
-		UIController.clickedPoint = getParent().toControl(p);
 	}
 	
 	public void refresh(){

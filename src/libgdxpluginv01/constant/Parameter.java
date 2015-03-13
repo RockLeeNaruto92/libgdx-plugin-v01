@@ -9,7 +9,7 @@ public class Parameter {
 	
 	public static Point DEFAULT_LABEL_SIZE = new Point(100, 25);
 	public static Point DEFAULT_CHECKBOX_SIZE = new Point(100, 25);
-	public static Point DEFAULT_BUTTON_SIZE = new Point(100, 25);
+	public static Point DEFAULT_BUTTON_SIZE = new Point(100, 100);
 	public static Point DEFAULT_SLIDER_SIZE = new Point(100, 25);
 	
 	public static String DEFAULT_LABEL_NAME_PATTERN = "Label";
