@@ -1,5 +1,6 @@
 package libgdxpluginv01.editors;
 
+import libgdxpluginv01.constant.MobileResolution;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.dnd.UIElementDropAdapter;
@@ -14,6 +15,9 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
@@ -21,8 +25,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 
 public class EditorInterface {
 	private ScrolledComposite root;
@@ -44,7 +46,11 @@ public class EditorInterface {
 		
 		dragComposite.getShell().setMinimumSize(Parameter.DEFAULT_DESIGN_PART_MIN_SIZE);
 		dragComposite.setSize(Parameter.DEFAULT_DESIGN_PART_MIN_SIZE);
+		
+		root.setContent(dragComposite);
+		
 		addDropListener(dragComposite);
+		addPaintListener(dragComposite);
 	}
 
 	private void createScrolledLayout(Composite parent) {
@@ -59,6 +65,17 @@ public class EditorInterface {
 		dropTarget.addDropListener(new UIElementDropAdapter(dragComposite, this));
 	}
 	
+	private void addPaintListener(Composite composite){
+		composite.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent e) {
+				e.gc.setLineWidth(Parameter.DEFAULT_MOBILE_WIDTH);
+				e.gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
+				e.gc.fillRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x / 2, MobileResolution.IPHONE_6_PLUS.y / 2);
+				e.gc.drawRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x / 2, MobileResolution.IPHONE_6_PLUS.y / 2);
+			}
+		});
+	}
 	
 	public void drop(DropTargetEvent e){
 		UIElementType type = identifyType();
