@@ -127,8 +127,9 @@ public class UIController {
 		
 		if (!isSelected(element)){
 			addSelectedUIElement(element);
-			currentMouseStyle = getMouseStyle(element.getSize(), element.getContainer().toControl(Display.getCurrent().getCursorLocation()));
 		}
+		
+		currentMouseStyle = getMouseStyle(element.getSize(), element.getContainer().toControl(Display.getCurrent().getCursorLocation()));
 	}
 
 	public void onMouseDoubleClick(MouseEvent e) {
@@ -146,6 +147,7 @@ public class UIController {
 	}
 
 	private void onUIElementMouseMove(MouseEvent e, UIElement uiElement) {
+		int tempWidth, tempHeight;
 		Point cursorLocation = Display.getCurrent().getCursorLocation();
 		Point cursorLocationOnEditor = uiElement.getContainer().getParent().toControl(cursorLocation);
 		int mouseStyle = getMouseStyle(uiElement.getSize(), uiElement.getContainer().toControl(cursorLocation));
@@ -155,10 +157,10 @@ public class UIController {
 			uiElement.getContainer().setCursor(new Cursor(null, mouseStyle));
 		
 		if (mouseDown){
-			switch (mouseStyle) {
+			switch (currentMouseStyle) {
 			case SWT.CURSOR_SIZENW: // top left
-				int tempWidth = bound.width + bound.x - cursorLocationOnEditor.x;
-				int tempHeight = bound.height + bound.y - cursorLocationOnEditor.y;
+				tempWidth = bound.width + bound.x - cursorLocationOnEditor.x;
+				tempHeight = bound.height + bound.y - cursorLocationOnEditor.y;
 				
 				if (tempWidth >= uiElement.getMinSize().x) {
 					bound.x = cursorLocationOnEditor.x;
@@ -170,29 +172,96 @@ public class UIController {
 					bound.height = tempHeight;
 				}
 				break;
+				
 			case SWT.CURSOR_SIZESW: // bottom left
+				tempWidth = bound.width + bound.x - cursorLocationOnEditor.x;
+				tempHeight = cursorLocationOnEditor.y - bound.y + (cursorLocationOnEditor.y >= bound.y ? 0 : bound.height);
+
+				System.out.println(tempHeight);
+				if (tempWidth >= uiElement.getMinSize().x) {
+					bound.x = cursorLocationOnEditor.x;
+					bound.width = tempWidth;
+				}
+				
+				if (tempHeight >= uiElement.getMinSize().y){
+					bound.height = tempHeight;
+				}
 				break;
-			case SWT.CURSOR_SIZEW: // left
-				break;
+				
 			case SWT.CURSOR_SIZENE: // top right
+				tempWidth = cursorLocationOnEditor.x - bound.width - bound.x;
+				tempHeight = bound.height + bound.y - cursorLocationOnEditor.y;
+				
+				if (tempWidth >= uiElement.getMinSize().x) {
+					bound.width = tempWidth;
+				}
+				
+				if (tempHeight >= uiElement.getMinSize().y){
+					bound.y = cursorLocationOnEditor.y;
+					bound.height = tempHeight;
+				}
 				break;
+				
 			case SWT.CURSOR_SIZESE: // bottom right
+				tempWidth = cursorLocationOnEditor.x - bound.width - bound.x;
+				tempHeight = cursorLocationOnEditor.y - bound.height - bound.y;
+				
+				if (tempWidth >= uiElement.getMinSize().x) {
+					bound.width = tempWidth;
+				}
+				
+				if (tempHeight >= uiElement.getMinSize().y){
+					bound.height = tempHeight;
+				}
+				
 				break;
+				
+			case SWT.CURSOR_SIZEW: // left
+				tempWidth = bound.width + bound.x - cursorLocationOnEditor.x;
+				
+				if (tempWidth >= uiElement.getMinSize().x) {
+					bound.x = cursorLocationOnEditor.x;
+					bound.width = tempWidth;
+				}
+				break;
+				
 			case SWT.CURSOR_SIZEE: // right
+				tempWidth = cursorLocationOnEditor.x - bound.width - bound.x;
+				
+				if (tempWidth >= uiElement.getMinSize().x) {
+					bound.width = tempWidth;
+				}
 				break;
+				
 			case SWT.CURSOR_SIZEN: // top
+				tempHeight = bound.height + bound.y - cursorLocationOnEditor.y;
+				
+				if (tempHeight >= uiElement.getMinSize().y){
+					bound.y = cursorLocationOnEditor.y;
+					bound.height = tempHeight;
+				}
 				break;
+				
 			case SWT.CURSOR_SIZES: // bottom
+				tempHeight = cursorLocationOnEditor.y - bound.height - bound.y;
+				
+				if (tempHeight >= uiElement.getMinSize().y){
+					bound.height = tempHeight;
+				}
+				
 				break;
+				
 			case SWT.CURSOR_SIZEALL: // move
 				Point distance = uiElement.getDistanceWithClickedPoint();
 				
 				bound.x = cursorLocationOnEditor.x - distance.x;
 				bound.y = cursorLocationOnEditor.y - distance.y;
 				break;
+				
 			default:
 				break;
 			}
+			
 			uiElement.setBound(bound);
 			uiElement.getContainer().refresh();
 			uiElement.redraw();
