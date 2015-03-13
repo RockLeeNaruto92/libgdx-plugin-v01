@@ -86,7 +86,10 @@ public class UIController {
 
 	public void removeAllSelectedUIElements(){
 		while (selectedUIElements.size() > 0){
-			removeSelectedUIElement(selectedUIElements.get(0));
+			UIElement element = selectedUIElements.get(0);
+			removeSelectedUIElement(element);
+			element.setSelected(false);
+			element.redraw();
 		}
 	}
 	
@@ -116,23 +119,34 @@ public class UIController {
 		return false;
 	}
 
-	public void onMouseUp(MouseEvent e, UIElement element) {
+	public void onMouseUp(MouseEvent e) {
 		mouseDown = false;
+	}
+	
+	public void onMouseDown(MouseEvent e){
+		mouseDown = true;
+		removeAllSelectedUIElements();
 	}
 
 	public void onMouseDown(MouseEvent e, UIElement element) {
 		mouseDown = true;
+		
+		removeAllSelectedUIElements();
+		addSelectedUIElement(element);
+		
+		element.setSelected(true);
+		element.redraw();
+		
 		clickedPoint = Display.getCurrent().getCursorLocation();
 		setDistanceOfClickedPointForSelectedUiElements(clickedPoint);
 		
 		if (!isSelected(element)){
 			addSelectedUIElement(element);
+			element.setSelected(true);
+			element.redraw();
 		}
 		
 		currentMouseStyle = getMouseStyle(element.getSize(), element.getContainer().toControl(Display.getCurrent().getCursorLocation()));
-	}
-
-	public void onMouseDoubleClick(MouseEvent e) {
 	}
 
 	public void onMouseMove(MouseEvent e) {
@@ -293,6 +307,7 @@ public class UIController {
 	}
 	
 	private void setDistanceOfClickedPointForSelectedUiElements(Point clickedPoint) {
+		System.out.println(selectedUIElements.size());
 		for (UIElement uielement : selectedUIElements) {
 			Point distance = uielement.getContainer().toControl(clickedPoint);
 			uielement.setDistanceWithClickedPoint(distance);

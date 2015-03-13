@@ -29,12 +29,10 @@ public abstract class UIElement {
 	private Color color;
 	private boolean visible;
 	private boolean debug;
-	private boolean clicked = true;
+	private boolean selected = true;
 	private UIController uiController;
 	
 	private Point distanceWithClickedPoint;
-
-	private PaintListener paintListener;
 
 	public UIElement(Composite root, Point location, UIController uiController) {
 		this.uiController = uiController;
@@ -64,6 +62,8 @@ public abstract class UIElement {
 			public void paintControl(PaintEvent e) {
 				drawContent(e);
 				
+				if (!selected) return;
+				
 				FormData data = (FormData)(container.getLayoutData());
 				
 				e.gc.setForeground(container.getDisplay().getSystemColor(SWT.COLOR_BLACK));
@@ -88,7 +88,7 @@ public abstract class UIElement {
 		final UIElement element = this;
 		container.addMouseListener(new MouseListener() {
 			public void mouseUp(MouseEvent e) {
-				uiController.onMouseUp(e, element);
+				uiController.onMouseUp(e);
 				onMouseUp();
 			}
 			
@@ -98,7 +98,6 @@ public abstract class UIElement {
 			}
 			
 			public void mouseDoubleClick(MouseEvent e) {
-				uiController.onMouseDoubleClick(e);
 				onMouseDoubleClick();
 			}
 		});
@@ -210,26 +209,18 @@ public abstract class UIElement {
 		return debug;
 	}
 
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
 	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}
 
-	public PaintListener getPaintListener() {
-		return paintListener;
-	}
-
-	public void setPaintListener(PaintListener paintListener) {
-		this.paintListener = paintListener;
-	}
-
-	public boolean isClicked() {
-		return clicked;
-	}
-
-	public void setClicked(boolean clicked) {
-		this.clicked = clicked;
-	}
-	
 	public Point getDistanceWithClickedPoint() {
 		return distanceWithClickedPoint;
 	}

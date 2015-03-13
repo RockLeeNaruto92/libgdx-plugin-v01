@@ -57,7 +57,7 @@ public class CButton extends UIElement {
 	@Override
 	public void displayBound(boolean display) {
 		// TODO Auto-generated method stub
-		setClicked(display);
+		setSelected(display);
 	}
 	
 	@Override

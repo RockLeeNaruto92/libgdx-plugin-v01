@@ -15,6 +15,8 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -49,6 +51,7 @@ public class EditorInterface {
 		
 		root.setContent(dragComposite);
 		
+		addMouseListener(dragComposite);
 		addDropListener(dragComposite);
 		addPaintListener(dragComposite);
 	}
@@ -59,7 +62,25 @@ public class EditorInterface {
 		root.setLayout(new FillLayout());
 	}
 	
-	private void addDropListener(Composite composite){
+	private void addMouseListener(Composite dragComposite){
+		dragComposite.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				uiController.onMouseUp(e);
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				uiController.onMouseDown(e);
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+		});
+	}
+	
+	private void addDropListener(Composite dragComposite){
 		final DropTarget dropTarget = new DropTarget(dragComposite, DND.DROP_MOVE | DND.DROP_COPY);
 		dropTarget.setTransfer(new Transfer[] {LocalSelectionTransfer.getTransfer()});
 		dropTarget.addDropListener(new UIElementDropAdapter(dragComposite, this));
