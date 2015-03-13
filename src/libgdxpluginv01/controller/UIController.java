@@ -3,19 +3,25 @@ package libgdxpluginv01.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 
 public class UIController {
 	public static boolean clicked = false;
 	public static Point clickedPoint;
-	public static Cursor cursor;
+	public Cursor cursor;
+	
+	private boolean mouseDown = false;
 	
 	private static UIController _instance;
 	private List<UIElement> uiElements;
@@ -49,9 +55,12 @@ public class UIController {
 //			return checkbox.getContainer();
 //		}
 		
+		removeAllSelectedUIElements();
+		
 		if (type == UIElementType.BUTTON){
-			CButton button = new CButton(dragComposite, location);
+			CButton button = new CButton(dragComposite, location, this);
 			addUIElement(button);
+			addSelectedUIElement(button);
 			
 			return button.getContainer();
 		}
@@ -74,14 +83,104 @@ public class UIController {
 		uielement.remove();
 		uiElements.remove(uielement);
 	}
+
+	public void removeAllSelectedUIElements(){
+		while (selectedUIElements.size() > 0){
+			removeSelectedUIElement(selectedUIElements.get(0));
+		}
+	}
+	
+	public void addSelectedUIElement(UIElement uielement){
+		selectedUIElements.add(uielement);
+	}
+	
+	public void removeSelectedUIElement(UIElement uielement){
+		selectedUIElements.remove(uielement);
+	}
 	
 	public void setPropertyView(UIElement uielement){
 	}
 	
 	public void removeAll(){
-		System.out.println(uiElements.size());
 		while (uiElements.size() != 0){
 			removeUIElement(uiElements.get(0));
 		}
+	}
+	
+	private boolean isSelected(UIElement uiElement){
+		for (UIElement element : selectedUIElements) {
+			if (uiElement == element)
+				return true;
+		}
+		
+		return false;
+	}
+
+	public void onMouseUp(MouseEvent e, UIElement element) {
+		mouseDown = false;
+	}
+
+	public void onMouseDown(MouseEvent e, UIElement element) {
+		mouseDown = true;
+		
+		if (!isSelected(element))
+			addSelectedUIElement(element);
+	}
+
+	public void onMouseDoubleClick(MouseEvent e) {
+	}
+
+	public void onMouseMove(MouseEvent e) {
+		if (selectedUIElements.size() == 1)
+			onUIElementMouseMove(e, selectedUIElements.get(0));
+		else if (selectedUIElements.size() > 1)
+			onEditorMouseMove(e);
+	}
+
+	private void onEditorMouseMove(MouseEvent e) {
+		
+	}
+
+	private void onUIElementMouseMove(MouseEvent e, UIElement uiElement) {
+		Point location = uiElement.getContainer().toControl(Display.getCurrent().getCursorLocation());
+		System.out.println(location);
+		int mouseStyle = getMouseStyle(uiElement.getSize(), location);
+		
+		uiElement.getContainer().setCursor(new Cursor(null, mouseStyle));
+//		if (mouseDown)
+//			switch (mouseStyle) {
+//			case SWT.CURSOR_SIZENW:
+//				break;
+//			case SWT.CURSOR_SIZEALL: // move
+//				uiElement.getContainer().setLocation(location);
+//				uiElement.getContainer().refresh();
+//				break;
+//			default:
+//				break;
+//			}
+	}
+	
+	private int getMouseStyle(Point size, Point location){
+		if (location.x <= Parameter.PADDING)
+			if (location.y <= Parameter.PADDING)
+				return SWT.CURSOR_SIZENW;
+			else if (location.y >= size.y - Parameter.PADDING)
+				return SWT.CURSOR_SIZESW;
+			else 
+				return SWT.CURSOR_SIZEW;
+		else if (location.x >= size.x - Parameter.PADDING)
+			if (location.y <= Parameter.PADDING)
+				return SWT.CURSOR_SIZENE;
+			else if (location.y >= size.y - Parameter.PADDING)
+				return SWT.CURSOR_SIZESE;
+			else 
+				return SWT.CURSOR_SIZEE;
+		else 
+			if (location.y <= Parameter.PADDING)
+				return SWT.CURSOR_SIZEN;
+			else if (location.y >= size.y - Parameter.PADDING)
+				return SWT.CURSOR_SIZES;
+			else 
+				return SWT.CURSOR_SIZEALL;
 	}
 }

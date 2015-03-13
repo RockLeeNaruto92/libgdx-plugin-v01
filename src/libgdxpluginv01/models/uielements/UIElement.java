@@ -16,13 +16,12 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class UIElement {
-	private static int i = 0;
-
+	public static int i = 0;
+	
 	private Rectangle bound;
 	private CustomComposite container;
 	private String name;
@@ -34,13 +33,17 @@ public abstract class UIElement {
 	private boolean debug;
 	private boolean clicked = true;
 	private boolean resize;
+	private UIController uiController;
 	
 	private Point distanceClick;
 
 	private PaintListener paintListener;
 
-	public UIElement(Composite root, Point location) {
-		name = getDefaultNamePattern();
+	public UIElement(Composite root, Point location, UIController uiController) {
+		this.uiController = uiController;
+		
+		name = getDefaultNamePattern() + i++;
+		
 		container = new CustomComposite(root, SWT.NO_TRIM, location);
 		container.setLayout(new FillLayout());
 
@@ -85,127 +88,31 @@ public abstract class UIElement {
 	}
 	
 	private void addMouseListener(){
+		final UIElement element = this;
 		container.addMouseListener(new MouseListener() {
-			
-			@Override
 			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-				UIController.clicked = false;
-				resize = false;
+				uiController.onMouseUp(e, element);
 				onMouseUp();
 			}
 			
-			@Override
 			public void mouseDown(MouseEvent e) {
-				UIController.clicked = true;
-				
-				Point cursorLocation = container.getDisplay().getCursorLocation();
-				distanceClick = container.toControl(cursorLocation);
-				
-				if (getMouseStyle(distanceClick) != SWT.CURSOR_SIZEALL){
-					resize = true;
-				}
-				
+				uiController.onMouseDown(e, element);
 				onMouseDown();
 			}
 			
-			@Override
-			public void mouseDoubleClick(MouseEvent arg0) {
+			public void mouseDoubleClick(MouseEvent e) {
+				uiController.onMouseDoubleClick(e);
 				onMouseDoubleClick();
 			}
 		});
 		
 		container.addMouseMoveListener(new MouseMoveListener() {
-			
-			@Override
 			public void mouseMove(MouseEvent e) {
-				if (UIController.clicked){
-					Point cursorLocation = container.getDisplay().getCursorLocation();
-					Point location = container.getParent().toControl(cursorLocation);
-					int style = getMouseStyle(location);
-					FormData data = (FormData)(container.getLayoutData());
-					Composite parent = container.getParent();
-					
-					if (resize){
-						switch (style){
-						case SWT.CURSOR_SIZENW:
-							System.out.println("top left");
-							data.width += data.left.offset - location.x;
-							data.height += data.top.offset - location.y;
-							container.setLocation(location);
-							break;
-						case SWT.CURSOR_SIZESW:
-							data.height += location.y - data.top.offset - data.height;
-							data.width += data.left.offset - location.x;
-							data.left = new FormAttachment(parent, location.x);
-							break;
-						case SWT.CURSOR_SIZEN:
-							data.height += data.top.offset - location.y;
-							data.top = new FormAttachment(parent, location.y);
-							break;
-						case SWT.CURSOR_SIZENE:
-							data.width += location.x - data.left.offset - data.width;
-							data.height += data.top.offset - location.y;
-							data.top = new FormAttachment(parent, location.y);
-							break;
-						case SWT.CURSOR_SIZESE:
-							data.width += location.x - data.left.offset - data.width;
-							data.height += location.y - data.top.offset - data.height;
-							break;
-						case SWT.CURSOR_SIZEE:
-							data.width += location.x - data.left.offset - data.width;
-							break;
-						case SWT.CURSOR_SIZEW:
-							data.width += data.left.offset - location.x;
-							data.left = new FormAttachment(parent, location.x);
-							break;
-						case SWT.CURSOR_SIZES:
-							System.out.println("bottom");
-							data.height += location.y - data.top.offset - data.height;
-							break;
-						default: 
-							container.setLocation(location.x - distanceClick.x, location.y - distanceClick.y);
-							break;
-						}
-					}
-					container.refresh();
-					redraw();
-					
-					bound.x = data.left.offset;
-					bound.y = data.top.offset;
-					bound.width = data.width;
-					bound.height = data.height;
-					
-					onMouseMove();
-				}
+				uiController.onMouseMove(e);
+				onMouseMove();
 			}
 		});
 
-		container.addMouseTrackListener(new MouseTrackListener() {
-			
-			@Override
-			public void mouseHover(MouseEvent e) {
-				UIController.cursor = new Cursor(container.getDisplay(), SWT.CURSOR_SIZEALL);
-				container.setCursor(UIController.cursor);
-				
-				onMouseHover();
-			}
-			
-			@Override
-			public void mouseExit(MouseEvent e) {
-				UIController.cursor = new Cursor(container.getDisplay(), SWT.CURSOR_ARROW);
-				container.setCursor(UIController.cursor);
-			}
-			
-			@Override
-			public void mouseEnter(MouseEvent e) {
-				Point cursorLocation = container.toControl(container.getDisplay().getCursorLocation());
-				int mouseStyle = getMouseStyle(cursorLocation);
-				
-				UIController.cursor = new Cursor(container.getDisplay(), mouseStyle);
-				container.setCursor(UIController.cursor);
-			}
-		});
 	}
 	
 	private int getMouseStyle(Point location){

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.controller.UIController;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
@@ -27,8 +28,8 @@ public class CButton extends UIElement {
 	private State state = State.UP;
 	private ButtonStyle style;
 
-	public CButton(Composite root, Point location) {
-		super(root, location);
+	public CButton(Composite root, Point location, UIController uiController) {
+		super(root, location, uiController);
 		
 		style = new ButtonStyle();
 	}
