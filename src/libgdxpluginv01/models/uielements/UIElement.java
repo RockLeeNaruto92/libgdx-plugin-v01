@@ -115,6 +115,8 @@ public abstract class UIElement {
 	public abstract String getDefaultNamePattern();
 
 	public abstract Point getDefaultSize();
+	
+	public abstract Point getMinSize();
 
 	public abstract void createControls();
 	
@@ -171,7 +173,7 @@ public abstract class UIElement {
 	public void setSize(Point size) {
 		this.size = size;
 	}
-
+	
 	public Point getScale() {
 		return scale;
 	}

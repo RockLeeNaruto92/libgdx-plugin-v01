@@ -44,6 +44,11 @@ public class CButton extends UIElement {
 	public Point getDefaultSize() {
 		return Parameter.DEFAULT_BUTTON_SIZE;
 	}
+	
+	@Override
+	public Point getMinSize(){
+		return Parameter.BUTTON_MIN_SIZE;
+	}
 
 	@Override
 	public void createControls() {

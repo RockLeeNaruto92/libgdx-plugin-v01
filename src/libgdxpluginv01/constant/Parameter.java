@@ -12,6 +12,8 @@ public class Parameter {
 	public static Point DEFAULT_BUTTON_SIZE = new Point(100, 100);
 	public static Point DEFAULT_SLIDER_SIZE = new Point(100, 25);
 	
+	public static Point BUTTON_MIN_SIZE = new Point(25, 25);
+	
 	public static String DEFAULT_LABEL_NAME_PATTERN = "Label";
 	public static String DEFAULT_CHECKBOX_NAME_PATTERN = "Checkbox";
 	public static String DEFAULT_BUTTON_NAME_PATTERN = "Button";

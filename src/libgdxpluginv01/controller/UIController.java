@@ -18,9 +18,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 public class UIController {
-	public static boolean clicked = false;
-	public Point clickedPoint;
-	public Cursor cursor;
+	private int currentMouseStyle;
+	private Point clickedPoint;
 	
 	private boolean mouseDown = false;
 	
@@ -126,8 +125,10 @@ public class UIController {
 		clickedPoint = Display.getCurrent().getCursorLocation();
 		setDistanceOfClickedPointForSelectedUiElements(clickedPoint);
 		
-		if (!isSelected(element))
+		if (!isSelected(element)){
 			addSelectedUIElement(element);
+			currentMouseStyle = getMouseStyle(element.getSize(), element.getContainer().toControl(Display.getCurrent().getCursorLocation()));
+		}
 	}
 
 	public void onMouseDoubleClick(MouseEvent e) {
@@ -150,15 +151,24 @@ public class UIController {
 		int mouseStyle = getMouseStyle(uiElement.getSize(), uiElement.getContainer().toControl(cursorLocation));
 		Rectangle bound = uiElement.getBound();
 		
-		uiElement.getContainer().setCursor(new Cursor(null, mouseStyle));
+		if (!mouseDown && mouseStyle != currentMouseStyle)
+			uiElement.getContainer().setCursor(new Cursor(null, mouseStyle));
 		
 		if (mouseDown){
 			switch (mouseStyle) {
 			case SWT.CURSOR_SIZENW: // top left
-				bound.width += bound.x - cursorLocationOnEditor.x;
-				bound.height += bound.y - cursorLocationOnEditor.y;
-				bound.x = cursorLocationOnEditor.x;
-				bound.y = cursorLocationOnEditor.y;
+				int tempWidth = bound.width + bound.x - cursorLocationOnEditor.x;
+				int tempHeight = bound.height + bound.y - cursorLocationOnEditor.y;
+				
+				if (tempWidth >= uiElement.getMinSize().x) {
+					bound.x = cursorLocationOnEditor.x;
+					bound.width = tempWidth;
+				}
+				
+				if (tempHeight >= uiElement.getMinSize().y){
+					bound.y = cursorLocationOnEditor.y;
+					bound.height = tempHeight;
+				}
 				break;
 			case SWT.CURSOR_SIZESW: // bottom left
 				break;
