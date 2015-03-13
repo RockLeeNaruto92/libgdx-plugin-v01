@@ -177,7 +177,6 @@ public class UIController {
 				tempWidth = bound.width + bound.x - cursorLocationOnEditor.x;
 				tempHeight = cursorLocationOnEditor.y - bound.y + (cursorLocationOnEditor.y >= bound.y ? 0 : bound.height);
 
-				System.out.println(tempHeight);
 				if (tempWidth >= uiElement.getMinSize().x) {
 					bound.x = cursorLocationOnEditor.x;
 					bound.width = tempWidth;
@@ -189,7 +188,7 @@ public class UIController {
 				break;
 				
 			case SWT.CURSOR_SIZENE: // top right
-				tempWidth = cursorLocationOnEditor.x - bound.width - bound.x;
+				tempWidth = cursorLocationOnEditor.x - bound.x + (cursorLocationOnEditor.x >= bound.x ? 0 : bound.width);
 				tempHeight = bound.height + bound.y - cursorLocationOnEditor.y;
 				
 				if (tempWidth >= uiElement.getMinSize().x) {
@@ -203,8 +202,8 @@ public class UIController {
 				break;
 				
 			case SWT.CURSOR_SIZESE: // bottom right
-				tempWidth = cursorLocationOnEditor.x - bound.width - bound.x;
-				tempHeight = cursorLocationOnEditor.y - bound.height - bound.y;
+				tempWidth = cursorLocationOnEditor.x - bound.x + (cursorLocationOnEditor.x >= bound.x ? 0 : bound.width);
+				tempHeight = cursorLocationOnEditor.y - bound.y + (cursorLocationOnEditor.y >= bound.y ? 0 : bound.height);
 				
 				if (tempWidth >= uiElement.getMinSize().x) {
 					bound.width = tempWidth;
@@ -226,7 +225,7 @@ public class UIController {
 				break;
 				
 			case SWT.CURSOR_SIZEE: // right
-				tempWidth = cursorLocationOnEditor.x - bound.width - bound.x;
+				tempWidth = cursorLocationOnEditor.x - bound.x + (cursorLocationOnEditor.x >= bound.x ? 0 : bound.width);
 				
 				if (tempWidth >= uiElement.getMinSize().x) {
 					bound.width = tempWidth;
@@ -243,7 +242,7 @@ public class UIController {
 				break;
 				
 			case SWT.CURSOR_SIZES: // bottom
-				tempHeight = cursorLocationOnEditor.y - bound.height - bound.y;
+				tempHeight = cursorLocationOnEditor.y - bound.y + (cursorLocationOnEditor.y >= bound.y ? 0 : bound.height);
 				
 				if (tempHeight >= uiElement.getMinSize().y){
 					bound.height = tempHeight;
