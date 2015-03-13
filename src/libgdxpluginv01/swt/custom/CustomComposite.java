@@ -57,6 +57,14 @@ public class CustomComposite extends Canvas{
 		setLayoutData(data);
 	}
 	
+	public void setSize(int width, int height){
+		FormData data = (FormData)getLayoutData();
+		
+		data.width = width;
+		data.height = height;
+		setLayoutData(data);
+	}
+	
 	public void refresh(){
 		Control[] changed = new Control[]{this};
 		

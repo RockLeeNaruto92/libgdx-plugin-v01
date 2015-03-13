@@ -153,11 +153,12 @@ public class UIController {
 		uiElement.getContainer().setCursor(new Cursor(null, mouseStyle));
 		
 		if (mouseDown){
-			Point distance = uiElement.getDistanceWithClickedPoint();
-			
 			switch (mouseStyle) {
 			case SWT.CURSOR_SIZENW: // top left
-				
+				bound.width += bound.x - cursorLocationOnEditor.x;
+				bound.height += bound.y - cursorLocationOnEditor.y;
+				bound.x = cursorLocationOnEditor.x;
+				bound.y = cursorLocationOnEditor.y;
 				break;
 			case SWT.CURSOR_SIZESW: // bottom left
 				break;
@@ -174,6 +175,8 @@ public class UIController {
 			case SWT.CURSOR_SIZES: // bottom
 				break;
 			case SWT.CURSOR_SIZEALL: // move
+				Point distance = uiElement.getDistanceWithClickedPoint();
+				
 				bound.x = cursorLocationOnEditor.x - distance.x;
 				bound.y = cursorLocationOnEditor.y - distance.y;
 				break;
@@ -182,6 +185,7 @@ public class UIController {
 			}
 			uiElement.setBound(bound);
 			uiElement.getContainer().refresh();
+			uiElement.redraw();
 		}
 		
 	}
