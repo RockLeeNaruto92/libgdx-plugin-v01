@@ -27,6 +27,7 @@ public class CButton extends UIElement {
 	
 	private State state = State.UP;
 	private ButtonStyle style;
+	
 
 	public CButton(Composite root, Point location, UIController uiController) {
 		super(root, location, uiController);

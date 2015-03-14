@@ -1,14 +1,16 @@
 package libgdxpluginv01.views;
 
-import libgdxpluginv01.views.properties.LabelProperty;
-import libgdxpluginv01.views.properties.UIElementProperty;
+import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.views.properties.EmptyProperty;
+import libgdxpluginv01.views.properties.Property;
 
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 public class PropertyView extends ViewPart {
-	UIElementProperty view;
+	private Property view;
+	private UIController uiController;
 	
 	public PropertyView() {
 	}
@@ -16,7 +18,7 @@ public class PropertyView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new FillLayout());
-		view = new LabelProperty(parent);
+		view = EmptyProperty.getInstance(parent);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package libgdxpluginv01.views.properties;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
 public class LabelProperty extends UIElementProperty{
@@ -12,13 +11,14 @@ public class LabelProperty extends UIElementProperty{
 	}
 
 	@Override
-	public void createContents() {
-		createNameField();
+	public Point getDefaultSize() {
+		return getContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 	}
 
 	@Override
-	public Point getDefaultSize() {
-		return getContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT);
+	public void createOtherProperties() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
