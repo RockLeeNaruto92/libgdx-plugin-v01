@@ -8,6 +8,9 @@ import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
+import libgdxpluginv01.views.PropertyView;
+import libgdxpluginv01.views.properties.ButtonProperty;
+import libgdxpluginv01.views.properties.EmptyProperty;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -32,6 +35,8 @@ public class UIController {
 	private List<UIElement> uiElements;
 	private List<UIElement> selectedUIElements;
 	
+	private PropertyView propertyView;
+	
 	public UIController(){
 		uiElements = new ArrayList<UIElement>();
 		selectedUIElements = new ArrayList<UIElement>();
@@ -45,6 +50,25 @@ public class UIController {
 		return _instance;
 	}
 	
+	public void setPropertyView(PropertyView view){
+		propertyView = view;
+	}
+	
+	public void setPropertyView(UIElement uielement){
+		switch (uielement.getType()) {
+		case UIElementType.BUTTON:
+			propertyView.setView(ButtonProperty.getInstance(propertyView.getParent()));
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	public void emptyPropertyView(){
+		propertyView.setView(EmptyProperty.getInstance(propertyView.getParent()));
+	}
+	
 	public boolean isSelecting(){
 		return selecting;
 	}
@@ -53,37 +77,24 @@ public class UIController {
 		return selectingRectangle;
 	}
 
-	public Control createUIElement(Canvas dragComposite, UIElementType type, Point location) {
-//		if (type == UIElementType.LABEL){
-//			CLabel label = new CLabel(dragComposite, location);
-//			addUIElement(label);
-//			
-//			return label.getContainer();
-//		}
-		
-//		if (type == UIElementType.CHECKBOX){
-//			CCheckbox checkbox = new CCheckbox(dragComposite, location);
-//			addUIElement(checkbox);
-//			
-//			return checkbox.getContainer();
-//		}
-		
+	public Control createUIElement(Canvas dragComposite, int type, Point location) {
+		UIElement newElement = null;
 		removeAllSelectedUIElements();
 		
-		if (type == UIElementType.BUTTON){
-			CButton button = new CButton(dragComposite, location, this);
-			addUIElement(button);
-			addSelectedUIElement(button);
+		switch (type){
+		case UIElementType.BUTTON:
+			newElement = new CButton(dragComposite, location, this);
+			break;
 			
-			return button.getContainer();
+		default :
+			break;
 		}
 		
-//		if (type == UIElementType.SLIDER){
-//			CSlider slider = new CSlider(dragComposite, location);
-//			addUIElement(slider);
-//			
-//			return slider.getContainer();
-//		}
+		if (newElement != null){
+			addUIElement(newElement);
+			addSelectedUIElement(newElement);
+			return newElement.getContainer();
+		}
 		
 		return null;
 	}
@@ -114,9 +125,6 @@ public class UIController {
 		selectedUIElements.remove(uielement);
 	}
 	
-	public void setPropertyView(UIElement uielement){
-	}
-	
 	public void removeAll(){
 		while (uiElements.size() != 0){
 			removeUIElement(uiElements.get(0));
@@ -140,6 +148,13 @@ public class UIController {
 			selectingRectangle = Utility.validateRectangle(selectingRectangle);
 			addSelectedUiElementsInRectangle(selectingRectangle);
 		}
+		
+		System.out.println(selectedUIElements.size());
+
+		if (selectedUIElements.size() == 1)
+			setPropertyView(selectedUIElements.get(0));
+		else
+			emptyPropertyView();
 		
 		if (composite != null)
 			composite.redraw();

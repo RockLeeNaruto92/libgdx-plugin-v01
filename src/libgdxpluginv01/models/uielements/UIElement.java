@@ -31,11 +31,13 @@ public abstract class UIElement {
 	private boolean debug;
 	private boolean selected = true;
 	private UIController uiController;
+	private int type;
 	
 	private Point distanceWithClickedPoint;
 
-	public UIElement(Composite root, Point location, UIController uiController) {
+	public UIElement(Composite root, Point location, UIController uiController, int type) {
 		this.uiController = uiController;
+		this.type = type;
 		
 		name = getDefaultNamePattern() + i++;
 		
@@ -227,6 +229,10 @@ public abstract class UIElement {
 
 	public void setDistanceWithClickedPoint(Point distanceWithClickedPoint) {
 		this.distanceWithClickedPoint = distanceWithClickedPoint;
+	}
+	
+	public int getType(){
+		return type;
 	}
 
 	public void redraw(){

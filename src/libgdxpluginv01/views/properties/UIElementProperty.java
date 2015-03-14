@@ -7,6 +7,8 @@ import libgdxpluginv01.models.uielements.UIElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -40,10 +42,16 @@ public abstract class UIElementProperty extends Property{
 		Point size = getDefaultSize();
 		container.setSize(size);
 		root.getParent().setRedraw(true);
-	} 
-
+	}
+	
 	private void createContainer(Composite parent) {
 		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL);
+		
+		FormData data = new FormData();
+		data.left = new FormAttachment(parent, 0);
+		data.right = new FormAttachment(parent, 0);
+		
+		root.setLayoutData(data);
 		
 		container = new Composite(root, SWT.NONE);
 		container.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));
@@ -185,5 +193,9 @@ public abstract class UIElementProperty extends Property{
 		
 		checkboxVisible = new Button(container, SWT.CHECK);
 		checkboxVisible.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+	}
+	
+	public void hide(boolean hide){
+		root.setVisible(!hide);
 	}
 }

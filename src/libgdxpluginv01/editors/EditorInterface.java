@@ -21,7 +21,6 @@ import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Canvas;
@@ -114,7 +113,7 @@ public class EditorInterface {
 	}
 	
 	public void drop(DropTargetEvent e){
-		UIElementType type = identifyType();
+		int type = identifyType();
 		Control[] changed = null;
 		
 		Point location = dragComposite.toControl(e.x, e.y);
@@ -125,7 +124,7 @@ public class EditorInterface {
 		dragComposite.layout(changed);
 	}
 	
-	private UIElementType identifyType(){
+	private int identifyType(){
 		final Element droppedObj = (Element)((StructuredSelection)transfer.getSelection()).getFirstElement();
 		String name = droppedObj.getName();
 		
@@ -142,6 +141,6 @@ public class EditorInterface {
 			return UIElementType.BUTTON;
 		
 		// TO DO
-		return null;
+		return -1;
 	}
 }

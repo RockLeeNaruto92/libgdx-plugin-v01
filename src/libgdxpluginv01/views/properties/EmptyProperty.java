@@ -8,9 +8,10 @@ import org.eclipse.swt.widgets.Label;
 
 public class EmptyProperty extends Property{
 	private static EmptyProperty _instance;
+	private Label label;
 	
 	public EmptyProperty(Composite parent){
-		Label label = new Label(parent, SWT.NONE);
+		label = new Label(parent, SWT.NONE);
 		
 		label.setText(Word.PROPERTY_EMPTY);
 	}
@@ -22,5 +23,9 @@ public class EmptyProperty extends Property{
 		
 		return _instance;
 	}
-	
+
+	@Override
+	public void hide(boolean visible) {
+		label.setVisible(visible);
+	}
 }

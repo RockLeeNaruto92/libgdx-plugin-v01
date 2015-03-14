@@ -30,7 +30,7 @@ public class CButton extends UIElement {
 	
 
 	public CButton(Composite root, Point location, UIController uiController) {
-		super(root, location, uiController);
+		super(root, location, uiController, UIElementType.BUTTON);
 		
 		style = new ButtonStyle();
 	}
