@@ -14,14 +14,18 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 public class UIController {
 	private int currentMouseStyle;
-	private Point clickedPoint;
+	private Point mouseDownPoint;
 	
 	private boolean mouseDown = false;
+	private boolean selecting = false;
+	
+	private Rectangle selectingRectangle = new Rectangle(0, 0, 0, 0);
 	
 	private static UIController _instance;
 	private List<UIElement> uiElements;
@@ -38,6 +42,14 @@ public class UIController {
 		}
 		
 		return _instance;
+	}
+	
+	public boolean isSelecting(){
+		return selecting;
+	}
+
+	public Rectangle getSelectingRectangle() {
+		return selectingRectangle;
 	}
 
 	public Control createUIElement(Canvas dragComposite, UIElementType type, Point location) {
@@ -119,12 +131,18 @@ public class UIController {
 		return false;
 	}
 
-	public void onMouseUp(MouseEvent e) {
+	public void onMouseUp(Composite composite) {
 		mouseDown = false;
+		selecting = false;
+		
+		if (composite != null)
+			composite.redraw();
 	}
 	
-	public void onMouseDown(MouseEvent e){
+	public void onMouseDown(Composite composite){
 		mouseDown = true;
+		mouseDownPoint = Display.getCurrent().getCursorLocation();
+		
 		removeAllSelectedUIElements();
 	}
 
@@ -137,8 +155,8 @@ public class UIController {
 		element.setSelected(true);
 		element.redraw();
 		
-		clickedPoint = Display.getCurrent().getCursorLocation();
-		setDistanceOfClickedPointForSelectedUiElements(clickedPoint);
+		mouseDownPoint = Display.getCurrent().getCursorLocation();
+		setDistanceOfClickedPointForSelectedUiElements(mouseDownPoint);
 		
 		if (!isSelected(element)){
 			addSelectedUIElement(element);
@@ -151,16 +169,30 @@ public class UIController {
 
 	public void onMouseMove(MouseEvent e) {
 		if (selectedUIElements.size() == 1)
-			onUIElementMouseMove(e, selectedUIElements.get(0));
+			onUIElementMouseMove(selectedUIElements.get(0));
 		else if (selectedUIElements.size() > 1)
-			onEditorMouseMove(e);
+			onEditorMouseMove(null);
 	}
 
-	private void onEditorMouseMove(MouseEvent e) {
-		
+	public void onEditorMouseMove(Composite composite) {
+		if (!mouseDown) return;
+		if (selectedUIElements.isEmpty()){
+			// draw rectangle selection
+			selecting = true;
+			
+			Point location = composite.toControl(mouseDownPoint);
+			
+			selectingRectangle.x = location.x;
+			selectingRectangle.y = location.y;
+			selectingRectangle.width = Display.getCurrent().getCursorLocation().x - mouseDownPoint.x;
+			selectingRectangle.height = Display.getCurrent().getCursorLocation().y - mouseDownPoint.y;
+			composite.redraw();
+		} else {
+			// move all selected elements
+		}
 	}
 
-	private void onUIElementMouseMove(MouseEvent e, UIElement uiElement) {
+	private void onUIElementMouseMove(UIElement uiElement) {
 		int tempWidth, tempHeight;
 		Point cursorLocation = Display.getCurrent().getCursorLocation();
 		Point cursorLocationOnEditor = uiElement.getContainer().getParent().toControl(cursorLocation);

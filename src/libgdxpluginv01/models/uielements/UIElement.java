@@ -88,7 +88,7 @@ public abstract class UIElement {
 		final UIElement element = this;
 		container.addMouseListener(new MouseListener() {
 			public void mouseUp(MouseEvent e) {
-				uiController.onMouseUp(e);
+				uiController.onMouseUp(null);
 				onMouseUp();
 			}
 			

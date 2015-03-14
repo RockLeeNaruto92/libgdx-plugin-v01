@@ -5,6 +5,8 @@ import org.eclipse.swt.graphics.Point;
 public class Parameter {
 	public static final int R = 1;
 	public static final int PADDING = 10;
+	
+	public static final int DEFAULT_SELECT_WIDTH = 1;
 	public static final int DEFAULT_MOBILE_WIDTH = 2;
 	public static final Point DEFAULT_MOBILE_POSITION = new Point(200, 200);
 	public static final Point DEFAULT_DESIGN_PART_MIN_SIZE = new Point(3000, 3000);

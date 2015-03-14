@@ -17,10 +17,11 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Canvas;
@@ -62,20 +63,27 @@ public class EditorInterface {
 		root.setLayout(new FillLayout());
 	}
 	
-	private void addMouseListener(Composite dragComposite){
+	private void addMouseListener(final Composite dragComposite){
 		dragComposite.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseUp(MouseEvent e) {
-				uiController.onMouseUp(e);
+				uiController.onMouseUp(dragComposite);
 			}
 			
 			@Override
 			public void mouseDown(MouseEvent e) {
-				uiController.onMouseDown(e);
+				uiController.onMouseDown(dragComposite);
 			}
 			
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
+			}
+		});
+		
+		dragComposite.addMouseMoveListener(new MouseMoveListener() {
+			@Override
+			public void mouseMove(MouseEvent e) {
+				uiController.onEditorMouseMove(dragComposite);
 			}
 		});
 	}
@@ -86,14 +94,21 @@ public class EditorInterface {
 		dropTarget.addDropListener(new UIElementDropAdapter(dragComposite, this));
 	}
 	
-	private void addPaintListener(Composite composite){
+	private void addPaintListener(final Composite composite){
 		composite.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
+				// draw mobile rectangle
 				e.gc.setLineWidth(Parameter.DEFAULT_MOBILE_WIDTH);
 				e.gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
 				e.gc.fillRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x / 2, MobileResolution.IPHONE_6_PLUS.y / 2);
 				e.gc.drawRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x / 2, MobileResolution.IPHONE_6_PLUS.y / 2);
+				
+				// draw rectangle selection
+				if (uiController.isSelecting()) {
+					e.gc.setLineWidth(Parameter.DEFAULT_SELECT_WIDTH);
+					e.gc.drawRectangle(uiController.getSelectingRectangle());
+				}
 			}
 		});
 	}
