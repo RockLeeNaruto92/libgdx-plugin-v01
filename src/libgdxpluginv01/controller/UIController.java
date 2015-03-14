@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
@@ -133,7 +134,12 @@ public class UIController {
 
 	public void onMouseUp(Composite composite) {
 		mouseDown = false;
-		selecting = false;
+		
+		if (selecting){
+			selecting = false;
+			selectingRectangle = Utility.validateRectangle(selectingRectangle);
+			addSelectedUiElementsInRectangle(selectingRectangle);
+		}
 		
 		if (composite != null)
 			composite.redraw();
@@ -342,6 +348,18 @@ public class UIController {
 		for (UIElement uielement : selectedUIElements) {
 			Point distance = uielement.getContainer().toControl(clickedPoint);
 			uielement.setDistanceWithClickedPoint(distance);
+		}
+	}
+	
+	private void addSelectedUiElementsInRectangle(Rectangle rect){
+		for (UIElement element : uiElements) {
+			Rectangle bound = element.getBound();
+			if (rect.contains(bound.x, bound.y) && rect.contains(bound.x + bound.width, bound.y + bound.height)){
+				addSelectedUIElement(element);
+				
+				element.setSelected(true);
+				element.redraw();
+			}
 		}
 	}
 }
