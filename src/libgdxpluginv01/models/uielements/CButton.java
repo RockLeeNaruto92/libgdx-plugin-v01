@@ -14,31 +14,22 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
 public class CButton extends UIElement {
-	public static int i = 0;
+	private boolean checked, disabled, over, up;
 	
-	private enum State {
-		UP,
-		DOWN,
-		CHECKED,
-		OVER,
-		CHECKED_OVER,
-		DISABLED
-	}
-	
-	private State state = State.UP;
 	private ButtonStyle style;
 	
-
+	public CButton(Composite root, Point location, UIController uiController, int type) {
+		super(root, location, uiController, type);
+	}
+	
 	public CButton(Composite root, Point location, UIController uiController) {
 		super(root, location, uiController, UIElementType.BUTTON);
-		
-		style = new ButtonStyle();
 	}
 
 	@Override
 	public String getDefaultNamePattern() {
 		// TODO Auto-generated method stub
-		return Parameter.DEFAULT_BUTTON_NAME_PATTERN + i;
+		return Parameter.DEFAULT_BUTTON_NAME_PATTERN;
 	}
 
 	@Override
@@ -63,24 +54,24 @@ public class CButton extends UIElement {
 	
 	@Override
 	public void onMouseUp() {
-		if (style.up != null){
-			state = State.UP;
+		up = true;
+		if (getStyle().up != null){
 			redraw();
 		}
 	}
 
 	@Override
 	public void onMouseDown() {
-		if (style.down != null){
-			state = State.DOWN;
+		up = false;
+		if (getStyle().down != null){
 			redraw();
 		}
 	}
 
 	@Override
 	public void onMouseHover() {
-		if (style.over != null){
-			state = State.OVER;
+		over = true;
+		if (getStyle().over != null){
 			redraw();
 		}
 	}
@@ -99,22 +90,61 @@ public class CButton extends UIElement {
 	@Override
 	public void drawContent(PaintEvent e) {
 		Image drawable = null;
-		if (state == State.UP){
-			drawable = style.up;
-		} else if (state == State.DOWN){
-			drawable = style.down;
-		} else if (state == State.CHECKED){
-			drawable = style.checked;
-		} else if (state == State.CHECKED_OVER){
-			drawable = style.checkedOver;
-		} else if (state == State.DISABLED){
-			drawable = style.disabled;
+		
+		if (disabled){
+			drawable = getStyle().disabled;
+		} else if (checked){
+			drawable = over ? getStyle().checkedOver : getStyle().checked;
+		} else {
+			if (up){
+				drawable = over ? getStyle().over : getStyle().up;
+			} else {
+				drawable = getStyle().down;
+			}
 		}
 		
 		Rectangle bound = drawable.getBounds();
-		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height,
-				0, 0, getSize().x, getSize().y);
+		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, 0, 0, getSize().x, getSize().y);
 	}
+	
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	public boolean isOver() {
+		return over;
+	}
+
+	public void setOver(boolean over) {
+		this.over = over;
+	}
+
+	public ButtonStyle getStyle() {
+		if (style == null){
+			style = new ButtonStyle();
+		}
+		
+		return style;
+	}
+
+	public void setStyle(ButtonStyle style) {
+		this.style = style;
+	}
+
+
 
 	static class ButtonStyle {
 		public Image checked;
@@ -132,6 +162,10 @@ public class CButton extends UIElement {
 			try {
 				up = new Image(null, new FileInputStream(Utility.getFile("datas/default/ButtonStyle/up.png")));
 				down = new Image(null, new FileInputStream(Utility.getFile("datas/default/ButtonStyle/down.png")));
+				over = up;
+				checked = up;
+				checkedOver = up;
+				disabled = up;
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}

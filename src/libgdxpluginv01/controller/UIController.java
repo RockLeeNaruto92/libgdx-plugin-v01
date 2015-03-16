@@ -6,6 +6,7 @@ import java.util.List;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.models.uielements.CButton;
+import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.CSlider;
 import libgdxpluginv01.models.uielements.UIElement;
@@ -73,6 +74,10 @@ public class UIController {
 			propertyView.setView(SliderProperty.getInstance(propertyView.getParent()));
 			break;
 			
+		case UIElementType.CHECKBOX:
+			
+			break;
+			
 		default:
 			break;
 		}
@@ -105,6 +110,10 @@ public class UIController {
 			
 		case UIElementType.SLIDER:
 			newElement = new CSlider(dragComposite, location, this);
+			break;
+		
+		case UIElementType.CHECKBOX:
+			newElement = new CCheckbox(dragComposite, location, this);
 			break;
 			
 		default :
