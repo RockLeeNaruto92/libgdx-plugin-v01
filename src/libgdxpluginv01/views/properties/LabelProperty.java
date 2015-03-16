@@ -43,6 +43,18 @@ public class LabelProperty extends UIElementProperty {
 		createFontScaleXField();
 		createFontScaleYField();
 		createEllipsisField();
+		createStyleField();
+	}
+
+	private void createStyleField() {
+		Label label = new Label(getContainer(), SWT.NONE);
+		
+		label.setText(Word.PROPERTY_STYLE);
+		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
+		
+		Button button = new Button(getContainer(), SWT.PUSH);
+		button.setText(Word.PROPERTY_SET_STYLE);
+		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 	}
 
 	private void createTextField() {

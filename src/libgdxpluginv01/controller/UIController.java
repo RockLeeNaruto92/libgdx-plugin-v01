@@ -14,6 +14,8 @@ import libgdxpluginv01.views.PropertyView;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
+import libgdxpluginv01.views.properties.Property;
+import libgdxpluginv01.views.properties.SliderProperty;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -67,6 +69,10 @@ public class UIController {
 			propertyView.setView(LabelProperty.getInstance(propertyView.getParent()));
 			break;
 			
+		case UIElementType.SLIDER:
+			propertyView.setView(SliderProperty.getInstance(propertyView.getParent()));
+			break;
+			
 		default:
 			break;
 		}
@@ -99,6 +105,7 @@ public class UIController {
 			
 		case UIElementType.SLIDER:
 			newElement = new CSlider(dragComposite, location, this);
+			break;
 			
 		default :
 			break;
@@ -107,6 +114,8 @@ public class UIController {
 		if (newElement != null){
 			addUIElement(newElement);
 			addSelectedUIElement(newElement);
+			setPropertyView(newElement);
+			
 			return newElement.getContainer();
 		}
 		

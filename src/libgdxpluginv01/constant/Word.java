@@ -32,4 +32,8 @@ public class Word {
 	public static String PROPERTY_WRAP = "Wrap";
 	public static String PROPERTY_ELLIPSIS = "Ellipsis";
 	public static String PROPERTY_FONT_SCALE = "Font scale";
+	public static String PROPERTY_MAX = "Max value";
+	public static String PROPERTY_MIN = "Min value";
+	public static String PROPERTY_STEP = "Step size";
+	public static String PROPERTY_VALUE = "Init value";
 }

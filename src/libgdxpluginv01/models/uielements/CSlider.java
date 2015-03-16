@@ -72,7 +72,9 @@ public class CSlider extends UIElement {
 		image = disabled ? style.disabledKnob : style.knob;
 		Rectangle kBound = image.getBounds();
 		
-		e.gc.drawImage(image, 0, 0, kBound.width, kBound.height, 0, 0, (int)(size.x * (kBound.width * 1f / bBound.width)), size.y);
+		int x = (int)(value / (max - min));
+		
+		e.gc.drawImage(image, 0, 0, kBound.width, kBound.height, x, 0, (int)(size.x * (kBound.width * 1f / bBound.width)), size.y);
 	}
 
 	@Override
@@ -83,7 +85,6 @@ public class CSlider extends UIElement {
 
 	@Override
 	public void onMouseDown() {
-		// TODO Auto-generated method stub
 
 	}
 
