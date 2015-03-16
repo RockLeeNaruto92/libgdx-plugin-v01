@@ -13,6 +13,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
@@ -44,12 +45,16 @@ public abstract class UIElementProperty extends Property{
 		root.getParent().setRedraw(true);
 	}
 	
+	public Control getRoot(){
+		return root;
+	}
+	
 	private void createContainer(Composite parent) {
 		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL);
 		
 		FormData data = new FormData();
-		data.left = new FormAttachment(parent, 0);
-		data.right = new FormAttachment(parent, 0);
+//		data.left = new FormAttachment(parent, 0);
+//		data.right = new FormAttachment(parent, 0);
 		
 		root.setLayoutData(data);
 		
@@ -74,10 +79,6 @@ public abstract class UIElementProperty extends Property{
 	
 	public Composite getContainer() {
 		return container;
-	}
-
-	public void setContainer(ScrolledComposite container) {
-		this.container = container;
 	}
 
 	public UIElement getUielement() {
@@ -193,9 +194,5 @@ public abstract class UIElementProperty extends Property{
 		
 		checkboxVisible = new Button(container, SWT.CHECK);
 		checkboxVisible.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-	}
-	
-	public void hide(boolean hide){
-		root.setVisible(!hide);
 	}
 }

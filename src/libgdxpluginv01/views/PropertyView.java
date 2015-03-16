@@ -1,6 +1,10 @@
 package libgdxpluginv01.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.Property;
 
@@ -13,8 +17,10 @@ import org.eclipse.swt.widgets.Layout;
 import org.eclipse.ui.part.ViewPart;
 
 public class PropertyView extends ViewPart {
+	private List<Property> properties;
 	private Property view;
 	private UIController uiController;
+	private int current = 0;
 	
 	private Composite parent;
 	
@@ -22,13 +28,25 @@ public class PropertyView extends ViewPart {
 		uiController = UIController.getInstance();
 		uiController.setPropertyView(this);
 	}
-
+	
+	private List<Property> getPropertyInstances(){
+		properties = new ArrayList<Property>();
+		
+		properties.add(EmptyProperty.getInstance(parent));
+		properties.add(ButtonProperty.getInstance(parent));
+		
+		ButtonProperty.getInstance(parent).getRoot().setVisible(false);
+		
+		return properties;
+	}
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new FormLayout());
 		view = EmptyProperty.getInstance(parent);
 		
 		setParent(parent);
+		properties = getPropertyInstances();
 	}
 	
 	public void setParent(Composite parent){
@@ -43,11 +61,12 @@ public class PropertyView extends ViewPart {
 		if (view == propertyView)
 			return;
 		
-		System.out.println("hide");
-		
-		view.hide(true);
+		view.getRoot().setVisible(false);
+		propertyView.getRoot().moveAbove(view.getRoot());
 		view = propertyView;
-		parent.layout();
+		view.getRoot().setVisible(true);
+		
+		System.out.println("set view");
 	}
 
 	@Override

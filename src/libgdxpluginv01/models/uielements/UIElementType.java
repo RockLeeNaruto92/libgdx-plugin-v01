@@ -1,6 +1,7 @@
 package libgdxpluginv01.models.uielements;
 
 public class UIElementType{
+	public static final int EMPTY = -1;
 	public static final int CHECKBOX = 0;
 	public static final int SLIDER = 1;
 	public static final int BUTTON = 2;
