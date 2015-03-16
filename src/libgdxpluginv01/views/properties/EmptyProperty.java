@@ -22,7 +22,6 @@ public class EmptyProperty extends Property{
 	public static EmptyProperty getInstance(Composite parent){
 		if (_instance == null){
 			_instance = new EmptyProperty(parent);
-			System.out.println("create empty propety");
 		}
 		
 		return _instance;
