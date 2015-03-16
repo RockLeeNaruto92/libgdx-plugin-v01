@@ -33,6 +33,8 @@ public abstract class UIElementProperty extends Property{
 		createContainer(parent);
 		createContents();
 		setScrolledComposite();
+		
+		root.setVisible(false);
 	}
 	
 	private void setScrolledComposite(){
@@ -53,8 +55,6 @@ public abstract class UIElementProperty extends Property{
 		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL);
 		
 		FormData data = new FormData();
-//		data.left = new FormAttachment(parent, 0);
-//		data.right = new FormAttachment(parent, 0);
 		
 		root.setLayoutData(data);
 		

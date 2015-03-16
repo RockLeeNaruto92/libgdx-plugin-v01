@@ -31,7 +31,6 @@ public class CLabel extends UIElement {
 	
 	public CLabel(Composite root, Point location, UIController uiController) {
 		super(root, location, uiController, UIElementType.LABEL);
-		System.out.println(getDefaultSize());
 		text = getName();
 	}
 

@@ -17,6 +17,8 @@ public class Parameter {
 	public static final Point LOCATION_RANGE_Y = new Point(-100, 100);
 	public static final Point SIZE_RANGE_WIDTH = new Point(-100, 100);
 	public static final Point SIZE_RANGE_HEIGHT = new Point(-100, 100);
+	public static final Point FONT_SCALE_RANGE_X = new Point(0, 100);
+	public static final Point FONT_SCALE_RANGE_Y = new Point(0, 100);
 	
 	public static final int DEFAULT_SELECT_WIDTH = 1;
 	public static final int DEFAULT_MOBILE_WIDTH = 2;

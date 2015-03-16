@@ -6,6 +6,7 @@ import java.util.List;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
+import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.Property;
 
 import org.eclipse.swt.layout.FormLayout;
@@ -29,8 +30,7 @@ public class PropertyView extends ViewPart {
 		
 		properties.add(EmptyProperty.getInstance(parent));
 		properties.add(ButtonProperty.getInstance(parent));
-		
-		ButtonProperty.getInstance(parent).getRoot().setVisible(false);
+		properties.add(LabelProperty.getInstance(parent));
 		
 		return properties;
 	}

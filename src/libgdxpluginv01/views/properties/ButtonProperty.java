@@ -23,7 +23,6 @@ public class ButtonProperty extends UIElementProperty{
 	public static ButtonProperty getInstance(Composite parent){
 		if (_instance == null){
 			_instance = new ButtonProperty(parent);
-			System.out.println("creat button property");
 		}
 		
 		return _instance;

@@ -12,6 +12,7 @@ import libgdxpluginv01.models.uielements.UIElementType;
 import libgdxpluginv01.views.PropertyView;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
+import libgdxpluginv01.views.properties.LabelProperty;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -60,7 +61,11 @@ public class UIController {
 		case UIElementType.BUTTON:
 			propertyView.setView(ButtonProperty.getInstance(propertyView.getParent()));
 			break;
-
+		
+		case UIElementType.LABEL:
+			propertyView.setView(LabelProperty.getInstance(propertyView.getParent()));
+			break;
+			
 		default:
 			break;
 		}
@@ -154,8 +159,6 @@ public class UIController {
 			addSelectedUiElementsInRectangle(selectingRectangle);
 		}
 		
-		System.out.println(selectedUIElements.size());
-
 		if (selectedUIElements.size() == 1)
 			setPropertyView(selectedUIElements.get(0));
 		else
