@@ -59,7 +59,6 @@ public abstract class UIElement {
 	
 	public void addPaintListener(){
 		container.addPaintListener(new PaintListener() {
-			
 			@Override
 			public void paintControl(PaintEvent e) {
 				drawContent(e);

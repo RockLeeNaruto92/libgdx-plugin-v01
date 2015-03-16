@@ -1,21 +1,24 @@
 package libgdxpluginv01.swt.custom;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import libgdxpluginv01.constant.Utility;
+
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
 
 
 public class BitmapFont {
-	public String fontFileName = "datas/default.fnt";
-	String path = "datas/";
-	public List<String> imgFileNames;
-	public List<Image> images;
+	private Display display;
+	private String fontFileName;
+	private String path;
+	private List<String> imgFileNames;
+	private List<Image> images;
 	private int size;
 	private int bold, italic, unicode, stretchH, aa, smooth;
 	private int padLeft, padRight, padTop, padBottom;
@@ -25,19 +28,30 @@ public class BitmapFont {
 	
 	private List<CCharacter> characters;
 	
-	public BitmapFont(String fontFilePath){
-		this.fontFileName = fontFilePath;
+	public BitmapFont(Display display, String fontFilePath){
+		this.display = display;
+		this.fontFileName = getName(fontFilePath);
 		this.imgFileNames = new ArrayList<String>();
 		this.images = new ArrayList<Image>();
 		this.characters = new ArrayList<CCharacter>();
+		this.path = getPath(fontFilePath);
 		
 		readCharacters();
+	}
+	
+	private String getName(String path){
+		
+		return path.substring(path.lastIndexOf('\\') + 1);
+	}
+	
+	private String getPath(String path){
+		return path.substring(0, path.lastIndexOf('\\') + 1);
 	}
 	
 	private void readCharacters(){
 		Scanner scanner = null;
 		try {
-			scanner = new Scanner(new File(fontFileName));
+			scanner = new Scanner(Utility.getFile("datas/default/Font/" + fontFileName));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +66,7 @@ public class BitmapFont {
 	
 	private void openImages(){
 		for (int i = 0; i < pages; i++){
-			images.add(new Image(null, path + imgFileNames.get(i)));
+			images.add(new Image(display, "D:/default.png"));
 		}
 	}
 
@@ -62,10 +76,9 @@ public class BitmapFont {
 			
 			String str = line.substring(line.indexOf("id="), line.indexOf("file="));
 			int id = readIntegerInfor(1, str, 3)[0];
-			String fileName;
 			
 			str = line.substring(line.indexOf("file="));
-			fileName = readStringInfor(str);
+			String fileName = readStringInfor(str);
 			
 			imgFileNames.add(id, fileName);
 		}
@@ -110,34 +123,27 @@ public class BitmapFont {
 			int chnl = readIntegerInfor(1, str, 5)[0];
 			
 			characters.add(new CCharacter(id, x, y, width, height, xoffset, yoffset, xadvance, page, chnl));
-			System.out.println(Character.toChars(id)[0] + ": " + xadvance);
 		}
 	}
 
 	private void readCommonTag(String line) {
 		String str = line.substring(line.indexOf("lineHeight="), line.indexOf("base="));
 		lineHeight = readIntegerInfor(1, str, 11)[0];
-		System.out.println("lineHeight: " + lineHeight);
 		
 		str = line.substring(line.indexOf("base="), line.indexOf("scaleW="));
 		base = readIntegerInfor(1, str, 5)[0];
-		System.out.println("base: " + base);
 		
 		str = line.substring(line.indexOf("scaleW="), line.indexOf("scaleH="));
 		scaleW = readIntegerInfor(1, str, 7)[0];
-		System.out.println("scaleW:" + scaleW);
 		
 		str = line.substring(line.indexOf("scaleH="), line.indexOf("pages="));
 		scaleH = readIntegerInfor(1, str, 7)[0];
-		System.out.println("scaleH:" + scaleH);
 		
 		str = line.substring(line.indexOf("pages="), line.indexOf("packed="));
 		pages = readIntegerInfor(1, str, 6)[0];
-		System.out.println("pages:" + pages);
 		
 		str = line.substring(line.indexOf("packed="));
 		base = readIntegerInfor(1, str, 7)[0];
-		System.out.println("packed:" + packed);
 	}
 
 	private void readIntegerInforTag(String line) {
@@ -221,7 +227,6 @@ public class BitmapFont {
 			CCharacter cchar = findCharacter(str.charAt(i));
 			draw(gc, cchar, nextX, y, scaleX, scaleY);
 			nextX += cchar.xAdvance * scaleX;
-			System.out.println(nextX);
 		}
 	}
 	

@@ -6,6 +6,7 @@ import java.util.List;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.models.uielements.CButton;
+import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
 import libgdxpluginv01.views.PropertyView;
@@ -84,6 +85,10 @@ public class UIController {
 		switch (type){
 		case UIElementType.BUTTON:
 			newElement = new CButton(dragComposite, location, this);
+			break;
+		
+		case UIElementType.LABEL:
+			newElement = new CLabel(dragComposite, location, this);
 			break;
 			
 		default :
