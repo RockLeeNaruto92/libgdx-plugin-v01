@@ -8,19 +8,14 @@ import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.Property;
 
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Layout;
 import org.eclipse.ui.part.ViewPart;
 
 public class PropertyView extends ViewPart {
 	private List<Property> properties;
 	private Property view;
 	private UIController uiController;
-	private int current = 0;
 	
 	private Composite parent;
 	
@@ -65,12 +60,9 @@ public class PropertyView extends ViewPart {
 		propertyView.getRoot().moveAbove(view.getRoot());
 		view = propertyView;
 		view.getRoot().setVisible(true);
-		
-		System.out.println("set view");
 	}
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
 	}
 }
