@@ -2,6 +2,8 @@ package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Word;
+import libgdxpluginv01.models.uielements.CLabel;
+import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.swt.custom.Align;
 
 import org.eclipse.swt.SWT;
@@ -139,6 +141,20 @@ public class LabelProperty extends UIElementProperty {
 		
 		checkboxEllipsis = new Button(getContainer(), SWT.CHECK);
 		checkboxEllipsis.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+	}
+	
+	@Override
+	public void setObjectPropertiesToView(UIElement object) {
+		super.setObjectPropertiesToView(object);
+		
+		CLabel obj = (CLabel)object;
+		
+		textText.setText(obj.getText());
+		textFontScaleX.setText(obj.getFontScaleX() + "");
+		textFontScaleY.setText(obj.getFontScaleY() + "");
+		comboAlign.select(Align.getAlignIndex(obj.getLabelAlign()));
+		checkboxWrap.setSelection(obj.isWrap());
+		checkboxEllipsis.setSelection(obj.isEllipsis());
 	}
 
 	@Override

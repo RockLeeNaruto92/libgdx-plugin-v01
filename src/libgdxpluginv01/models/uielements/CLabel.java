@@ -193,8 +193,6 @@ public class CLabel extends UIElement {
 		this.style = style;
 	}
 
-
-
 	class LabelStyle{
 		public BitmapFont font;
 		public Color fontColor;
