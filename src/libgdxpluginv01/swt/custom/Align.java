@@ -26,4 +26,27 @@ public class Align {
 			Word.ALIGN_BOTTOM_RIGHT
 		};
 	}
+	
+	public static int getAlignIndex(int align){
+		switch (align) {
+		case left:
+			return 0;
+		case right:
+			return 1;
+		case top:
+			return 2;
+		case bottom:
+			return 3;
+		case topLeft:
+			return 4;
+		case topRight:
+			return 5;
+		case bottomLeft:
+			return 6;
+		case bottomRight:
+			return 7;
+		default:
+			return -1;
+		}
+	}
 }

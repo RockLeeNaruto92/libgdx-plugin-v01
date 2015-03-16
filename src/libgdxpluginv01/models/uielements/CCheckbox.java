@@ -177,6 +177,70 @@ public class CCheckbox extends CButton {
 		this.text = text;
 	}
 
+	public float getScaleX() {
+		return scaleX;
+	}
+
+	public void setScaleX(float scaleX) {
+		this.scaleX = scaleX;
+	}
+
+	public float getScaleY() {
+		return scaleY;
+	}
+
+	public void setScaleY(float scaleY) {
+		this.scaleY = scaleY;
+	}
+
+	public int getAlign() {
+		return align;
+	}
+
+	public void setAlign(int align) {
+		this.align = align;
+	}
+
+	public int getPadLeft() {
+		return padLeft;
+	}
+
+	public void setPadLeft(int padLeft) {
+		this.padLeft = padLeft;
+	}
+
+	public int getPadRight() {
+		return padRight;
+	}
+
+	public void setPadRight(int padRight) {
+		this.padRight = padRight;
+	}
+
+	public int getPadTop() {
+		return padTop;
+	}
+
+	public void setPadTop(int padTop) {
+		this.padTop = padTop;
+	}
+
+	public int getPadBottom() {
+		return padBottom;
+	}
+
+	public void setPadBottom(int padBottom) {
+		this.padBottom = padBottom;
+	}
+
+	public boolean isOn() {
+		return on;
+	}
+
+	public void setOn(boolean on) {
+		this.on = on;
+	}
+
 
 	static class CheckboxStyle extends ButtonStyle{
 		public BitmapFont font;

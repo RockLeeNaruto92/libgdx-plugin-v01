@@ -28,6 +28,8 @@ public abstract class UIElementProperty extends Property{
 	private Text textSizeWidth;
 	private Text textSizeHeight;
 	private Button checkboxVisible;
+	
+	private UIElement object;
 
 	public UIElementProperty(Composite parent) {
 		createContainer(parent);
@@ -194,5 +196,14 @@ public abstract class UIElementProperty extends Property{
 		
 		checkboxVisible = new Button(container, SWT.CHECK);
 		checkboxVisible.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+	}
+	
+	public void setObjectPropertiesToView(UIElement object){
+		textName.setText(object.getName());
+		textLocationX.setText(object.getBound().x + "");
+		textLocationY.setText(object.getBound().y + "");
+		textSizeWidth.setText(object.getBound().width + "");
+		textSizeHeight.setText(object.getBound().height + "");
+		checkboxVisible.setSelection(object.isVisible());
 	}
 }

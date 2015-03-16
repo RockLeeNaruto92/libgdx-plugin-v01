@@ -107,7 +107,6 @@ public class CButton extends UIElement {
 		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, 0, 0, getSize().x, getSize().y);
 	}
 	
-
 	public boolean isChecked() {
 		return checked;
 	}

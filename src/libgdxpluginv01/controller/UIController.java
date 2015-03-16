@@ -20,6 +20,7 @@ import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.Property;
 import libgdxpluginv01.views.properties.SliderProperty;
 import libgdxpluginv01.views.properties.SpriteProperty;
+import libgdxpluginv01.views.properties.UIElementProperty;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -64,29 +65,36 @@ public class UIController {
 	}
 	
 	public void setPropertyView(UIElement uielement){
+		Property view = null; 
 		switch (uielement.getType()) {
 		case UIElementType.BUTTON:
-			propertyView.setView(ButtonProperty.getInstance(propertyView.getParent()));
+			view = ButtonProperty.getInstance(propertyView.getParent());
 			break;
 		
 		case UIElementType.LABEL:
-			propertyView.setView(LabelProperty.getInstance(propertyView.getParent()));
+			view = LabelProperty.getInstance(propertyView.getParent());
 			break;
 			
 		case UIElementType.SLIDER:
-			propertyView.setView(SliderProperty.getInstance(propertyView.getParent()));
+			view = SliderProperty.getInstance(propertyView.getParent());
 			break;
 			
 		case UIElementType.CHECKBOX:
-			propertyView.setView(CheckboxProperty.getInstance(propertyView.getParent()));
+			view = CheckboxProperty.getInstance(propertyView.getParent());
 			break;
 			
 		case UIElementType.SPRITE:
-			propertyView.setView(SpriteProperty.getInstance(propertyView.getParent()));
+			view = SpriteProperty.getInstance(propertyView.getParent());
 			break;
 			
 		default:
+			view = EmptyProperty.getInstance(propertyView.getParent());
 			break;
+		}
+
+		if (view != null && !(view instanceof EmptyProperty)){
+			propertyView.setView(view);
+			((UIElementProperty)view).setObjectPropertiesToView(uielement);
 		}
 	}
 	

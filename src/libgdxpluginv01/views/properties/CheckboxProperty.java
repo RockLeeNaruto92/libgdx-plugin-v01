@@ -2,6 +2,8 @@ package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Word;
+import libgdxpluginv01.models.uielements.CCheckbox;
+import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.swt.custom.Align;
 
 import org.eclipse.swt.SWT;
@@ -146,6 +148,20 @@ public class CheckboxProperty extends ButtonProperty{
 		comboAlign.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 		comboAlign.setItems(Align.getStrings());
 		comboAlign.select(0);
+	}
+	
+	@Override
+	public void setObjectPropertiesToView(UIElement object) {
+		super.setObjectPropertiesToView(object);
+		
+		CCheckbox obj = (CCheckbox)object;
+		
+		textText.setText(obj.getText());
+		comboAlign.select(Align.getAlignIndex(obj.getAlign()));
+		textPadLeft.setText(obj.getPadLeft() + "");
+		textPadRight.setText(obj.getPadRight() + "");
+		textPadTop.setText(obj.getPadTop() + "");
+		textPadBottom.setText(obj.getPadBottom() + "");
 	}
 
 	@Override

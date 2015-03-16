@@ -2,12 +2,13 @@ package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Word;
+import libgdxpluginv01.models.uielements.CButton;
+import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 public class ButtonProperty extends UIElementProperty{
@@ -71,4 +72,13 @@ public class ButtonProperty extends UIElementProperty{
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 	}
 
+	@Override
+	public void setObjectPropertiesToView(UIElement object) {
+		super.setObjectPropertiesToView(object);
+		
+		CButton obj = (CButton)object;
+		
+		checkboxCheck.setSelection(obj.isChecked());
+		checkboxDisable.setSelection(obj.isDisabled());
+	}
 }
