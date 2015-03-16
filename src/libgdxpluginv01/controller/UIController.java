@@ -19,6 +19,7 @@ import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.Property;
 import libgdxpluginv01.views.properties.SliderProperty;
+import libgdxpluginv01.views.properties.SpriteProperty;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -81,6 +82,7 @@ public class UIController {
 			break;
 			
 		case UIElementType.SPRITE:
+			propertyView.setView(SpriteProperty.getInstance(propertyView.getParent()));
 			break;
 			
 		default:
@@ -122,7 +124,6 @@ public class UIController {
 			break;
 			
 		case UIElementType.SPRITE:
-			System.out.println("Sprite new");
 			newElement = new CSprite(dragComposite, location, this);
 			break;
 			
