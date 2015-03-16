@@ -82,7 +82,6 @@ public class CheckboxProperty extends ButtonProperty{
 		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
 		slider.setIncrement(Parameter.SLIDER_STEP);
 		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
-
 	}
 
 	private void createPadRightField() {

@@ -41,4 +41,10 @@ public class Word {
 	public static String PROPERTY_PAD_RIGHT = "Right";
 	public static String PROPERTY_PAD_TOP = "Top";
 	public static String PROPERTY_PAD_BOTTOM = "Bottom";
+	public static String PROPERTY_ROTATION = "Rotation";
+	public static String PROPERTY_FLIP = "Flip";
+	public static String PROPERTY_COLOR = "Color";
+	public static String PROPERTY_IMAGE = "Image";
+	public static String PROPERTY_SET_COLOR = "Set color";
+	public static String PROPERTY_SET_IMAGE = "Set image";
 }
