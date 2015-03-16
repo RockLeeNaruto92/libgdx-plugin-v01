@@ -9,6 +9,7 @@ import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.CSlider;
+import libgdxpluginv01.models.uielements.CSprite;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
 import libgdxpluginv01.views.PropertyView;
@@ -79,6 +80,9 @@ public class UIController {
 			propertyView.setView(CheckboxProperty.getInstance(propertyView.getParent()));
 			break;
 			
+		case UIElementType.SPRITE:
+			break;
+			
 		default:
 			break;
 		}
@@ -115,6 +119,11 @@ public class UIController {
 		
 		case UIElementType.CHECKBOX:
 			newElement = new CCheckbox(dragComposite, location, this);
+			break;
+			
+		case UIElementType.SPRITE:
+			System.out.println("Sprite new");
+			newElement = new CSprite(dragComposite, location, this);
 			break;
 			
 		default :

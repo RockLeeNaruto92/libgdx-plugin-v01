@@ -44,7 +44,7 @@ public class CheckboxProperty extends ButtonProperty{
 	}
 
 	private void createPadBottomField() {
-Label label = new Label(getContainer(), SWT.NONE);
+		Label label = new Label(getContainer(), SWT.NONE);
 		
 		label.setText("");
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));

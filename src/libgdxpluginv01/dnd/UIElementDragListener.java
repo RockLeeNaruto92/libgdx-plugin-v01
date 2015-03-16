@@ -28,7 +28,6 @@ public class UIElementDragListener implements DragSourceListener{
 
 	@Override
 	public void dragStart(DragSourceEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	

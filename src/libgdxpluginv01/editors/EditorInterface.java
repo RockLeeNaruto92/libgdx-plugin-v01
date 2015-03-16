@@ -140,6 +140,8 @@ public class EditorInterface {
 		if (name.equals("Button"))
 			return UIElementType.BUTTON;
 		
+		if (name.equals("Sprite"))
+			return UIElementType.SPRITE;
 		// TO DO
 		return -1;
 	}

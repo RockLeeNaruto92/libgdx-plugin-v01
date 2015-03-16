@@ -50,8 +50,7 @@ public abstract class UIElement {
 		container.setSize(defaultSize);
 		setSize(defaultSize);
 
-		setBound(new Rectangle(location.x, location.y, defaultSize.x,
-				defaultSize.y));
+		setBound(new Rectangle(location.x, location.y, defaultSize.x, defaultSize.y));
 		
 		addPaintListener();
 		addMouseListener();
