@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 public class CLabel extends UIElement {
-	private int labelAlign = Align.left;
+	private int labelAlign = Align.right;
 	private boolean wrap;
 	private float fontScaleX = 1, fontScaleY = 1;
 	private boolean ellipsis;
@@ -63,7 +63,45 @@ public class CLabel extends UIElement {
 
 	@Override
 	public void drawContent(PaintEvent e) {
-		style.font.drawString(e.gc, getText(), 0, 0, fontScaleX, fontScaleY);
+		int x = 0, y = 0;
+		Point size = getSize();
+		Point defaultSize = getDefaultSize();
+		
+		switch (labelAlign) {
+		case Align.left:
+			x = 0;
+			break;
+		case Align.right:
+			x = size.x - defaultSize.x;
+			break;
+		case Align.top:
+			y = 0;
+			break;
+		case Align.bottom:
+			y = size.y - defaultSize.y;
+			break;
+		case Align.topLeft:
+			x = 0;
+			y = 0;
+			break;
+		case Align.topRight:
+			x = size.x - defaultSize.x;
+			y = 0;
+			break;
+		case Align.bottomLeft:
+			x = 0;
+			y = size.y - defaultSize.y;
+			break;
+		case Align.bottomRight:
+			x = size.x - defaultSize.x;
+			y = size.y - defaultSize.y;
+			break;
+		default:
+			x = 0;
+			y = 0;
+			break;
+		}
+		style.font.drawString(e.gc, getText(), x, y, fontScaleX, fontScaleY);
 	}
 
 	@Override
