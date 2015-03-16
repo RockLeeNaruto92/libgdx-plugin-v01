@@ -13,6 +13,7 @@ import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
 import libgdxpluginv01.views.PropertyView;
 import libgdxpluginv01.views.properties.ButtonProperty;
+import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.Property;
@@ -75,7 +76,7 @@ public class UIController {
 			break;
 			
 		case UIElementType.CHECKBOX:
-			
+			propertyView.setView(CheckboxProperty.getInstance(propertyView.getParent()));
 			break;
 			
 		default:

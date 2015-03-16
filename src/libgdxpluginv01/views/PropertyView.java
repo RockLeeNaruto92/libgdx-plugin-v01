@@ -5,6 +5,7 @@ import java.util.List;
 
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.views.properties.ButtonProperty;
+import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.Property;
@@ -33,6 +34,7 @@ public class PropertyView extends ViewPart {
 		properties.add(ButtonProperty.getInstance(parent));
 		properties.add(LabelProperty.getInstance(parent));
 		properties.add(SliderProperty.getInstance(parent));
+		properties.add(CheckboxProperty.getInstance(parent));
 		
 		return properties;
 	}

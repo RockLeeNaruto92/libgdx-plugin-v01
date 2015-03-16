@@ -36,4 +36,9 @@ public class Word {
 	public static String PROPERTY_MIN = "Min value";
 	public static String PROPERTY_STEP = "Step size";
 	public static String PROPERTY_VALUE = "Init value";
+	public static String PROPERTY_PAD = "Padding";
+	public static String PROPERTY_PAD_LEFT = "Left";
+	public static String PROPERTY_PAD_RIGHT = "Right";
+	public static String PROPERTY_PAD_TOP = "Top";
+	public static String PROPERTY_PAD_BOTTOM = "Bottom";
 }

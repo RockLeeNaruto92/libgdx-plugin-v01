@@ -40,7 +40,7 @@ public class ButtonProperty extends UIElementProperty{
 		return getContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 	}
 	
-	private void createCheckField(){
+	protected void createCheckField(){
 		Label label = new Label(getContainer(), SWT.NONE);
 		
 		label.setText(Word.PROPERTY_DISABLE);
@@ -50,7 +50,7 @@ public class ButtonProperty extends UIElementProperty{
 		checkboxCheck.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 	}
 	
-	private void createDisableField(){
+	protected void createDisableField(){
 		Label label = new Label(getContainer(), SWT.NONE);
 		
 		label.setText(Word.PROPERTY_CHECK);
@@ -60,7 +60,7 @@ public class ButtonProperty extends UIElementProperty{
 		checkboxDisable.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 	}
 	
-	private void createStyleField(){
+	protected void createStyleField(){
 		Label label = new Label(getContainer(), SWT.NONE);
 		
 		label.setText(Word.PROPERTY_STYLE);
