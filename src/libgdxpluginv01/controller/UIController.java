@@ -7,6 +7,7 @@ import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
+import libgdxpluginv01.models.uielements.CImage;
 import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.CSlider;
 import libgdxpluginv01.models.uielements.CSprite;
@@ -134,6 +135,9 @@ public class UIController {
 		case UIElementType.SPRITE:
 			newElement = new CSprite(dragComposite, location, this);
 			break;
+			
+		case UIElementType.IMAGE:
+			newElement = new CImage(dragComposite, location, this);
 			
 		default :
 			break;

@@ -142,6 +142,9 @@ public class EditorInterface {
 		
 		if (name.equals("Sprite"))
 			return UIElementType.SPRITE;
+		
+		if (name.equals("Image"))
+			return UIElementType.IMAGE;
 		// TO DO
 		return -1;
 	}
