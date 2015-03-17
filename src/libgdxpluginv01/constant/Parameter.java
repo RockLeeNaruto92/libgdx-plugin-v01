@@ -8,10 +8,10 @@ public class Parameter {
 	public static final String SPECIAL_CHARACTER = "?\"\\.+,/@!#$%^*()'";
 	public static final Point PROPERTY_SCROLL_MIN_SIZE = new Point(450, 100);
 	public static final int PROPERTY_COLUMN_NUM = 4;
-	public static final int PROPERTY_COLUMN_1_WIDTH = 100;
+	public static final int PROPERTY_COLUMN_1_WIDTH = 200;
 	public static final int PROPERTY_COLUMN_2_WIDTH = 50;
-	public static final int PROPERTY_COLUMN_3_WIDTH = 100;
-	public static final int PROPERTY_COLUMN_4_WIDTH = 200;
+	public static final int PROPERTY_COLUMN_3_WIDTH = 200;
+	public static final int PROPERTY_COLUMN_4_WIDTH = 100;
 	
 	public static final int SLIDER_STEP = 1;
 	public static final Point LOCATION_RANGE_X = new Point(-100, 100);

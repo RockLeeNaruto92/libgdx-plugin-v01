@@ -1,11 +1,10 @@
 package libgdxpluginv01.swt.custom;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import libgdxpluginv01.constant.Utility;
 
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -55,7 +54,7 @@ public class BitmapFont {
 	private void readCharacters(){
 		Scanner scanner = null;
 		try {
-			scanner = new Scanner(Utility.getFile("datas/default/Font/" + fontFileName));
+			scanner = new Scanner(new File("datas/default.fnt"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,6 +150,7 @@ public class BitmapFont {
 	}
 
 	private void readIntegerInforTag(String line) {
+		System.out.println(line.indexOf("bound="));
 		String str = line.substring(line.indexOf("size="), line.indexOf("bold=") - 1);
 		size = readIntegerInfor(1, str, 5)[0];
 		

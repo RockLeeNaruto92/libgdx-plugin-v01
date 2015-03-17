@@ -37,7 +37,6 @@ public abstract class StyleProperty extends Property{
 	
 	private void setScrolledComposite(){
 		root.setContent(container);
-		root.setExpandHorizontal(true);
 		root.setAlwaysShowScrollBars(true);
 		
 		Point size = getDefaultSize();
@@ -47,7 +46,6 @@ public abstract class StyleProperty extends Property{
 	
 	public void createContainer(Composite parent){
 		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL);
-		
 		FormData data = new FormData();
 		
 		root.setLayoutData(data);
@@ -56,6 +54,7 @@ public abstract class StyleProperty extends Property{
 		container.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));
 		
 		root.setContent(container);
+		root.setMinSize(getDefaultSize());
 	}
 	
 	public abstract void createContents();
@@ -106,6 +105,7 @@ public abstract class StyleProperty extends Property{
 		
 		Text fontText = new Text(container, SWT.BORDER | SWT.READ_ONLY);
 		fontText.setText(fontName);
+		fontText.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
 		
 		Button button = new Button(container, SWT.PUSH);
 		button.setText(Word.PROPERTY_SET);
@@ -123,6 +123,7 @@ public abstract class StyleProperty extends Property{
 		if (color == null)
 			color = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		colorText.setBackground(color);
+		colorText.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
 		
 		Button button = new Button(container, SWT.PUSH);
 		button.setText(Word.PROPERTY_SET);
