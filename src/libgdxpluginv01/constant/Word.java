@@ -47,7 +47,20 @@ public class Word {
 	public static String PROPERTY_IMAGE = "Image";
 	public static String PROPERTY_SET_COLOR = "Set color";
 	public static String PROPERTY_SET_IMAGE = "Set image";
-	
+	public static String PROPERTY_SET = "Set";
+	public static String PROPERTY_UP = "Up";
+	public static String PROPERTY_DOWN = "Down";
+	public static String PROPERTY_CHECKED = "Checked";
+	public static String PROPERTY_DISABLED = "Disabled";
+	public static String PROPERTY_OVER = "Over";
+	public static String PROPERTY_CHECKED_OVER = "Checked over";
+	public static String PROPERTY_FONT = "Font";
+	public static String PROPERTY_FONT_COLOR = "Font color";
+	public static String PROPERTY_DOWN_FONT_COLOR = "Down font color";
+	public static String PROPERTY_OVER_FONT_COLOR = "Over font color";
+	public static String PROPERTY_DISABLED_FONT_COLOR = "Disabled font color";
+	public static String PROPERTY_CHECKED_FONT_COLOR = "Checked font color";
+	public static String PROPERTY_CHECKED_OVER_FONT_COLOR = "Checked over font color";
 	
 	public static String ERROR = "Error";
 	public static String ERROR_INVALID_NAME = "Invalid name! Name must be not null, not start by number, not contain special chacracters: \"" + Parameter.SPECIAL_CHARACTER + "\"";

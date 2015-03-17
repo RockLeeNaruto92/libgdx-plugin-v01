@@ -94,16 +94,6 @@ public abstract class UIElementProperty extends Property{
 		this.uielement = uielement;
 	}
 	
-	public GridData createLayoutData(int width, int height, int horizontalSpan){
-		GridData data = new GridData();
-		data.horizontalAlignment = GridData.FILL;
-		data.verticalAlignment = GridData.CENTER;
-		data.widthHint = width;
-		data.horizontalSpan = horizontalSpan;
-		
-		return data;
-	}
-
 	private void createNameField(){
 		Label label = new Label(container, SWT.NONE);
 		
@@ -263,7 +253,7 @@ public abstract class UIElementProperty extends Property{
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
 		
 		label = new Label(container, SWT.NONE);
-		label.setText(Word.PROPERTY_WIDTH);
+		label.setText(Word.PROPERTY_HEIGHT);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
 		
 		textSizeHeight = new Text(container, SWT.BORDER);

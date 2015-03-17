@@ -242,7 +242,7 @@ public class CCheckbox extends CButton {
 	}
 
 
-	static class CheckboxStyle extends ButtonStyle{
+	public static class CheckboxStyle extends ButtonStyle{
 		public BitmapFont font;
 		public Color fontColor, downFontColor, overFontColor, checkedFontColor, checkedOverFontColor, disabledFontColor;
 		public Image checkboxOn, checkboxOff;
@@ -258,6 +258,14 @@ public class CCheckbox extends CButton {
 			checkboxOver = checkboxOn;
 			checkboxOnDisabled = checkboxOn;
 			checkboxOffDisabled = checkboxOff;
+		}
+		
+		public CheckboxStyle(Image up, Image on, Image off, BitmapFont font){
+			super(up);
+			
+			this.font = font;
+			this.checkboxOn = on;
+			this.checkboxOff = off;
 		}
 	}
 }

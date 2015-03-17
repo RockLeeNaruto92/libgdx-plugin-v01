@@ -48,6 +48,10 @@ public class BitmapFont {
 		return path.substring(0, path.lastIndexOf('\\') + 1);
 	}
 	
+	public String getPath(){
+		return this.path;
+	}
+	
 	private void readCharacters(){
 		Scanner scanner = null;
 		try {

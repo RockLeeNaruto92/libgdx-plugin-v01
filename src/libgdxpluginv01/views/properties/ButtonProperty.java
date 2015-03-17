@@ -6,6 +6,8 @@ import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -103,6 +105,20 @@ public class ButtonProperty extends UIElementProperty{
 		Button button = new Button(getContainer(), SWT.PUSH);
 		button.setText(Word.PROPERTY_SET_STYLE);
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		button.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent arg0) {
+			}
+		});
 	}
 
 	@Override

@@ -145,7 +145,7 @@ public class CButton extends UIElement {
 
 
 
-	static class ButtonStyle {
+	public static class ButtonStyle {
 		public Image checked;
 		public Image checkedOver;
 		public Image disabled;
@@ -168,6 +168,15 @@ public class CButton extends UIElement {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		public ButtonStyle(Image up){
+			this.up = up;
+			this.down = up;
+			this.checked = up;
+			this.checkedOver = up;
+			this.over = up;
+			this.disabled = up;
 		}
 	}
 }
