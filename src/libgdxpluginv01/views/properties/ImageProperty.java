@@ -36,7 +36,7 @@ public class ImageProperty extends UIElementProperty {
 
 	@Override
 	public void createOtherProperties() {
-//		createAlignField();
+		createAlignField();
 		createScalingField();
 		createImageField();
 	}
@@ -48,8 +48,7 @@ public class ImageProperty extends UIElementProperty {
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
 		
 		image = new Composite(getContainer(), SWT.BORDER);
-		image.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH + Parameter.PROPERTY_COLUMN_3_WIDTH, Parameter.PROPERTY_COLUMN_2_WIDTH, 2));
-//		image.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
+		image.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, Parameter.PROPERTY_COLUMN_2_WIDTH, 1));
 		image.addPaintListener(new PaintListener() {
 			
 			@Override
@@ -67,7 +66,7 @@ public class ImageProperty extends UIElementProperty {
 		
 		Button setImage = new Button(getContainer(), SWT.PUSH);
 		setImage.setText(Word.PROPERTY_SET_IMAGE);
-		setImage.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		setImage.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 2));
 	}
 
 	private void createScalingField() {
@@ -79,7 +78,7 @@ public class ImageProperty extends UIElementProperty {
 		comboScaling = new Combo(getContainer(), SWT.READ_ONLY);
 		comboScaling.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 		comboScaling.setItems(Scaling.getStrings());
-		comboScaling.select(Scaling.getScalingIndex(((CImage)(getUielement())).getScaling()));
+		comboScaling.select(0);
 	}
 
 	private void createAlignField() {
@@ -91,15 +90,7 @@ public class ImageProperty extends UIElementProperty {
 		comboAlign = new Combo(getContainer(), SWT.READ_ONLY);
 		comboAlign.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 		comboAlign.setItems(Align.getStrings());
-//		comboAlign.select(Align.getAlignIndex(((CImage)(getUielement())).getAlign()));
 		comboAlign.select(0);
-		
-		CImage obj = (CImage)getUielement();
-		if (obj == null) 
-			System.out.println("Element nul");
-		else 
-			System.out.println("elmentnot null");
-		
 	}
 
 	@Override
