@@ -54,7 +54,7 @@ public abstract class UIElement {
 		setBound(new Rectangle(location.x, location.y, defaultSize.x, defaultSize.y));
 		
 		addPaintListener();
-//		addMouseListener();
+		addMouseListener();
 	}
 	
 	public void addPaintListener(){

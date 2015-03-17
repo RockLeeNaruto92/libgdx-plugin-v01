@@ -145,6 +145,9 @@ public class EditorInterface {
 		
 		if (name.equals("Image"))
 			return UIElementType.IMAGE;
+		
+		if (name.equals("Animation"))
+			return UIElementType.ANIMATION;
 		// TO DO
 		return -1;
 	}

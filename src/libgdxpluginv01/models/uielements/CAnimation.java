@@ -1,8 +1,10 @@
 package libgdxpluginv01.models.uielements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.PlayMode;
 
@@ -30,17 +32,29 @@ public class CAnimation extends UIElement {
 			UIController uiController, int type) {
 		super(root, location, uiController, type);
 		Display.getCurrent().timerExec((int)(getFrameDuration() * 1000), getRunable());
+		
+		keyFrames = new ArrayList<Image>();
+		
+		setDefaultKeyFrames();
 	}
 	
 	public CAnimation(Composite root, Point location,
 			UIController uiController) {
 		super(root, location, uiController, UIElementType.ANIMATION);
 		Display.getCurrent().timerExec((int)(getFrameDuration() * 1000), getRunable());
+		
+		keyFrames = new ArrayList<Image>();
+		
+		setDefaultKeyFrames();
+	}
+	
+	private void setDefaultKeyFrames(){
+		for (int i = 1; i < 5; i ++)
+			keyFrames.add(new Image(Display.getCurrent(),  Utility.getFile("datas/default/Animation/bow" + i + ".png").toString()));
 	}
 
 	@Override
 	public String getDefaultNamePattern() {
-		// TODO Auto-generated method stub
 		return Parameter.DEFAULT_ANIMATION_NAME_PATTERN;
 	}
 
@@ -140,8 +154,6 @@ public class CAnimation extends UIElement {
 		lastFrameNumber = frameNumber;
 		lastStateTime = stateTime;
 
-		System.out.println(frameNumber);
-		
 		return frameNumber;
 	}
 	
@@ -176,6 +188,7 @@ public class CAnimation extends UIElement {
 	@Override
 	public void remove() {
 		super.remove();
+		removeAllFrames();
 		Display.getCurrent().timerExec(-1, runable);
 		
 	}
@@ -259,4 +272,10 @@ public class CAnimation extends UIElement {
 		this.runable = runable;
 	}
 	
+	public void removeAllFrames(){
+		while (keyFrames.size() != 0){
+			Image image = keyFrames.remove(0);
+			image.dispose();
+		}
+	}
 }

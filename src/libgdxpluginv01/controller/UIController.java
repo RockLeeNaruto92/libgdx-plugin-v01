@@ -5,6 +5,7 @@ import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.models.uielements.CAnimation;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CImage;
@@ -144,6 +145,11 @@ public class UIController {
 			
 		case UIElementType.IMAGE:
 			newElement = new CImage(dragComposite, location, this);
+			break;
+			
+		case UIElementType.ANIMATION:
+			newElement = new CAnimation(dragComposite, location, this);
+			break;
 			
 		default :
 			break;
