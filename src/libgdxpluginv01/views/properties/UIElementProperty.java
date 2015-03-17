@@ -227,6 +227,28 @@ public abstract class UIElementProperty extends Property{
 		
 		textSizeWidth = new Text(container, SWT.BORDER);
 		textSizeWidth.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textSizeWidth.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (uielement == null) return;
+				
+				if (isValidSizeWidth(textSizeWidth.getText())){
+					Rectangle bound = uielement.getBound();
+					bound.width = Integer.parseInt(textSizeWidth.getText());
+					
+					uielement.setBound(bound);
+					uielement.refresh();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_WIDTH);
+					textSizeWidth.setText(uielement.getBound().width + "");
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+		});
 		
 		Slider sliderY = new Slider(container, SWT.HORIZONTAL);
 		sliderY.setMinimum(Parameter.SIZE_RANGE_WIDTH.x);
@@ -246,6 +268,28 @@ public abstract class UIElementProperty extends Property{
 		
 		textSizeHeight = new Text(container, SWT.BORDER);
 		textSizeHeight.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textSizeHeight.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (uielement == null) return;
+				
+				if (isValidSizeHeight(textSizeHeight.getText())){
+					Rectangle bound = uielement.getBound();
+					bound.height = Integer.parseInt(textSizeHeight.getText());
+					
+					uielement.setBound(bound);
+					uielement.refresh();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_HEIGHT);
+					textSizeHeight.setText(uielement.getBound().height + "");
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+		});
 		
 		Slider sliderY = new Slider(container, SWT.HORIZONTAL);
 		sliderY.setMinimum(Parameter.SIZE_RANGE_HEIGHT.x);
@@ -317,5 +361,13 @@ public abstract class UIElementProperty extends Property{
 	
 	private boolean isValidPositionY(String y){
 		return isIntegerNum(y);
+	}
+	
+	private boolean isValidSizeWidth(String width){
+		return isIntegerNum(width);
+	}
+	
+	private boolean isValidSizeHeight(String height){
+		return isIntegerNum(height);
 	}
 }
