@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import libgdxpluginv01.constant.Utility;
+
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -54,7 +56,7 @@ public class BitmapFont {
 	private void readCharacters(){
 		Scanner scanner = null;
 		try {
-			scanner = new Scanner(new File("datas/default.fnt"));
+			scanner = new Scanner(Utility.getFile("datas/default/Font/default.fnt"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
