@@ -14,7 +14,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
 public class CButton extends UIElement {
-	private boolean checked, disabled, over, up;
+	private boolean checked = true, disabled, over, up;
 	
 	private ButtonStyle style;
 	

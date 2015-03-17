@@ -6,6 +6,8 @@ import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -49,6 +51,21 @@ public class ButtonProperty extends UIElementProperty{
 		
 		checkboxCheck = new Button(getContainer(), SWT.CHECK);
 		checkboxCheck.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		checkboxCheck.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (getUielement() == null) return;
+				
+				CButton obj = (CButton)getUielement();
+				obj.setChecked(!obj.isChecked());
+				obj.redraw();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				
+			}
+		});
 	}
 	
 	protected void createDisableField(){
@@ -59,6 +76,22 @@ public class ButtonProperty extends UIElementProperty{
 		
 		checkboxDisable = new Button(getContainer(), SWT.CHECK);
 		checkboxDisable.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		checkboxDisable.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (getUielement() == null) return;
+				
+				CButton obj = (CButton)getUielement();
+				obj.setDisabled(!obj.isDisabled());
+				obj.redraw();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	protected void createStyleField(){
