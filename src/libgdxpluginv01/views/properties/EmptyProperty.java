@@ -13,7 +13,8 @@ public class EmptyProperty extends Property{
 	private Label label;
 	
 	public EmptyProperty(Composite parent){
-		label = new Label(parent, SWT.NONE);
+		super(parent);
+		label = new Label(getRootContainer(), SWT.NONE);
 		label.setLayoutData(new FormData());
 		
 		label.setText(Word.PROPERTY_EMPTY);

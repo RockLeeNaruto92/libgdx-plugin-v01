@@ -14,7 +14,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -35,6 +34,7 @@ public abstract class UIElementProperty extends Property{
 	private Button checkboxVisible;
 	
 	public UIElementProperty(Composite parent) {
+		super(parent);
 		createContainer(parent);
 		createContents();
 		setScrolledComposite();
@@ -49,6 +49,7 @@ public abstract class UIElementProperty extends Property{
 		
 		Point size = getDefaultSize();
 		container.setSize(size);
+		getRootContainer().setSize(size);
 		root.getParent().setRedraw(true);
 	}
 	
@@ -57,7 +58,7 @@ public abstract class UIElementProperty extends Property{
 	}
 	
 	private void createContainer(Composite parent) {
-		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL);
+		root = new ScrolledComposite(getContainer(), SWT.BORDER | SWT.V_SCROLL);
 		
 		root.setLayoutData(new FormData());
 		

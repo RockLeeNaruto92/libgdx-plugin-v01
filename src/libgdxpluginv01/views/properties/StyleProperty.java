@@ -27,6 +27,7 @@ public abstract class StyleProperty extends Property{
 	private Object object;
 	
 	public StyleProperty(Composite parent, Object object){
+		super(parent);
 		setObject(object);
 		createContainer(parent);
 		createContents();
@@ -45,7 +46,7 @@ public abstract class StyleProperty extends Property{
 	}
 	
 	public void createContainer(Composite parent){
-		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL);
+		root = new ScrolledComposite(getRootContainer(), SWT.BORDER | SWT.V_SCROLL);
 		FormData data = new FormData();
 		
 		root.setLayoutData(data);
