@@ -12,6 +12,7 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -143,15 +144,24 @@ public abstract class UIElementProperty extends Property{
 		textLocationX = new Text(container, SWT.BORDER);
 		textLocationX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
 		textLocationX.addFocusListener(new FocusListener() {
-			
 			@Override
 			public void focusLost(FocusEvent e) {
+				if (uielement == null) return;
 				
+				if (isValidPositionX(textLocationX.getText())){
+					Rectangle bound = uielement.getBound();
+					bound.x = Integer.parseInt(textLocationX.getText());
+					
+					uielement.setBound(bound);
+					uielement.refresh();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_X);
+					textLocationX.setText(uielement.getBound().x + "");
+				}
 			}
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -175,6 +185,17 @@ public abstract class UIElementProperty extends Property{
 		
 		textLocationY = new Text(container, SWT.BORDER);
 		textLocationY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textLocationY.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+			}
+		});
 		
 		Slider sliderY = new Slider(container, SWT.HORIZONTAL);
 		sliderY.setMinimum(Parameter.LOCATION_RANGE_Y.x);
@@ -267,5 +288,22 @@ public abstract class UIElementProperty extends Property{
 			return false;
 		
 		return true;
+	}
+	
+	private boolean isIntegerNum(String text){
+		for (int i = 0; i < text.length(); i++){
+			if (!Character.isDigit(text.charAt(i)))
+				return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean isValidPositionX(String x){
+		return isIntegerNum(x);
+	}
+	
+	private boolean isValidPositonY(String y){
+		return isIntegerNum(y);
 	}
 }

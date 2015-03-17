@@ -238,4 +238,8 @@ public abstract class UIElement {
 	public void redraw(){
 		container.redraw();
 	}
+	
+	public void refresh(){
+		container.refresh();
+	}
 }
