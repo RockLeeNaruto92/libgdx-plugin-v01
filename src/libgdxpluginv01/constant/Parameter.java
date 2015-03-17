@@ -32,11 +32,13 @@ public class Parameter {
 	public static final Point DEFAULT_SLIDER_SIZE = new Point(100, 25);
 	public static final Point DEFAULT_SPRITE_SIZE = new Point(100, 100);
 	public static final Point DEFAULT_IMAGE_SIZE = new Point(100, 100);
+	public static final Point DEFAULT_ANIMATION_SIZE = new Point(100, 100);
 	
 	public static final Point BUTTON_MIN_SIZE = new Point(25, 25);
 	public static final Point SLIDER_MIN_SIZE = new Point(25, 25);
 	public static final Point SPRITE_MIN_SIZE = new Point(25, 25);
 	public static final Point IMAGE_MIN_SIZE = new Point(25, 25);
+	public static final Point ANIMATION_MIN_SIZE = new Point(25, 25);
 	
 	public static final String DEFAULT_LABEL_NAME_PATTERN = "Label";
 	public static final String DEFAULT_CHECKBOX_NAME_PATTERN = "Checkbox";
@@ -44,5 +46,6 @@ public class Parameter {
 	public static final String DEFAULT_SLIDER_NAME_PATTERN = "Slider";
 	public static final String DEFAULT_SPRITE_NAME_PATTERN = "Sprite";
 	public static final String DEFAULT_IMAGE_NAME_PATTERN = "Image";
+	public static final String DEFAULT_ANIMATION_NAME_PATTERN = "Animation";
 	
 }
