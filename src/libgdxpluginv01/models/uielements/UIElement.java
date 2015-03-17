@@ -38,6 +38,7 @@ public abstract class UIElement {
 	public UIElement(Composite root, Point location, UIController uiController, int type) {
 		this.uiController = uiController;
 		this.type = type;
+		this.visible = true;
 		
 		name = getDefaultNamePattern() + i++;
 		
@@ -202,6 +203,7 @@ public abstract class UIElement {
 	}
 
 	public void setVisible(boolean visible) {
+		this.container.setVisible(visible);
 		this.visible = visible;
 	}
 

@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Display;
 
 public class CSprite extends UIElement {
 	private Image image;
+	private boolean flipX, flipY;
 	
 	public CSprite(Composite root, Point location, UIController uiController, int type) {
 		super(root, location, uiController, type);
@@ -82,5 +83,21 @@ public class CSprite extends UIElement {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public boolean isFlipX() {
+		return flipX;
+	}
+
+	public void setFlipX(boolean flipX) {
+		this.flipX = flipX;
+	}
+
+	public boolean isFlipY() {
+		return flipY;
+	}
+
+	public void setFlipY(boolean flipY) {
+		this.flipY = flipY;
 	}
 }

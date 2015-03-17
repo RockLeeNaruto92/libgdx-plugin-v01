@@ -6,8 +6,9 @@ import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -29,8 +30,6 @@ public abstract class UIElementProperty extends Property{
 	private Text textSizeHeight;
 	private Button checkboxVisible;
 	
-	private UIElement object;
-
 	public UIElementProperty(Composite parent) {
 		createContainer(parent);
 		createContents();
@@ -196,9 +195,26 @@ public abstract class UIElementProperty extends Property{
 		
 		checkboxVisible = new Button(container, SWT.CHECK);
 		checkboxVisible.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		checkboxVisible.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				UIElement obj = getUielement();
+				
+				if (obj == null){
+					return;
+				}
+				
+				obj.setVisible(!obj.isVisible());
+			}
+			
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 	}
 	
 	public void setObjectPropertiesToView(UIElement object){
+		setUielement(object);
+		
 		textName.setText(object.getName());
 		textLocationX.setText(object.getBound().x + "");
 		textLocationY.setText(object.getBound().y + "");

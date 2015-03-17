@@ -2,6 +2,8 @@ package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Word;
+import libgdxpluginv01.models.uielements.CSlider;
+import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -100,6 +102,19 @@ public class SliderProperty extends UIElementProperty {
 		Button button = new Button(getContainer(), SWT.PUSH);
 		button.setText(Word.PROPERTY_SET_STYLE);
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+	}
+	
+
+	@Override
+	public void setObjectPropertiesToView(UIElement object) {
+		super.setObjectPropertiesToView(object);
+		
+		CSlider obj = (CSlider)object;
+		checkboxDisable.setSelection(obj.isDisabled());
+		textMax.setText(obj.getMax() + "");
+		textMin.setText(obj.getMin() + "");
+		textStep.setText(obj.getStepSize() + "");
+		textValue.setText(obj.getValue() + "");
 	}
 
 	@Override
