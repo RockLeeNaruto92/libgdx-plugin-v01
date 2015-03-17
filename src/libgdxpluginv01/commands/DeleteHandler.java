@@ -17,11 +17,9 @@ public class DeleteHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// TODO Auto-generated method stub
-//		System.out.println("Handing delete");
-		System.out.println("Hello commnad");
 		UIController uiController = UIController.getInstance();
 		
-		uiController.removeAll();
+		uiController.removeAllSelectedUIElements();
 		return null;
 	}
 

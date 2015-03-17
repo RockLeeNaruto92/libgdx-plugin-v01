@@ -5,6 +5,7 @@ import org.eclipse.swt.graphics.Point;
 public class Parameter {
 	public static final int R = 1;
 	public static final int PADDING = 10;
+	public static final String SPECIAL_CHARACTER = "?\"\\.+,/@!#$%^*()'";
 	public static final Point PROPERTY_SCROLL_MIN_SIZE = new Point(450, 100);
 	public static final int PROPERTY_COLUMN_NUM = 4;
 	public static final int PROPERTY_COLUMN_1_WIDTH = 100;

@@ -4,8 +4,11 @@ import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.UIElement;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -108,6 +111,23 @@ public abstract class UIElementProperty extends Property{
 		
 		textName = new Text(container, SWT.BORDER);
 		textName.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		textName.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (uielement == null) return;
+				
+				if (isValidName(textName.getText())){
+					uielement.setName(textName.getText());
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_NAME);
+					textName.setText(uielement.getName());
+				}
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+			}
+		});
 	}
 	
 	private void createLocationXField(){
@@ -122,6 +142,19 @@ public abstract class UIElementProperty extends Property{
 		
 		textLocationX = new Text(container, SWT.BORDER);
 		textLocationX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textLocationX.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		Slider sliderX = new Slider(container, SWT.HORIZONTAL);
 		sliderX.setMinimum(Parameter.LOCATION_RANGE_X.x);
@@ -221,5 +254,18 @@ public abstract class UIElementProperty extends Property{
 		textSizeWidth.setText(object.getBound().width + "");
 		textSizeHeight.setText(object.getBound().height + "");
 		checkboxVisible.setSelection(object.isVisible());
+	}
+	
+	private boolean isValidName(String name){
+		if (name == null) 
+			return false;
+		if (name.length() == 0)
+			return false;
+		if (name.charAt(0) <= '9' && name.charAt(0) >= '0')
+			return false;
+		if (name.contains(Parameter.SPECIAL_CHARACTER))
+			return false;
+		
+		return true;
 	}
 }

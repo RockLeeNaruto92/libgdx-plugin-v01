@@ -47,4 +47,8 @@ public class Word {
 	public static String PROPERTY_IMAGE = "Image";
 	public static String PROPERTY_SET_COLOR = "Set color";
 	public static String PROPERTY_SET_IMAGE = "Set image";
+	
+	
+	public static String ERROR = "Error";
+	public static String ERROR_INVALID_NAME = "Invalid name! Name must be not null, not start by number, not contain special chacracters: \"" + Parameter.SPECIAL_CHARACTER + "\"";
 }
