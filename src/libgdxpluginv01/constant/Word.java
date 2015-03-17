@@ -62,6 +62,15 @@ public class Word {
 	public static String PROPERTY_CHECKED_FONT_COLOR = "Checked font color";
 	public static String PROPERTY_CHECKED_OVER_FONT_COLOR = "Checked over font color";
 	public static String PROPERTY_BACKGROUND = "Background";
+	public static String PROPERTY_SCALING = "Scaling";
+	public static String PROPERTY_FIT = "Fit";
+	public static String PROPERTY_FILL = "Fill";
+	public static String PROPERTY_FILL_X = "Fill X";
+	public static String PROPERTY_FILL_Y = "Fill Y";
+	public static String PROPERTY_STRETCH = "Stretch";
+	public static String PROPERTY_STRETCH_X = "Stretch X";
+	public static String PROPERTY_STRETCH_Y = "Stretch Y";
+	public static String PROPERTY_NONE = "None";
 	
 	public static String ERROR = "Error";
 	public static String ERROR_INVALID_NAME = "Invalid name! Name must be not null, not start by number, not contain special chacracters: \"" + Parameter.SPECIAL_CHARACTER + "\"";

@@ -180,4 +180,20 @@ public class CImage extends UIElement {
 	public void setImage(Image image) {
 		this.image = image;
 	}
+
+	public int getAlign() {
+		return align;
+	}
+
+	public void setAlign(int align) {
+		this.align = align;
+	}
+
+	public int getScaling() {
+		return scaling;
+	}
+
+	public void setScaling(int scaling) {
+		this.scaling = scaling;
+	}
 }

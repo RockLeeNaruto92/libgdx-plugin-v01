@@ -17,6 +17,7 @@ import libgdxpluginv01.views.PropertyView;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
+import libgdxpluginv01.views.properties.ImageProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.Property;
 import libgdxpluginv01.views.properties.SliderProperty;
@@ -88,14 +89,19 @@ public class UIController {
 			view = SpriteProperty.getInstance(propertyView.getParent());
 			break;
 			
+		case UIElementType.IMAGE:
+			view = ImageProperty.getInstance(propertyView.getParent());
+			break;
 		default:
 			view = EmptyProperty.getInstance(propertyView.getParent());
 			break;
 		}
 
-		if (view != null && !(view instanceof EmptyProperty)){
+		if (view != null){
 			propertyView.setView(view);
-			((UIElementProperty)view).setObjectPropertiesToView(uielement);
+			
+			if (!(view instanceof EmptyProperty))
+				((UIElementProperty)view).setObjectPropertiesToView(uielement);
 		}
 	}
 	
