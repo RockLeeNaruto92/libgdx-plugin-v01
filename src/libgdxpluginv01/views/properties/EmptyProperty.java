@@ -3,7 +3,6 @@ package libgdxpluginv01.views.properties;
 import libgdxpluginv01.constant.Word;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -15,7 +14,7 @@ public class EmptyProperty extends Property{
 	public EmptyProperty(Composite parent){
 		super(parent);
 		label = new Label(getRootContainer(), SWT.NONE);
-		label.setLayoutData(new FormData());
+//		label.setLayoutData(new FormData());
 		
 		label.setText(Word.PROPERTY_EMPTY);
 	}
@@ -26,10 +25,5 @@ public class EmptyProperty extends Property{
 		}
 		
 		return _instance;
-	}
-
-	@Override
-	public Control getRoot() {
-		return label;
 	}
 }

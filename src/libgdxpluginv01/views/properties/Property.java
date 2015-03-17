@@ -2,19 +2,23 @@ package libgdxpluginv01.views.properties;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public abstract class Property {
-	public abstract Control getRoot();
-	
+public class Property {
 	private Composite rootContainer;
 	
 	public Property(Composite parent){
 		rootContainer = new Composite(parent, SWT.NONE);
 		rootContainer.setLayout(new FillLayout());
+		rootContainer.setLayoutData(new FormData());
 	}
+	
+	public Control getRoot() {
+		return getRootContainer();
+	};
 	
 	public Composite getRootContainer() {
 		return rootContainer;
@@ -23,8 +27,6 @@ public abstract class Property {
 	public void setRootContainer(Composite rootContainer) {
 		this.rootContainer = rootContainer;
 	}
-
-
 
 	public GridData createLayoutData(int width, int height, int horizontalSpan){
 		GridData data = new GridData();

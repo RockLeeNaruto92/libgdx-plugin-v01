@@ -47,9 +47,9 @@ public abstract class StyleProperty extends Property{
 	
 	public void createContainer(Composite parent){
 		root = new ScrolledComposite(getRootContainer(), SWT.BORDER | SWT.V_SCROLL);
-		FormData data = new FormData();
-		
-		root.setLayoutData(data);
+//		FormData data = new FormData();
+//		
+//		root.setLayoutData(data);
 		
 		container = new Composite(root, SWT.NONE);
 		container.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));
@@ -64,12 +64,6 @@ public abstract class StyleProperty extends Property{
 		return container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 	}
 
-	@Override
-	public Control getRoot() {
-		// TODO Auto-generated method stub
-		return root;
-	}
-	
 	protected Composite createImageField(String text, final Image background) {
 		Label label = new Label(container, SWT.NONE);
 		label.setText(text);

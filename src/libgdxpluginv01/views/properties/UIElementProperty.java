@@ -39,7 +39,7 @@ public abstract class UIElementProperty extends Property{
 		createContents();
 		setScrolledComposite();
 		
-		root.setVisible(false);
+		getRoot().setVisible(false);
 	}
 	
 	private void setScrolledComposite(){
@@ -49,18 +49,14 @@ public abstract class UIElementProperty extends Property{
 		
 		Point size = getDefaultSize();
 		container.setSize(size);
-		getRootContainer().setSize(size);
-		root.getParent().setRedraw(true);
-	}
-	
-	public Control getRoot(){
-		return root;
+		root.setMinSize(size);
+		getRoot().getParent().setRedraw(true);
 	}
 	
 	private void createContainer(Composite parent) {
-		root = new ScrolledComposite(getContainer(), SWT.BORDER | SWT.V_SCROLL);
+		root = new ScrolledComposite(getRootContainer(), SWT.BORDER | SWT.V_SCROLL);
 		
-		root.setLayoutData(new FormData());
+//		root.setLayoutData(new FormData());
 		
 		container = new Composite(root, SWT.NONE);
 		container.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));
