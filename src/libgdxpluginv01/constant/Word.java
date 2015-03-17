@@ -52,4 +52,7 @@ public class Word {
 	public static String ERROR = "Error";
 	public static String ERROR_INVALID_NAME = "Invalid name! Name must be not null, not start by number, not contain special chacracters: \"" + Parameter.SPECIAL_CHARACTER + "\"";
 	public static String ERROR_INVALID_X = "X must be integer number.";
+	public static String ERROR_INVALID_Y = "Y must be integer number.";
+	public static String ERROR_INVALID_WIDTH = "Width must be integer number.";
+	public static String ERROR_INVALID_HEIGHT = "Height must be integer number.";
 }

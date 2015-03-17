@@ -183,16 +183,28 @@ public abstract class UIElementProperty extends Property{
 		label.setText(Word.PROPERTY_Y);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
 		
+		
 		textLocationY = new Text(container, SWT.BORDER);
 		textLocationY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
 		textLocationY.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
+				if (uielement == null) return;
 				
+				if (isValidPositionY(textLocationY.getText())){
+					Rectangle bound = uielement.getBound();
+					bound.y = Integer.parseInt(textLocationY.getText());
+					
+					uielement.setBound(bound);
+					uielement.refresh();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_Y);
+					textLocationY.setText(uielement.getBound().y + "");
+				}
 			}
 			
 			@Override
-			public void focusGained(FocusEvent arg0) {
+			public void focusGained(FocusEvent e) {
 				
 			}
 		});
@@ -303,7 +315,7 @@ public abstract class UIElementProperty extends Property{
 		return isIntegerNum(x);
 	}
 	
-	private boolean isValidPositonY(String y){
+	private boolean isValidPositionY(String y){
 		return isIntegerNum(y);
 	}
 }
