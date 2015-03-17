@@ -59,9 +59,7 @@ public abstract class UIElementProperty extends Property{
 	private void createContainer(Composite parent) {
 		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL);
 		
-		FormData data = new FormData();
-		
-		root.setLayoutData(data);
+		root.setLayoutData(new FormData());
 		
 		container = new Composite(root, SWT.NONE);
 		container.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));

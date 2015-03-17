@@ -61,6 +61,7 @@ public class Word {
 	public static String PROPERTY_DISABLED_FONT_COLOR = "Disabled font color";
 	public static String PROPERTY_CHECKED_FONT_COLOR = "Checked font color";
 	public static String PROPERTY_CHECKED_OVER_FONT_COLOR = "Checked over font color";
+	public static String PROPERTY_BACKGROUND = "Background";
 	
 	public static String ERROR = "Error";
 	public static String ERROR_INVALID_NAME = "Invalid name! Name must be not null, not start by number, not contain special chacracters: \"" + Parameter.SPECIAL_CHARACTER + "\"";

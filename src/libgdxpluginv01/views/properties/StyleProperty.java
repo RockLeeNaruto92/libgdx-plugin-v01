@@ -74,15 +74,15 @@ public abstract class StyleProperty extends Property{
 		label.setText(text);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
 		
-		if (background == null){
-			return null;
-		}
-		
 		final Composite imgContainer = new Composite(container, SWT.BORDER);
 		imgContainer.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH + Parameter.PROPERTY_COLUMN_3_WIDTH, Parameter.PROPERTY_COLUMN_1_WIDTH, 2));
 		imgContainer.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
+				if (background == null){
+					return;
+				}
+				
 				Rectangle bound = background.getBounds();
 				
 				GridData data = (GridData)imgContainer.getLayoutData();
