@@ -100,7 +100,7 @@ public class CLabel extends UIElement {
 			y = 0;
 			break;
 		}
-		
+		System.out.println("Font scale y : " + fontScaleY );
 		style.font.drawString(e.gc, getText(), x, y, fontScaleX, fontScaleY);
 	}
 

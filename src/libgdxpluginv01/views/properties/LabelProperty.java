@@ -157,7 +157,7 @@ public class LabelProperty extends UIElementProperty {
 			}
 		});
 		
-		createSlider(getContainer(), textFontScaleX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 2);
+		createSlider(getContainer(), textFontScaleX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_3_WIDTH + Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
 	}
 	
 	private void createFontScaleYField(){
@@ -181,6 +181,7 @@ public class LabelProperty extends UIElementProperty {
 				
 				if (isValidFontScaleY(textFontScaleY.getText())){
 					obj.setFontScaleY(Float.parseFloat(textFontScaleY.getText()));
+					System.out.println("redraw: " + obj.getFontScaleY());
 					obj.redraw();
 				} else {
 					MessageDialog.openError(obj.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_FONT_SCALE_Y);
@@ -189,7 +190,7 @@ public class LabelProperty extends UIElementProperty {
 			}
 		});
 		
-		createSlider(getContainer(), textFontScaleX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 2);
+		createSlider(getContainer(), textFontScaleY, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_3_WIDTH + Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
 	}
 	
 
