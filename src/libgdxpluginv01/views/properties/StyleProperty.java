@@ -62,12 +62,13 @@ public abstract class StyleProperty extends Property{
 	}
 	
 	public abstract void createContents();
+	public abstract Image getImageFromIndex(int index);
 	
 	private Point getDefaultSize(){
 		return container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 	}
 
-	protected Composite createImageField(String text, final Image background) {
+	protected Composite createImageField(String text, final Image background, final int index) {
 		Label label = new Label(container, SWT.NONE);
 		label.setText(text);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
@@ -77,6 +78,8 @@ public abstract class StyleProperty extends Property{
 		imgContainer.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
+				Image background = getImageFromIndex(index);
+				
 				if (background == null){
 					return;
 				}
@@ -100,7 +103,7 @@ public abstract class StyleProperty extends Property{
 				if (imageFile == null) return;
 				
 				Image image = new Image(Display.getCurrent(), imageFile);
-				setPropertyToView(getObject(), new Object[]{image});
+				setPropertyToView(getObject(), new Object[]{image, new Integer(index)});
 			}
 		});
 		

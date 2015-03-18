@@ -1,8 +1,5 @@
 package libgdxpluginv01.models.uielements;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
@@ -12,9 +9,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 public class CButton extends UIElement {
-	private boolean checked = true, disabled, over, up;
+	private boolean checked, disabled, over, up = true;
 	
 	private ButtonStyle style;
 	
@@ -93,12 +91,21 @@ public class CButton extends UIElement {
 		
 		if (disabled){
 			drawable = getStyle().disabled;
+			System.out.println("Draw disabled");
 		} else if (checked){
 			drawable = over ? getStyle().checkedOver : getStyle().checked;
+			if (over)
+				System.out.println("draw checked over)");
+			else System.out.println("draw checked");
 		} else {
 			if (up){
 				drawable = over ? getStyle().over : getStyle().up;
+				if (over)
+					System.out.println("draw over ");
+				else 
+					System.out.println("draw up");
 			} else {
+				System.out.println("draw down");
 				drawable = getStyle().down;
 			}
 		}
@@ -158,16 +165,12 @@ public class CButton extends UIElement {
 		public float unpressedOffsetY;
 		
 		public ButtonStyle(){
-			try {
-				up = new Image(null, new FileInputStream(Utility.getFile("datas/default/ButtonStyle/up.png")));
-				down = new Image(null, new FileInputStream(Utility.getFile("datas/default/ButtonStyle/down.png")));
-				over = up;
-				checked = up;
-				checkedOver = up;
-				disabled = up;
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			up = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/up.png").toString());
+			down = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/down.png").toString());
+			over = up;
+			checked = up;
+			checkedOver = up;
+			disabled = up;
 		}
 		
 		public ButtonStyle(Image up){

@@ -32,7 +32,7 @@ public class LabelStyleProperty extends StyleProperty {
 	public void createContents() {
 		textFont = createFontField(null, Word.PROPERTY_FONT);
 		textFontColor = createColorField(Word.PROPERTY_COLOR, null);
-		image = createImageField(Word.PROPERTY_BACKGROUND, null);
+		image = createImageField(Word.PROPERTY_BACKGROUND, null, 0);
 	}
 
 	@Override
@@ -61,8 +61,15 @@ public class LabelStyleProperty extends StyleProperty {
 		textFontColor.setBackground(style.fontColor);
 		if (style.background != null)
 			image.setBackgroundImage(style.background);
+		
 		// redraw
 		obj.redraw();
+	}
+
+	@Override
+	public Image getImageFromIndex(int index) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

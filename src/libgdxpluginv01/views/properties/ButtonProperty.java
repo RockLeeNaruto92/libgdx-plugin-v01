@@ -2,7 +2,9 @@ package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Word;
+import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.models.uielements.CButton;
+import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.swt.SWT;
@@ -13,7 +15,9 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 
 public class ButtonProperty extends UIElementProperty{
 	private static ButtonProperty _instance;
@@ -105,18 +109,15 @@ public class ButtonProperty extends UIElementProperty{
 		Button button = new Button(getContainer(), SWT.PUSH);
 		button.setText(Word.PROPERTY_SET_STYLE);
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		button.addMouseListener(new MouseListener() {
+		button.addListener(SWT.MouseDown, new Listener() {
 			@Override
-			public void mouseUp(MouseEvent arg0) {
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
 				
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent arg0) {
+				CButton obj = (CButton)getUielement();
+				UIController uiController = obj.getUiController();
+				
+				uiController.setPropertyView(obj, true);
 			}
 		});
 	}
