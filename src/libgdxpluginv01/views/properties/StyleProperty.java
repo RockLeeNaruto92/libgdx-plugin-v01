@@ -110,7 +110,7 @@ public abstract class StyleProperty extends Property{
 		return imgContainer;
 	}
 	
-	protected Text createFontField(final BitmapFont font, String text) {
+	protected Text createFontField(final BitmapFont font, String text, final int index) {
 		Label label = new Label(container, SWT.NONE);
 		label.setText(text);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
@@ -129,14 +129,14 @@ public abstract class StyleProperty extends Property{
 				
 				if (fontFile == null) return;
 				
-				setPropertyToView(getObject(), new Object[]{fontFile});
+				setPropertyToView(getObject(), new Object[]{fontFile, new Integer(index)});
 			}
 		});
 		
 		return fontText;
 	}
 	
-	protected Text createColorField(String text, Color color) {
+	protected Text createColorField(String text, Color color, final int index) {
 		Label label = new Label(container, SWT.NONE);
 		label.setText(text);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
@@ -157,8 +157,9 @@ public abstract class StyleProperty extends Property{
 				
 				if (selectColor == null) return;
 				
-				setPropertyToView(getObject(), new Object[]{selectColor});
-				colorText.setBackground(new Color(Display.getCurrent(), selectColor));
+				Color color = new Color(Display.getCurrent(), selectColor);
+				setPropertyToView(getObject(), new Object[]{color, new Integer(index)});
+				colorText.setBackground(color);
 			}
 		});
 		

@@ -20,6 +20,7 @@ import libgdxpluginv01.views.properties.AnimationProperty;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.ButtonStyleProperty;
 import libgdxpluginv01.views.properties.CheckboxProperty;
+import libgdxpluginv01.views.properties.CheckboxStyleProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.ImageProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
@@ -129,6 +130,10 @@ public class UIController {
 				
 			case UIElementType.BUTTON:
 				view = ButtonStyleProperty.getInstance(propertyView.getParent(), ((CButton)uielement).getStyle());
+				break;
+				
+			case UIElementType.CHECKBOX:
+				view = CheckboxStyleProperty.getInstance(propertyView.getParent(), ((CCheckbox)uielement).getStyle());
 				break;
 
 			default:

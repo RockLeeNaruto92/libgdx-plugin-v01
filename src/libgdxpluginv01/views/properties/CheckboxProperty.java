@@ -226,8 +226,11 @@ public class CheckboxProperty extends ButtonProperty{
 		comboAlign.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-				// TODO Auto-generated method stub
+				if (getUielement() == null) return;
+				CCheckbox obj = (CCheckbox)getUielement();
 				
+				obj.setAlign(Align.getAlignIndex(comboAlign.getSelectionIndex()));
+				obj.redraw();
 			}
 		});
 	}

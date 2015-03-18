@@ -30,8 +30,8 @@ public class LabelStyleProperty extends StyleProperty {
 
 	@Override
 	public void createContents() {
-		textFont = createFontField(null, Word.PROPERTY_FONT);
-		textFontColor = createColorField(Word.PROPERTY_COLOR, null);
+		textFont = createFontField(null, Word.PROPERTY_FONT, 0);
+		textFontColor = createColorField(Word.PROPERTY_COLOR, null, 0);
 		image = createImageField(Word.PROPERTY_BACKGROUND, null, 0);
 	}
 
@@ -48,7 +48,7 @@ public class LabelStyleProperty extends StyleProperty {
 				style.font.setFont((String)datas[0]);
 			else if (datas[0] instanceof RGB){
 				style.fontColor.dispose();
-				style.fontColor = new Color(Display.getCurrent(), (RGB)datas[0]);
+				style.fontColor = (Color) datas[0];
 			} else if (datas[0] instanceof Image){
 				if (style.background != null)
 					style.background.dispose();

@@ -8,6 +8,7 @@ import libgdxpluginv01.views.properties.AnimationProperty;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.ButtonStyleProperty;
 import libgdxpluginv01.views.properties.CheckboxProperty;
+import libgdxpluginv01.views.properties.CheckboxStyleProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.ImageProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
@@ -45,6 +46,7 @@ public class PropertyView extends ViewPart {
 		properties.add(AnimationProperty.getInstance(parent));
 		properties.add(LabelStyleProperty.getInstance(parent, null));
 		properties.add(ButtonStyleProperty.getInstance(parent, null));
+		properties.add(CheckboxStyleProperty.getInstance(parent, null));
 		
 		return properties;
 	}

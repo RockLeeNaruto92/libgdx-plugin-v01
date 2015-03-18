@@ -114,7 +114,7 @@ public class ButtonProperty extends UIElementProperty{
 			public void handleEvent(Event arg0) {
 				if (getUielement() == null) return;
 				
-				CButton obj = (CButton)getUielement();
+				UIElement obj = getUielement();
 				UIController uiController = obj.getUiController();
 				
 				uiController.setPropertyView(obj, true);
