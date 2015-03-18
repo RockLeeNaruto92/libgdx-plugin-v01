@@ -292,4 +292,8 @@ public abstract class UIElement {
 	public void addAction(CAction action){
 		getActions().add(action);
 	}
+
+	public UIController getUiController() {
+		return uiController;
+	}
 }

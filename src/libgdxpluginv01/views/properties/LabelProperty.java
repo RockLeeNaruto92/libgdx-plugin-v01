@@ -2,6 +2,7 @@ package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Word;
+import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.swt.custom.Align;
@@ -62,6 +63,17 @@ public class LabelProperty extends UIElementProperty {
 		Button button = new Button(getContainer(), SWT.PUSH);
 		button.setText(Word.PROPERTY_SET_STYLE);
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		button.addListener(SWT.MouseDown, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CLabel obj = (CLabel)getUielement();
+				UIController uiController = obj.getUiController();
+				
+				uiController.setPropertyView(obj, true);
+			}
+		});
 	}
 
 	private void createTextField() {

@@ -21,6 +21,7 @@ import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.ImageProperty;
 import libgdxpluginv01.views.properties.LabelProperty;
+import libgdxpluginv01.views.properties.LabelStyleProperty;
 import libgdxpluginv01.views.properties.Property;
 import libgdxpluginv01.views.properties.SliderProperty;
 import libgdxpluginv01.views.properties.SpriteProperty;
@@ -109,6 +110,26 @@ public class UIController {
 			
 			if (!(view instanceof EmptyProperty))
 				((UIElementProperty)view).setObjectPropertiesToView(uielement);
+		}
+	}
+	
+	public void setPropertyView(UIElement uielement, boolean isStyleView){
+		if (!isStyleView)
+			setPropertyView(uielement);
+		else {
+			Property view = null;
+			switch (uielement.getType()) {
+			case UIElementType.LABEL:
+				view = LabelStyleProperty.getInstance(propertyView.getParent(), ((CLabel)uielement).getStyle());
+				break;
+
+			default:
+				break;
+			}
+			
+			if (view != null){
+				propertyView.setView(view);
+			}
 		}
 	}
 	
