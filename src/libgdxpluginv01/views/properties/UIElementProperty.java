@@ -13,11 +13,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -114,14 +112,18 @@ public abstract class UIElementProperty extends Property{
 		});
 	}
 	
-	private void processLocationX(String text){
+	private void processLocationX(){
 		if (uielement == null) return;
 		
-		if (isValidName(textName.getText())){
-			uielement.setName(textName.getText());
+		if (isValidPositionX(textLocationX.getText())){
+			Rectangle bound = uielement.getBound();
+			
+			bound.x = Integer.parseInt(textLocationX.getText());
+			uielement.setBound(bound);
+			uielement.refresh();
 		} else {
-			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_NAME);
-			textName.setText(uielement.getName());
+			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_X);
+			textLocationY.setText(uielement.getBound().x + "");
 		}
 	}
 	
@@ -140,20 +142,20 @@ public abstract class UIElementProperty extends Property{
 		textLocationX.addListener(SWT.FocusOut, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-				processLocationX(textLocationX.getText());
+				processLocationX();
 			}
 		});
-		textLocationX.addListener(SWT.CHANGED, new Listener() {
+		textLocationX.addListener(SWT.Modify, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-				processLocationX(textLocationX.getText());
+				processLocationX();
 			}
 		});
 		
 		createSlider(container, textLocationX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
 	}
 	
-	private void processLocationY(String text){
+	private void processLocationY(){
 		System.out.println("process");
 		if (uielement == null) return;
 		
@@ -184,13 +186,13 @@ public abstract class UIElementProperty extends Property{
 		textLocationY.addListener(SWT.FocusOut, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-				processLocationY(textLocationY.getText());				
+				processLocationY();				
 			}
 		});
-		textLocationY.addListener(SWT.CHANGED, new Listener() {
+		textLocationY.addListener(SWT.Modify, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-				processLocationY(textLocationY.getText());
+				processLocationY();
 			}
 		});
 		
@@ -208,31 +210,51 @@ public abstract class UIElementProperty extends Property{
 		
 		textSizeWidth = new Text(container, SWT.BORDER);
 		textSizeWidth.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textSizeWidth.addFocusListener(new FocusListener() {
+		textSizeWidth.addListener(SWT.FocusOut, new Listener() {
 			@Override
-			public void focusLost(FocusEvent e) {
-				if (uielement == null) return;
-				
-				if (isValidSizeWidth(textSizeWidth.getText())){
-					Rectangle bound = uielement.getBound();
-					bound.width = Integer.parseInt(textSizeWidth.getText());
-					
-					uielement.setBound(bound);
-					uielement.refresh();
-				} else {
-					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_WIDTH);
-					textSizeWidth.setText(uielement.getBound().width + "");
-				}
+			public void handleEvent(Event arg0) {
+				processSizeWidth();
 			}
-			
+		});
+		textSizeWidth.addListener(SWT.Modify, new Listener() {
 			@Override
-			public void focusGained(FocusEvent e) {
-				
+			public void handleEvent(Event arg0) {
+				processSizeWidth();
 			}
 		});
 		
 		createSlider(container, textSizeWidth, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
 		
+	}
+	
+	private void processSizeWidth(){
+		if (uielement == null) return;
+		
+		if (isValidSizeWidth(textSizeWidth.getText())){
+			Rectangle bound = uielement.getBound();
+			bound.width = Integer.parseInt(textSizeWidth.getText());
+			
+			uielement.setBound(bound);
+			uielement.refresh();
+		} else {
+			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_WIDTH);
+			textSizeWidth.setText(uielement.getBound().width + "");
+		}
+	}
+	
+	private void processSizeHeight(){
+		if (uielement == null) return;
+		
+		if (isValidSizeHeight(textSizeHeight.getText())){
+			Rectangle bound = uielement.getBound();
+			bound.height = Integer.parseInt(textSizeHeight.getText());
+			
+			uielement.setBound(bound);
+			uielement.refresh();
+		} else {
+			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_HEIGHT);
+			textSizeHeight.setText(uielement.getBound().height + "");
+		}
 	}
 	
 	private void createSizeHeightField(){
@@ -249,19 +271,14 @@ public abstract class UIElementProperty extends Property{
 		textSizeHeight.addListener(SWT.FocusOut, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-				if (uielement == null) return;
-				
-				if (isValidSizeHeight(textSizeHeight.getText())){
-					Rectangle bound = uielement.getBound();
-					bound.height = Integer.parseInt(textSizeHeight.getText());
-					
-					uielement.setBound(bound);
-					uielement.refresh();
-				} else {
-					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_HEIGHT);
-					textSizeHeight.setText(uielement.getBound().height + "");
-				}
-				
+				processSizeHeight();
+			}
+		});
+		textSizeHeight.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				System.out.println("Modify height");
+				processSizeHeight();
 			}
 		});
 		

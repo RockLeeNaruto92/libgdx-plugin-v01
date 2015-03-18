@@ -261,7 +261,6 @@ public abstract class UIElement {
 				public void run() {
 					animate(ACTION_UPDATE_TIME);
 					Display.getCurrent().timerExec((int)(ACTION_UPDATE_TIME * 1000), this);
-					System.out.println("on animation thread");
 				}
 			};
 		}
@@ -270,7 +269,7 @@ public abstract class UIElement {
 	}
 	
 	private void animate(float time){
-		for (CAction action : actions) {
+		for (CAction action : getActions()) {
 			action.animate(time);
 		}
 	}
