@@ -331,10 +331,20 @@ public abstract class UIElementProperty extends Property{
 		return true;
 	}
 	
-	private boolean isIntegerNum(String text){
+	public boolean isIntegerNum(String text){
 		for (int i = 0; i < text.length(); i++){
 			if (!Character.isDigit(text.charAt(i)))
 				return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean isFloatNum(String text){
+		try {
+			Float.parseFloat(text);
+		} catch (Exception e){
+			return false;
 		}
 		
 		return true;

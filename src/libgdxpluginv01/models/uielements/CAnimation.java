@@ -25,6 +25,7 @@ public class CAnimation extends UIElement {
 	private int lastFrameNumber;
 	private float lastStateTime;
 	private float stateTime = 0;
+	private float rotation;
 
 	private Runnable runable;
 
@@ -50,7 +51,8 @@ public class CAnimation extends UIElement {
 	
 	private void setDefaultKeyFrames(){
 		for (int i = 1; i < 5; i ++)
-			keyFrames.add(new Image(Display.getCurrent(),  Utility.getFile("datas/default/Animation/bow" + i + ".png").toString()));
+//			keyFrames.add(new Image(Display.getCurrent(),  Utility.getFile("datas/default/Animation/bow" + i + ".png").toString()));
+			keyFrames.add(new Image(Display.getCurrent(), "datas/bow" + i + ".png"));
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import libgdxpluginv01.models.uielements.CSprite;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.models.uielements.UIElementType;
 import libgdxpluginv01.views.PropertyView;
+import libgdxpluginv01.views.properties.AnimationProperty;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
@@ -93,6 +94,11 @@ public class UIController {
 		case UIElementType.IMAGE:
 			view = ImageProperty.getInstance(propertyView.getParent());
 			break;
+			
+		case UIElementType.ANIMATION:
+			view = AnimationProperty.getInstance(propertyView.getParent());
+			break;
+			
 		default:
 			view = EmptyProperty.getInstance(propertyView.getParent());
 			break;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.views.properties.AnimationProperty;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
@@ -39,6 +40,7 @@ public class PropertyView extends ViewPart {
 		properties.add(CheckboxProperty.getInstance(parent));
 		properties.add(SpriteProperty.getInstance(parent));
 		properties.add(ImageProperty.getInstance(parent));
+		properties.add(AnimationProperty.getInstance(parent));
 		
 		return properties;
 	}

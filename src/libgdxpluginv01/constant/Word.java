@@ -12,6 +12,22 @@ public class Word {
 	public static String ALIGN_TOP_RIGHT = "Top right";
 	public static String ALIGN_BOTTOM_LEFT = "Bottom left";
 	public static String ALIGN_BOTTOM_RIGHT = "Bottom right";
+	
+	public static String PLAY_MODE_NORMAL = "Normal";
+	public static String PLAY_MODE_REVERSE = "Reverse";
+	public static String PLAY_MODE_LOOP = "Loop";
+	public static String PLAY_MODE_LOOP_REVERSE = "Loop reverse";
+	public static String PLAY_MODE_PING_PONG = "Ping pong";
+	public static String PLAY_MODE_RANDOM = "Random";
+	
+	
+	public static String PROPERTY_FIT = "Fit";
+	public static String PROPERTY_FILL = "Fill";
+	public static String PROPERTY_FILL_X = "Fill X";
+	public static String PROPERTY_FILL_Y = "Fill Y";
+	public static String PROPERTY_STRETCH = "Stretch";
+	public static String PROPERTY_STRETCH_X = "Stretch X";
+	public static String PROPERTY_STRETCH_Y = "Stretch Y";
 
 	public static String PROPERTY_NAME = "Name";
 	public static String PROPERTY_LOCATION = "Location";
@@ -63,19 +79,19 @@ public class Word {
 	public static String PROPERTY_CHECKED_OVER_FONT_COLOR = "Checked over font color";
 	public static String PROPERTY_BACKGROUND = "Background";
 	public static String PROPERTY_SCALING = "Scaling";
-	public static String PROPERTY_FIT = "Fit";
-	public static String PROPERTY_FILL = "Fill";
-	public static String PROPERTY_FILL_X = "Fill X";
-	public static String PROPERTY_FILL_Y = "Fill Y";
-	public static String PROPERTY_STRETCH = "Stretch";
-	public static String PROPERTY_STRETCH_X = "Stretch X";
-	public static String PROPERTY_STRETCH_Y = "Stretch Y";
 	public static String PROPERTY_NONE = "None";
-	
+	public static String PROPERTY_ORIGIN = "Origin";
+	public static String PROPERTY_PLAY_MODE = "Play mode";
+	public static String PROPERTY_FRAME_DURATION = "Time per frame";
+	public static String PROPERTY_KEY_FRAMES = "Images";
+	public static String PROPERTY_COUNT = "Count";
+	public static String PROPERTY_FRAME = "Frame ";
+	 
 	public static String ERROR = "Error";
 	public static String ERROR_INVALID_NAME = "Invalid name! Name must be not null, not start by number, not contain special chacracters: \"" + Parameter.SPECIAL_CHARACTER + "\"";
 	public static String ERROR_INVALID_X = "X must be integer number.";
 	public static String ERROR_INVALID_Y = "Y must be integer number.";
 	public static String ERROR_INVALID_WIDTH = "Width must be integer number.";
 	public static String ERROR_INVALID_HEIGHT = "Height must be integer number.";
+	public static String ERROR_INVALID_COUNT = "Count must be integer number";
 }
