@@ -1,7 +1,5 @@
 package libgdxpluginv01.models.uielements;
 
-import javax.rmi.CORBA.Tie;
-
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
@@ -31,7 +29,6 @@ public class CMoveToAction extends CAction {
 		velocity = new Point(0, 0);
 		velocity.x = (int)(1f / timePerPixel);
 		velocity.y = (int)(1f / timePerPixel);
-		System.out.println(velocity);
 	}
 
 	public int getX() {
@@ -95,9 +92,6 @@ public class CMoveToAction extends CAction {
 		if (bound.x > this.x && bound.y > this.y){
 			setCompleted(true);
 		}
-		
-		System.out.println(bound);
-		System.out.println(stateTime + "-" + timePerPixel);
 		
 		target.setBound(bound);
 		target.refresh();
