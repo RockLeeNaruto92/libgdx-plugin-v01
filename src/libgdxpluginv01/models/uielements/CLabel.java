@@ -6,6 +6,7 @@ import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -200,6 +201,7 @@ public class CLabel extends UIElement {
 		
 		public LabelStyle(){
 			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
+			fontColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		}
 		
 		public LabelStyle(BitmapFont font, Color fontColor){

@@ -12,6 +12,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -126,7 +127,7 @@ public abstract class StyleProperty extends Property{
 		label.setText(text);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
 		
-		Text colorText = new Text(container, SWT.BORDER | SWT.READ_ONLY);
+		final Text colorText = new Text(container, SWT.BORDER | SWT.READ_ONLY);
 		if (color == null)
 			color = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		colorText.setBackground(color);
@@ -135,6 +136,17 @@ public abstract class StyleProperty extends Property{
 		Button button = new Button(container, SWT.PUSH);
 		button.setText(Word.PROPERTY_SET);
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		button.addListener(SWT.MouseDown, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				RGB selectColor = Utility.openChooseColorDialog(container, colorText.getBackground().getRGB());
+				
+				if (selectColor == null) return;
+				
+				setPropertyToView(getObject(), new Object[]{selectColor});
+				colorText.setBackground(new Color(Display.getCurrent(), selectColor));
+			}
+		});
 		
 		return colorText;
 	}
