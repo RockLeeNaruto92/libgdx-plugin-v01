@@ -12,13 +12,17 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.keys.Key;
 
 public class AnimationProperty extends UIElementProperty {
 	private static AnimationProperty _instance;
@@ -99,15 +103,42 @@ public class AnimationProperty extends UIElementProperty {
 		
 		textCount = new Text(getContainer(), SWT.BORDER);
 		textCount.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
+		textCount.setText("0");
 		
 		textCount.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (getUielement() == null) return;
 				
+				System.out.println("Focus lost");
+				
 				CAnimation obj = (CAnimation)getUielement();
 				if (isValidCount(textCount.getText())){
-					obj.setCount(Integer.parseInt(textCount.getText()));
+					// create or remove frame text
+					int value = Integer.parseInt(textCount.getText());
+					
+					System.out.println("Distance: " + (value - obj.getCount()));
+					System.out.println("Value: " + value);
+					System.out.println("count: " + obj.getCount());
+					
+					if (value > obj.getCount()){
+						for (int i = 0; i < value - obj.getCount(); i++){
+							Text frame = createAFrameField();
+							textFrames.add(frame);
+						}
+					} else {
+						for (int i = 0; i < obj.getCount() - value; i++){
+							Text frame = textFrames.remove(textFrames.size() - 1);
+							frame.dispose();
+						}
+					}
+					
+					getContainer().layout();
+					getContainer().setSize(getDefaultSize());
+					
+					// set obj count
+					obj.setCount(value);
+					
 				} else {
 					MessageDialog.openError(obj.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_COUNT);
 					textCount.setText(obj.getCount() + "");
@@ -118,6 +149,54 @@ public class AnimationProperty extends UIElementProperty {
 			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+		});
+		
+		textCount.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				System.out.println(e.keyCode);
+				if (e.keyCode == 13){ // Enter
+					if (getUielement() == null) return;
+					
+					System.out.println("Press enter");
+					
+					CAnimation obj = (CAnimation)getUielement();
+					if (isValidCount(textCount.getText())){
+						// create or remove frame text
+						int value = Integer.parseInt(textCount.getText());
+						Control[] changed = new Control[value > obj.getCount() ? value - obj.getCount() : obj.getCount() - value];
+						int m = 0;
+						
+						if (value > obj.getCount()){
+							for (int i = 0; i < value - obj.getCount(); i++){
+								Text frame = createAFrameField();
+								changed[m++] = frame;
+								textFrames.add(frame);
+							}
+						} else {
+							for (int i = 0; i < obj.getCount() - value; i++){
+								Text frame = textFrames.remove(textFrames.size() - 1);
+								changed[m++] = frame;
+							}
+						}
+						
+						getContainer().layout(changed);
+						
+						// set obj count
+						obj.setCount(value);
+						
+					} else {
+						MessageDialog.openError(obj.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_COUNT);
+						textCount.setText(obj.getCount() + "");
+					}
+				}
 			}
 		});
 	}
