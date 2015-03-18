@@ -94,4 +94,6 @@ public class Word {
 	public static String ERROR_INVALID_WIDTH = "Width must be integer number.";
 	public static String ERROR_INVALID_HEIGHT = "Height must be integer number.";
 	public static String ERROR_INVALID_COUNT = "Count must be integer number";
+	public static String ERROR_INVALID_FONT_SCALE_X = "Font scale x must be float number";
+	public static String ERROR_INVALID_FONT_SCALE_Y = "Font scale y must be float number";
 }

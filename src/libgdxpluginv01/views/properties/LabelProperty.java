@@ -6,6 +6,7 @@ import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.swt.custom.Align;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
@@ -138,12 +140,24 @@ public class LabelProperty extends UIElementProperty {
 		
 		textFontScaleX = new Text(getContainer(), SWT.BORDER);
 		textFontScaleX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textFontScaleX.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CLabel obj = (CLabel)getUielement();
+				
+				if (isValidFontScaleX(textFontScaleX.getText())){
+					obj.setFontScaleX(Float.parseFloat(textFontScaleX.getText()));
+					obj.redraw();
+				} else {
+					MessageDialog.openError(obj.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_FONT_SCALE_X);
+					textFontScaleX.setText(obj.getFontScaleX() + "");
+				}
+			}
+		});
 		
-		Slider sliderX = new Slider(getContainer(), SWT.HORIZONTAL);
-		sliderX.setMinimum(Parameter.FONT_SCALE_RANGE_X.x);
-		sliderX.setMaximum(Parameter.FONT_SCALE_RANGE_X.y);
-		sliderX.setIncrement(Parameter.SLIDER_STEP);
-		sliderX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(getContainer(), textFontScaleX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 2);
 	}
 	
 	private void createFontScaleYField(){
@@ -158,12 +172,24 @@ public class LabelProperty extends UIElementProperty {
 		
 		textFontScaleY = new Text(getContainer(), SWT.BORDER);
 		textFontScaleY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textFontScaleY.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CLabel obj = (CLabel)getUielement();
+				
+				if (isValidFontScaleY(textFontScaleY.getText())){
+					obj.setFontScaleY(Float.parseFloat(textFontScaleY.getText()));
+					obj.redraw();
+				} else {
+					MessageDialog.openError(obj.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_FONT_SCALE_Y);
+					textFontScaleY.setText(obj.getFontScaleY() + "");
+				}
+			}
+		});
 		
-		Slider sliderY = new Slider(getContainer(), SWT.HORIZONTAL);
-		sliderY.setMinimum(Parameter.FONT_SCALE_RANGE_X.x);
-		sliderY.setMaximum(Parameter.FONT_SCALE_RANGE_X.y);
-		sliderY.setIncrement(Parameter.SLIDER_STEP);
-		sliderY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(getContainer(), textFontScaleX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 2);
 	}
 	
 
@@ -197,4 +223,11 @@ public class LabelProperty extends UIElementProperty {
 		return getContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 	}
 
+	private boolean isValidFontScaleX(String fsx){
+		return isFloatNum(fsx);
+	}
+	
+	private boolean isValidFontScaleY(String fsy){
+		return isFloatNum(fsy);
+	}
 }
