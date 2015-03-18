@@ -5,6 +5,7 @@ import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.CLabel.LabelStyle;
 
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -13,6 +14,7 @@ import org.eclipse.swt.widgets.Text;
 public class LabelStyleProperty extends StyleProperty {
 	private static LabelStyleProperty _instance;
 	private Text textFont, textFontColor;
+	private Composite image;
 
 	public LabelStyleProperty(Composite parent, Object object) {
 		super(parent, object);
@@ -30,7 +32,7 @@ public class LabelStyleProperty extends StyleProperty {
 	public void createContents() {
 		textFont = createFontField(null, Word.PROPERTY_FONT);
 		textFontColor = createColorField(Word.PROPERTY_COLOR, null);
-		createImageField(Word.PROPERTY_BACKGROUND, null);
+		image = createImageField(Word.PROPERTY_BACKGROUND, null);
 	}
 
 	@Override
@@ -47,12 +49,18 @@ public class LabelStyleProperty extends StyleProperty {
 			else if (datas[0] instanceof RGB){
 				style.fontColor.dispose();
 				style.fontColor = new Color(Display.getCurrent(), (RGB)datas[0]);
+			} else if (datas[0] instanceof Image){
+				if (style.background != null)
+					style.background.dispose();
+				style.background = (Image)datas[0];
 			}
+				
 		}
 		
 		textFont.setText(style.font.getName());
 		textFontColor.setBackground(style.fontColor);
-		
+		if (style.background != null)
+			image.setBackgroundImage(style.background);
 		// redraw
 		obj.redraw();
 	}

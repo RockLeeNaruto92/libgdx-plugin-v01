@@ -11,6 +11,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
@@ -66,6 +67,12 @@ public class CLabel extends UIElement {
 		int x = 0, y = 0;
 		Point size = getSize();
 		Point defaultSize = getDefaultSize();
+		
+		// draw background
+		if (style.background != null){
+			Rectangle bound = style.background.getBounds();
+			e.gc.drawImage(style.background, 0, 0, bound.width, bound.height, 0, 0, size.x, size.y);
+		}
 		
 		switch (labelAlign) {
 		case Align.left:

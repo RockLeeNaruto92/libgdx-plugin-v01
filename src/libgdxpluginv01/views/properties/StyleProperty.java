@@ -92,6 +92,17 @@ public abstract class StyleProperty extends Property{
 		Button button = new Button(container, SWT.PUSH);
 		button.setText(Word.PROPERTY_SET);
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		button.addListener(SWT.MouseDown, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				String imageFile = Utility.openSelectFileDialog(container, new String[]{"*.jpg", "*.png"});
+				
+				if (imageFile == null) return;
+				
+				Image image = new Image(Display.getCurrent(), imageFile);
+				setPropertyToView(getObject(), new Object[]{image});
+			}
+		});
 		
 		return imgContainer;
 	}
