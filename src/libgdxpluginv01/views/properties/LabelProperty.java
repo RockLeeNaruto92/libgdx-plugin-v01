@@ -80,11 +80,10 @@ public class LabelProperty extends UIElementProperty {
 				obj.setText(textText.getText());
 				
 				Point size = obj.getDefaultSize();
-				System.out.println(size);
 				Rectangle bound = obj.getBound();
 				
-				bound.width = size.x;
-				bound.height = size.y;
+				if (bound.width < size.x) bound.width = size.x;
+				if (bound.height < size.y) bound.height = size.y;
 				
 				obj.setBound(bound);
 				
@@ -104,6 +103,17 @@ public class LabelProperty extends UIElementProperty {
 		comboAlign.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 		comboAlign.setItems(Align.getStrings());
 		comboAlign.select(0);
+		comboAlign.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CLabel obj = (CLabel)getUielement();
+				
+				obj.setLabelAlign(Align.getAlign(comboAlign.getSelectionIndex()));
+				obj.redraw();
+			}
+		});
 	}
 
 	private void createWrapField() {

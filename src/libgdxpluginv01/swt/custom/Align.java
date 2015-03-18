@@ -49,4 +49,28 @@ public class Align {
 			return -1;
 		}
 	}
+	
+	public static int getAlign(int index){
+		switch (index) {
+		case 0:
+			return left;
+		case 1:
+			return right;
+		case 2:
+			return top;
+		case 3:
+			return bottom;
+		case 4:
+			return topLeft;
+		case 5:
+			return topRight;
+		case 6:
+			return bottomLeft;
+		case 7:
+			return bottomRight;
+		default:
+			break;
+		}
+		return -1;
+	}
 }
