@@ -8,10 +8,13 @@ import libgdxpluginv01.swt.custom.Align;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
@@ -67,6 +70,28 @@ public class LabelProperty extends UIElementProperty {
 		
 		textText = new Text(getContainer(), SWT.BORDER);
 		textText.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		textText.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CLabel obj = (CLabel)getUielement();
+				
+				obj.setText(textText.getText());
+				
+				Point size = obj.getDefaultSize();
+				System.out.println(size);
+				Rectangle bound = obj.getBound();
+				
+				bound.width = size.x;
+				bound.height = size.y;
+				
+				obj.setBound(bound);
+				
+				obj.refresh();
+				obj.redraw();
+			}
+		});
 	}
 
 	private void createAlignField() {

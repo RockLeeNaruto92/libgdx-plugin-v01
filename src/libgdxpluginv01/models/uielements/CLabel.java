@@ -42,7 +42,7 @@ public class CLabel extends UIElement {
 	@Override
 	public Point getDefaultSize() {
 		// TODO Auto-generated method stub
-		return getStyle().font.getActualSize(getName(), 1, 1);
+		return getStyle().font.getActualSize(getText(), 1, 1);
 	}
 
 	@Override
