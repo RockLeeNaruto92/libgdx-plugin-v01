@@ -111,16 +111,10 @@ public class AnimationProperty extends UIElementProperty {
 			public void focusLost(FocusEvent e) {
 				if (getUielement() == null) return;
 				
-				System.out.println("Focus lost");
-				
 				CAnimation obj = (CAnimation)getUielement();
 				if (isValidCount(textCount.getText())){
 					// create or remove frame text
 					int value = Integer.parseInt(textCount.getText());
-					
-					System.out.println("Distance: " + (value - obj.getCount()));
-					System.out.println("Value: " + value);
-					System.out.println("count: " + obj.getCount());
 					
 					if (value > obj.getCount()){
 						for (int i = 0; i < value - obj.getCount(); i++){
