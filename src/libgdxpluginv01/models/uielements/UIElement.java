@@ -1,5 +1,8 @@
 package libgdxpluginv01.models.uielements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.CustomComposite;
@@ -16,9 +19,11 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 public abstract class UIElement {
 	public static int i = 0;
+	private static float ACTION_UPDATE_TIME = 0.013f;
 	
 	private Rectangle bound;
 	private CustomComposite container;
@@ -32,6 +37,9 @@ public abstract class UIElement {
 	private boolean selected = true;
 	private UIController uiController;
 	private int type;
+	
+	private Runnable animationThread;
+	private List<CAction> actions;
 	
 	private Point distanceWithClickedPoint;
 
@@ -55,6 +63,8 @@ public abstract class UIElement {
 		
 		addPaintListener();
 		addMouseListener();
+		
+		Display.getCurrent().timerExec((int)(ACTION_UPDATE_TIME * 1000), getAnimationThread());
 	}
 	
 	public void addPaintListener(){
@@ -135,6 +145,7 @@ public abstract class UIElement {
 	public abstract void onMouseMove();
 	
 	public void remove(){
+		Display.getCurrent().timerExec(-1, getAnimationThread());
 		container.dispose();
 	}
 
@@ -241,5 +252,45 @@ public abstract class UIElement {
 	
 	public void refresh(){
 		container.refresh();
+	}
+
+	public Runnable getAnimationThread() {
+		if (animationThread == null){
+			animationThread = new Runnable() {
+				@Override
+				public void run() {
+					animate(ACTION_UPDATE_TIME);
+					Display.getCurrent().timerExec((int)(ACTION_UPDATE_TIME * 1000), this);
+					System.out.println("on animation thread");
+				}
+			};
+		}
+		
+		return animationThread;
+	}
+	
+	private void animate(float time){
+		for (CAction action : actions) {
+			action.animate(time);
+		}
+	}
+
+	public void setAnimationThread(Runnable animationThread) {
+		this.animationThread = animationThread;
+	}
+
+	public List<CAction> getActions() {
+		if (actions == null){
+			actions = new ArrayList<CAction>();
+		}
+		return actions;
+	}
+
+	public void setActions(List<CAction> actions) {
+		this.actions = actions;
+	}
+	
+	public void addAction(CAction action){
+		getActions().add(action);
 	}
 }
