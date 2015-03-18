@@ -33,7 +33,7 @@ public class CheckboxStyleProperty extends ButtonStyleProperty{
 		
 		if (style == null) return;
 		
-		font = createFontField(Word.PROPERTY_FONT, style.font.getPath());
+//		font = createFontField(Word.PROPERTY_FONT, style.font.getPath());
 		fontColor = createColorField(Word.PROPERTY_FONT_COLOR, style.fontColor);
 		downFontColor = createColorField(Word.PROPERTY_DOWN_FONT_COLOR, style.downFontColor);
 		overFontColor = createColorField(Word.PROPERTY_OVER, style.overFontColor);

@@ -156,7 +156,6 @@ public abstract class UIElementProperty extends Property{
 	}
 	
 	private void processLocationY(){
-		System.out.println("process");
 		if (uielement == null) return;
 		
 		if (isValidPositionY(textLocationY.getText())){
@@ -277,7 +276,6 @@ public abstract class UIElementProperty extends Property{
 		textSizeHeight.addListener(SWT.Modify, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
-				System.out.println("Modify height");
 				processSizeHeight();
 			}
 		});

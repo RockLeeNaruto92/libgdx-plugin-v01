@@ -7,7 +7,10 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.osgi.framework.Bundle;
 
 public class Utility {
@@ -45,5 +48,16 @@ public class Utility {
 		}
 		
 		return rect;
+	}
+	
+	public static String openSelectFileDialog(Composite parent, String[] filters){
+		FileDialog fd = new FileDialog(parent.getShell(), SWT.OPEN);
+
+		fd.setText(Word.OPEN);
+		fd.setFilterPath("C:/");
+		fd.setFilterExtensions(filters);
+		String selected = fd.open();
+		
+		return selected;
 	}
 }

@@ -59,7 +59,6 @@ public class AnimationProperty extends UIElementProperty {
 		CAnimation obj = (CAnimation)getUielement();
 		
 		if (obj == null){
-			System.out.println("obj null");
 			return;
 		}
 		

@@ -1,7 +1,9 @@
 package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
+import libgdxpluginv01.swt.custom.BitmapFont;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -16,7 +18,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class StyleProperty extends Property{
@@ -91,18 +95,28 @@ public abstract class StyleProperty extends Property{
 		return imgContainer;
 	}
 	
-	protected Text createFontField(String text, String fontName) {
+	protected Text createFontField(final BitmapFont font, String text) {
 		Label label = new Label(container, SWT.NONE);
 		label.setText(text);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
 		
-		Text fontText = new Text(container, SWT.BORDER | SWT.READ_ONLY);
-		fontText.setText(fontName);
+		final Text fontText = new Text(container, SWT.BORDER | SWT.READ_ONLY);
+		fontText.setText(font == null ? "null" : font.getName());
 		fontText.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
 		
 		Button button = new Button(container, SWT.PUSH);
 		button.setText(Word.PROPERTY_SET);
 		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		button.addListener(SWT.MouseDown, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				String fontFile = Utility.openSelectFileDialog(container.getShell(), new String[]{"*.fnt"});
+				
+				if (fontFile == null) return;
+				
+				setPropertyToView(getObject(), new Object[]{fontFile});
+			}
+		});
 		
 		return fontText;
 	}
@@ -132,4 +146,6 @@ public abstract class StyleProperty extends Property{
 	public Object getObject(){
 		return this.object;
 	}
+	
+	public abstract void setPropertyToView(Object object, Object[] datas);
 }

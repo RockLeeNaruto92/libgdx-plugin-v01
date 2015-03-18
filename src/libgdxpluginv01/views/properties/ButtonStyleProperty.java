@@ -31,4 +31,9 @@ public class ButtonStyleProperty extends StyleProperty {
 		over = createImageField(Word.PROPERTY_OVER, ((ButtonStyle)getObject()).over);
 		checkover = createImageField(Word.PROPERTY_CHECKED_OVER, ((ButtonStyle)getObject()).checkedOver);
 	}
+
+	@Override
+	public void setPropertyToView(Object object, Object[] datas) {
+		
+	}
 }

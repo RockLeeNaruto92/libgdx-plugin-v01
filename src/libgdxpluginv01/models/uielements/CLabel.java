@@ -20,7 +20,7 @@ public class CLabel extends UIElement {
 	private boolean ellipsis;
 	private String text;
 	
-	private LabelStyle style;
+	private LabelStyle style ;
 	
 	public CLabel(Composite root, Point location, UIController uiController,
 			int type) {
@@ -100,7 +100,6 @@ public class CLabel extends UIElement {
 			y = 0;
 			break;
 		}
-		System.out.println("Font scale y : " + fontScaleY );
 		style.font.drawString(e.gc, getText(), x, y, fontScaleX, fontScaleY);
 	}
 
@@ -194,7 +193,7 @@ public class CLabel extends UIElement {
 		this.style = style;
 	}
 
-	class LabelStyle{
+	public class LabelStyle{
 		public BitmapFont font;
 		public Color fontColor;
 		public Image background;

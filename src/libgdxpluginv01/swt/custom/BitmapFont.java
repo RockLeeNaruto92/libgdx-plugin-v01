@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import libgdxpluginv01.constant.Utility;
-
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -49,6 +47,10 @@ public class BitmapFont {
 		return path.substring(0, path.lastIndexOf('\\') + 1);
 	}
 	
+	public String getName(){
+		return this.fontFileName;
+	}
+	
 	public String getPath(){
 		return this.path;
 	}
@@ -56,7 +58,7 @@ public class BitmapFont {
 	private void readCharacters(){
 		Scanner scanner = null;
 		try {
-			scanner = new Scanner(Utility.getFile("datas/default/Font/default.fnt"));
+			scanner = new Scanner(new File(path + fontFileName));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,7 +73,7 @@ public class BitmapFont {
 	
 	private void openImages(){
 		for (int i = 0; i < pages; i++){
-			images.add(new Image(display, "D:/default.png"));
+			images.add(new Image(display, path + imgFileNames.get(i)));
 		}
 	}
 
@@ -217,7 +219,8 @@ public class BitmapFont {
 	}
 	
 	public void dispose(){
-		for (Image image : images) {
+		while (images.size() != 0){
+			Image image = images.remove(0);
 			image.dispose();
 		}
 	}
@@ -261,6 +264,15 @@ public class BitmapFont {
 		}
 		
 		return new Point(sumWidth, maxHeight);
+	}
+	
+	public void setFont(String fontFilePath){
+		this.fontFileName = getName(fontFilePath);
+		this.path = getPath(fontFilePath);
+		
+		dispose();
+		readCharacters();
+		
 	}
 	
 	class CCharacter {

@@ -10,6 +10,7 @@ import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CImage;
 import libgdxpluginv01.models.uielements.CLabel;
+import libgdxpluginv01.models.uielements.CLabel.LabelStyle;
 import libgdxpluginv01.models.uielements.CSlider;
 import libgdxpluginv01.models.uielements.CSprite;
 import libgdxpluginv01.models.uielements.UIElement;
@@ -25,6 +26,7 @@ import libgdxpluginv01.views.properties.LabelStyleProperty;
 import libgdxpluginv01.views.properties.Property;
 import libgdxpluginv01.views.properties.SliderProperty;
 import libgdxpluginv01.views.properties.SpriteProperty;
+import libgdxpluginv01.views.properties.StyleProperty;
 import libgdxpluginv01.views.properties.UIElementProperty;
 
 import org.eclipse.swt.SWT;
@@ -118,6 +120,7 @@ public class UIController {
 			setPropertyView(uielement);
 		else {
 			Property view = null;
+			
 			switch (uielement.getType()) {
 			case UIElementType.LABEL:
 				view = LabelStyleProperty.getInstance(propertyView.getParent(), ((CLabel)uielement).getStyle());
@@ -129,6 +132,7 @@ public class UIController {
 			
 			if (view != null){
 				propertyView.setView(view);
+				((StyleProperty)view).setPropertyToView(uielement, null);
 			}
 		}
 	}
