@@ -18,7 +18,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
@@ -97,9 +99,9 @@ public abstract class UIElementProperty extends Property{
 		
 		textName = new Text(container, SWT.BORDER);
 		textName.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		textName.addFocusListener(new FocusListener() {
+		textName.addListener(SWT.FocusOut, new Listener() {
 			@Override
-			public void focusLost(FocusEvent e) {
+			public void handleEvent(Event arg0) {
 				if (uielement == null) return;
 				
 				if (isValidName(textName.getText())){
@@ -109,11 +111,18 @@ public abstract class UIElementProperty extends Property{
 					textName.setText(uielement.getName());
 				}
 			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-			}
 		});
+	}
+	
+	private void processLocationX(String text){
+		if (uielement == null) return;
+		
+		if (isValidName(textName.getText())){
+			uielement.setName(textName.getText());
+		} else {
+			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_NAME);
+			textName.setText(uielement.getName());
+		}
 	}
 	
 	private void createLocationXField(){
@@ -128,34 +137,36 @@ public abstract class UIElementProperty extends Property{
 		
 		textLocationX = new Text(container, SWT.BORDER);
 		textLocationX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textLocationX.addFocusListener(new FocusListener() {
+		textLocationX.addListener(SWT.FocusOut, new Listener() {
 			@Override
-			public void focusLost(FocusEvent e) {
-				if (uielement == null) return;
-				
-				if (isValidPositionX(textLocationX.getText())){
-					Rectangle bound = uielement.getBound();
-					bound.x = Integer.parseInt(textLocationX.getText());
-					
-					uielement.setBound(bound);
-					uielement.refresh();
-				} else {
-					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_X);
-					textLocationX.setText(uielement.getBound().x + "");
-				}
+			public void handleEvent(Event arg0) {
+				processLocationX(textLocationX.getText());
 			}
-			
+		});
+		textLocationX.addListener(SWT.CHANGED, new Listener() {
 			@Override
-			public void focusGained(FocusEvent e) {
-				
+			public void handleEvent(Event arg0) {
+				processLocationX(textLocationX.getText());
 			}
 		});
 		
-		Slider sliderX = new Slider(container, SWT.HORIZONTAL);
-		sliderX.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		sliderX.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		sliderX.setIncrement(Parameter.SLIDER_STEP);
-		sliderX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(container, textLocationX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+	}
+	
+	private void processLocationY(String text){
+		System.out.println("process");
+		if (uielement == null) return;
+		
+		if (isValidPositionY(textLocationY.getText())){
+			Rectangle bound = uielement.getBound();
+			bound.y = Integer.parseInt(textLocationY.getText());
+			
+			uielement.setBound(bound);
+			uielement.refresh();
+		} else {
+			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_Y);
+			textLocationY.setText(uielement.getBound().y + "");
+		}
 	}
 	
 	private void createLocationYField(){
@@ -168,37 +179,22 @@ public abstract class UIElementProperty extends Property{
 		label.setText(Word.PROPERTY_Y);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
 		
-		
 		textLocationY = new Text(container, SWT.BORDER);
 		textLocationY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textLocationY.addFocusListener(new FocusListener() {
+		textLocationY.addListener(SWT.FocusOut, new Listener() {
 			@Override
-			public void focusLost(FocusEvent e) {
-				if (uielement == null) return;
-				
-				if (isValidPositionY(textLocationY.getText())){
-					Rectangle bound = uielement.getBound();
-					bound.y = Integer.parseInt(textLocationY.getText());
-					
-					uielement.setBound(bound);
-					uielement.refresh();
-				} else {
-					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_Y);
-					textLocationY.setText(uielement.getBound().y + "");
-				}
+			public void handleEvent(Event arg0) {
+				processLocationY(textLocationY.getText());				
 			}
-			
+		});
+		textLocationY.addListener(SWT.CHANGED, new Listener() {
 			@Override
-			public void focusGained(FocusEvent e) {
-				
+			public void handleEvent(Event arg0) {
+				processLocationY(textLocationY.getText());
 			}
 		});
 		
-		Slider sliderY = new Slider(container, SWT.HORIZONTAL);
-		sliderY.setMinimum(Parameter.LOCATION_RANGE_Y.x);
-		sliderY.setMaximum(Parameter.LOCATION_RANGE_Y.y);
-		sliderY.setIncrement(Parameter.SLIDER_STEP);
-		sliderY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(container, textLocationY, Parameter.LOCATION_RANGE_Y, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
 	}
 	
 	private void createSizeWidthField(){
@@ -235,11 +231,8 @@ public abstract class UIElementProperty extends Property{
 			}
 		});
 		
-		Slider sliderY = new Slider(container, SWT.HORIZONTAL);
-		sliderY.setMinimum(Parameter.SIZE_RANGE_WIDTH.x);
-		sliderY.setMaximum(Parameter.SIZE_RANGE_WIDTH.y);
-		sliderY.setIncrement(Parameter.SLIDER_STEP);
-		sliderY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(container, textSizeWidth, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+		
 	}
 	
 	private void createSizeHeightField(){
@@ -253,9 +246,9 @@ public abstract class UIElementProperty extends Property{
 		
 		textSizeHeight = new Text(container, SWT.BORDER);
 		textSizeHeight.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textSizeHeight.addFocusListener(new FocusListener() {
+		textSizeHeight.addListener(SWT.FocusOut, new Listener() {
 			@Override
-			public void focusLost(FocusEvent e) {
+			public void handleEvent(Event arg0) {
 				if (uielement == null) return;
 				
 				if (isValidSizeHeight(textSizeHeight.getText())){
@@ -268,19 +261,11 @@ public abstract class UIElementProperty extends Property{
 					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_HEIGHT);
 					textSizeHeight.setText(uielement.getBound().height + "");
 				}
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
 				
 			}
 		});
 		
-		Slider sliderY = new Slider(container, SWT.HORIZONTAL);
-		sliderY.setMinimum(Parameter.SIZE_RANGE_HEIGHT.x);
-		sliderY.setMaximum(Parameter.SIZE_RANGE_HEIGHT.y);
-		sliderY.setIncrement(Parameter.SLIDER_STEP);
-		sliderY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(container, textSizeHeight, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
 	}
 	
 	private void createVisbleField(){
@@ -364,5 +349,22 @@ public abstract class UIElementProperty extends Property{
 	
 	private boolean isValidSizeHeight(String height){
 		return isIntegerNum(height);
+	}
+	
+	public Slider createSlider(Composite parent, final Text target, Point range, int step, int width, int height, int horizontalSpan){
+		final Slider slider = new Slider(parent, SWT.HORIZONTAL);
+		
+		slider.setMinimum(range.x);
+		slider.setMaximum(range.y);
+		slider.setIncrement(step);
+		slider.setLayoutData(createLayoutData(width, height, horizontalSpan));
+		slider.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event e) {
+				target.setText(slider.getSelection() + "");
+			}
+		});
+		
+		return slider;
 	}
 }
