@@ -91,21 +91,12 @@ public class CButton extends UIElement {
 		
 		if (disabled){
 			drawable = getStyle().disabled;
-			System.out.println("Draw disabled");
 		} else if (checked){
 			drawable = over ? getStyle().checkedOver : getStyle().checked;
-			if (over)
-				System.out.println("draw checked over)");
-			else System.out.println("draw checked");
 		} else {
 			if (up){
 				drawable = over ? getStyle().over : getStyle().up;
-				if (over)
-					System.out.println("draw over ");
-				else 
-					System.out.println("draw up");
 			} else {
-				System.out.println("draw down");
 				drawable = getStyle().down;
 			}
 		}

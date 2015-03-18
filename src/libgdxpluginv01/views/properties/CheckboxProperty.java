@@ -6,11 +6,14 @@ import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.swt.custom.Align;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
@@ -57,12 +60,28 @@ public class CheckboxProperty extends ButtonProperty{
 		
 		textPadBottom = new Text(getContainer(), SWT.BORDER);
 		textPadBottom.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textPadBottom.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CCheckbox uielement = (CCheckbox)getUielement();
+				
+				if (isValidTextPadBottom(textPadBottom.getText())){
+					uielement.setPadBottom(Integer.parseInt(textPadBottom.getText()));
+					uielement.redraw();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_PAD_BOTTOM);
+					textPadBottom.setText(uielement.getPadBottom() + "");
+				}
+			}
+		});
 		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(getContainer(), textPadBottom, Parameter.LOCATION_RANGE_X, 1, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+	}
+	
+	private boolean isValidTextPadBottom(String text){
+		return isIntegerNum(text);
 	}
 
 	private void createPadTopField() {
@@ -78,16 +97,31 @@ public class CheckboxProperty extends ButtonProperty{
 		
 		textPadTop = new Text(getContainer(), SWT.BORDER);
 		textPadTop.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textPadTop.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CCheckbox uielement = (CCheckbox)getUielement();
+				
+				if (isValidTextPadTop(textPadTop.getText())){
+					uielement.setPadTop(Integer.parseInt(textPadTop.getText()));
+					uielement.redraw();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_PAD_TOP);
+					textPadTop.setText(uielement.getPadTop() + "");
+				}
+			}
+		});
 		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(getContainer(), textPadTop, Parameter.LOCATION_RANGE_X, 1, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+	}
+
+	private boolean isValidTextPadTop(String text) {
+		return isIntegerNum(text);
 	}
 
 	private void createPadRightField() {
-		// TODO Auto-generated method stub
 		Label label = new Label(getContainer(), SWT.NONE);
 		
 		label.setText("");
@@ -99,16 +133,31 @@ public class CheckboxProperty extends ButtonProperty{
 		
 		textPadRight = new Text(getContainer(), SWT.BORDER);
 		textPadRight.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textPadRight.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CCheckbox uielement = (CCheckbox)getUielement();
+				
+				if (isValidTextPadRight(textPadRight.getText())){
+					uielement.setPadRight(Integer.parseInt(textPadRight.getText()));
+					uielement.redraw();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_PAD_RIGHT);
+					textPadRight.setText(uielement.getPadRight() + "");
+				}
+			}
+		});
 		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(getContainer(), textPadRight, Parameter.LOCATION_RANGE_X, 1, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+	}
+	
+	private boolean isValidTextPadRight(String text) {
+		return isFloatNum(text);
 	}
 
 	private void createPadLeftField() {
-		// TODO Auto-generated method stub
 		Label label = new Label(getContainer(), SWT.NONE);
 		
 		label.setText(Word.PROPERTY_PAD);
@@ -120,12 +169,28 @@ public class CheckboxProperty extends ButtonProperty{
 		
 		textPadLeft = new Text(getContainer(), SWT.BORDER);
 		textPadLeft.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+		textPadLeft.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				
+				CCheckbox uielement = (CCheckbox)getUielement();
+				
+				if (isValidTextPadLeft(textPadLeft.getText())){
+					uielement.setPadLeft(Integer.parseInt(textPadLeft.getText()));
+					uielement.redraw();
+				} else {
+					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_PAD_LEFT);
+					textPadLeft.setText(uielement.getPadLeft() + "");
+				}
+			}
+		});
 		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		createSlider(getContainer(), textPadLeft, Parameter.LOCATION_RANGE_X, 1, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+	}
+	
+	private boolean isValidTextPadLeft(String text){
+		return isIntegerNum(text);
 	}
 
 	private void createTextField() {
@@ -136,6 +201,16 @@ public class CheckboxProperty extends ButtonProperty{
 		
 		textText = new Text(getContainer(), SWT.BORDER);
 		textText.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		textText.addListener(SWT.Modify, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				if (getUielement() == null) return;
+				CCheckbox uielement = (CCheckbox)getUielement();
+				
+				uielement.setText(textText.getText());
+				uielement.redraw();
+			}
+		});
 	}
 	
 	private void createAlignField() {
@@ -148,6 +223,13 @@ public class CheckboxProperty extends ButtonProperty{
 		comboAlign.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
 		comboAlign.setItems(Align.getStrings());
 		comboAlign.select(0);
+		comboAlign.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	@Override

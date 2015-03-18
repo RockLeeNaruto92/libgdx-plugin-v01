@@ -99,4 +99,8 @@ public class Word {
 	public static String ERROR_INVALID_COUNT = "Count must be integer number";
 	public static String ERROR_INVALID_FONT_SCALE_X = "Font scale x must be float number";
 	public static String ERROR_INVALID_FONT_SCALE_Y = "Font scale y must be float number";
+	public static String ERROR_INVALID_PAD_RIGHT = "Pad right must be integer number";
+	public static String ERROR_INVALID_PAD_LEFT = "Pad left must be integer number";
+	public static String ERROR_INVALID_PAD_TOP = "Pad top must be integer number";
+	public static String ERROR_INVALID_PAD_BOTTOM = "Pad bottom must be integer number";
 }
