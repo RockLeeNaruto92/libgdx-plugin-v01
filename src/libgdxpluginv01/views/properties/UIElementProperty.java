@@ -1,12 +1,12 @@
 package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -118,31 +118,33 @@ public abstract class UIElementProperty extends Property{
 	}
 	
 	private void createLocationXField(){
-		Label label = new Label(container, SWT.NONE);
-		
-		label.setText(Word.PROPERTY_LOCATION);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(container, SWT.NONE);
-		label.setText(Word.PROPERTY_X);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		textLocationX = new Text(container, SWT.BORDER);
-		textLocationX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textLocationX.addListener(SWT.FocusOut, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processLocationX();
-			}
-		});
-		textLocationX.addListener(SWT.Modify, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processLocationX();
-			}
-		});
-		
-		createSlider(container, textLocationX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+//		Label label = new Label(container, SWT.NONE);
+//		
+//		label.setText(Word.PROPERTY_LOCATION);
+//		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
+//		
+//		label = new Label(container, SWT.NONE);
+//		label.setText(Word.PROPERTY_X);
+//		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
+//		
+//		textLocationX = new Text(container, SWT.BORDER);
+//		textLocationX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
+//		textLocationX.addListener(SWT.FocusOut, new Listener() {
+//			@Override
+//			public void handleEvent(Event arg0) {
+//				processLocationX();
+//			}
+//		});
+//		textLocationX.addListener(SWT.Modify, new Listener() {
+//			@Override
+//			public void handleEvent(Event arg0) {
+//				processLocationX();
+//			}
+//		});
+//		
+//		createSlider(container, textLocationX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+		String[] labelNames = new String[]{Word.PROPERTY_LOCATION, Word.PROPERTY_X};
+		textLocationX = Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.LOCATION_X);
 	}
 	
 	private void processLocationY(){

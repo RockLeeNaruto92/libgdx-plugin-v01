@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.CustomComposite;
+import libgdxpluginv01.views.properties.Error;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -295,5 +298,85 @@ public abstract class UIElement {
 
 	public UIController getUiController() {
 		return uiController;
+	}
+	
+	private Error isValidLocationX(String xValue){
+		if (!Utility.isInteger(xValue))
+			return Error.LOCATION_X_IS_STRING;
+		
+		int x = Integer.parseInt(xValue);
+		if (x > getXRange().y | x < getXRange().x)
+			return Error.LOCATION_X_OUT_RANGE;
+		
+		return Error.VALID;
+	}
+	
+	private Error isValidLocationY(String yValue){
+		if (!Utility.isInteger(yValue))
+			return Error.LOCATION_Y_IS_STRING;
+		
+		int y = Integer.parseInt(yValue);
+		if (y > getYRange().y | y < getYRange().x)
+			return Error.LOCATION_X_OUT_RANGE;
+		
+		return Error.VALID;
+	}
+
+	public Error isValidProperty(UIElementPropertyType type, String value){
+		switch (type) {
+		case LOCATION_X:
+			return isValidLocationX(value);
+		case LOCATION_Y:
+			return isValidLocationY(value);
+		default:
+			break;
+		}
+		
+		return Error.VALID;
+	}
+	
+	private Point getXRange(){
+		return Parameter.LOCATION_RANGE_X;
+	}
+	
+	private Point getYRange(){
+		return Parameter.LOCATION_RANGE_Y;
+	}
+	
+	public void setPropertyValue(UIElementPropertyType type, String value){
+		switch (type) {
+		case LOCATION_X:
+			setX(Integer.parseInt(value));
+			break;
+			
+		case LOCATION_Y:
+			setY(Integer.parseInt(value));
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	public Object getPropertyValue(UIElementPropertyType type){
+		switch (type) {
+		case LOCATION_X:
+			return bound.x;
+		case LOCATION_Y:
+			return bound.y;
+		default:
+			break;
+		}
+		
+		return null;
+	}
+	
+	private void setX(int xValue){
+		bound.x = xValue;
+		setBound(bound);
+	}
+	
+	private void setY(int yValue){
+		bound.y = yValue;
 	}
 }
