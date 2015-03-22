@@ -6,7 +6,6 @@ import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.swt.custom.BitmapFont;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -24,7 +23,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class StyleProperty extends Property{
-	private ScrolledComposite root;
 	private Composite container;
 	private Object object;
 	
@@ -39,25 +37,17 @@ public abstract class StyleProperty extends Property{
 	}
 	
 	private void setScrolledComposite(){
-		root.setContent(container);
-		root.setAlwaysShowScrollBars(true);
+		getRoot().setContent(container);
+		getRoot().setAlwaysShowScrollBars(true);
 		
 		Point size = getDefaultSize();
 		container.setSize(size);
-		root.getParent().setRedraw(true);
+		getRoot().setMinSize(size);
 	}
 	
 	public void createContainer(Composite parent){
-		root = new ScrolledComposite(getRootContainer(), SWT.BORDER | SWT.V_SCROLL);
-//		FormData data = new FormData();
-//		
-//		root.setLayoutData(data);
-		
-		container = new Composite(root, SWT.NONE);
+		container = new Composite(getRoot(), SWT.NONE);
 		container.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));
-		
-		root.setContent(container);
-		root.setMinSize(getDefaultSize());
 	}
 	
 	public abstract void createContents();
