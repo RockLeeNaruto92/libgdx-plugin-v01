@@ -102,47 +102,7 @@ public abstract class UIElementProperty extends Property{
 		});
 	}
 	
-	private void processLocationX(){
-		if (uielement == null) return;
-		
-		if (isValidPositionX(textLocationX.getText())){
-			Rectangle bound = uielement.getBound();
-			
-			bound.x = Integer.parseInt(textLocationX.getText());
-			uielement.setBound(bound);
-			uielement.refresh();
-		} else {
-			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_X);
-			textLocationY.setText(uielement.getBound().x + "");
-		}
-	}
-	
 	private void createLocationXField(){
-//		Label label = new Label(container, SWT.NONE);
-//		
-//		label.setText(Word.PROPERTY_LOCATION);
-//		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-//		
-//		label = new Label(container, SWT.NONE);
-//		label.setText(Word.PROPERTY_X);
-//		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-//		
-//		textLocationX = new Text(container, SWT.BORDER);
-//		textLocationX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-//		textLocationX.addListener(SWT.FocusOut, new Listener() {
-//			@Override
-//			public void handleEvent(Event arg0) {
-//				processLocationX();
-//			}
-//		});
-//		textLocationX.addListener(SWT.Modify, new Listener() {
-//			@Override
-//			public void handleEvent(Event arg0) {
-//				processLocationX();
-//			}
-//		});
-//		
-//		createSlider(container, textLocationX, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
 		String[] labelNames = new String[]{Word.PROPERTY_LOCATION, Word.PROPERTY_X};
 		textLocationX = Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.LOCATION_X);
 	}
@@ -163,59 +123,13 @@ public abstract class UIElementProperty extends Property{
 	}
 	
 	private void createLocationYField(){
-		Label label = new Label(container, SWT.NONE);
-		
-		label.setText("");
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(container, SWT.NONE);
-		label.setText(Word.PROPERTY_Y);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		textLocationY = new Text(container, SWT.BORDER);
-		textLocationY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textLocationY.addListener(SWT.FocusOut, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processLocationY();				
-			}
-		});
-		textLocationY.addListener(SWT.Modify, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processLocationY();
-			}
-		});
-		
-		createSlider(container, textLocationY, Parameter.LOCATION_RANGE_Y, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+		String[] labelNames = new String[]{"", Word.PROPERTY_Y};
+		textLocationY= Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.LOCATION_Y);
 	}
 	
 	private void createSizeWidthField(){
-		Label label = new Label(container, SWT.NONE);
-		label.setText(Word.PROPERTY_SIZE);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(container, SWT.NONE);
-		label.setText(Word.PROPERTY_WIDTH);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		textSizeWidth = new Text(container, SWT.BORDER);
-		textSizeWidth.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textSizeWidth.addListener(SWT.FocusOut, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processSizeWidth();
-			}
-		});
-		textSizeWidth.addListener(SWT.Modify, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processSizeWidth();
-			}
-		});
-		
-		createSlider(container, textSizeWidth, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
-		
+		String[] labelNames = new String[]{Word.PROPERTY_SIZE, Word.PROPERTY_WIDTH};
+		textLocationY= Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.SIZE_WIDTH);
 	}
 	
 	private void processSizeWidth(){
@@ -249,30 +163,8 @@ public abstract class UIElementProperty extends Property{
 	}
 	
 	private void createSizeHeightField(){
-		Label label = new Label(container, SWT.NONE);
-		label.setText("");
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(container, SWT.NONE);
-		label.setText(Word.PROPERTY_HEIGHT);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		textSizeHeight = new Text(container, SWT.BORDER);
-		textSizeHeight.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textSizeHeight.addListener(SWT.FocusOut, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processSizeHeight();
-			}
-		});
-		textSizeHeight.addListener(SWT.Modify, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				processSizeHeight();
-			}
-		});
-		
-		createSlider(container, textSizeHeight, Parameter.LOCATION_RANGE_X, Parameter.SLIDER_STEP, Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1);
+		String[] labelNames = new String[]{"", Word.PROPERTY_HEIGHT};
+		textLocationY= Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.SIZE_HEIGHT);
 	}
 	
 	private void createVisbleField(){

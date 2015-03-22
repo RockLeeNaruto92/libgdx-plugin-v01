@@ -12,6 +12,7 @@ import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
@@ -19,10 +20,12 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 import org.osgi.framework.Bundle;
@@ -124,15 +127,15 @@ public class Utility {
 				}
 			});
 			
-			addListenerToText(text, slider, property, type);
+			addListenerToText(text, slider, property, type, range);
 			
 		} else 
-			addListenerToText(text, null, property, type);
+			addListenerToText(text, null, property, type, range);
 		
 		return text;
 	}
 	
-	private static Text addListenerToText(final Text text, final Slider slider, final UIElementProperty property, final UIElementPropertyType type){
+	private static Text addListenerToText(final Text text, final Slider slider, final UIElementProperty property, final UIElementPropertyType type, final Object infor){
 		text.addListener(SWT.Modify, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
@@ -145,7 +148,7 @@ public class Utility {
 					
 					object.refresh();
 				}else {
-					displayErrorMessage(error);
+					displayErrorMessage(error, infor);
 					text.setText(object.getPropertyValue(type) + "");
 				}
 			}
@@ -154,8 +157,20 @@ public class Utility {
 		return text;
 	}
 	
-	private static void displayErrorMessage(Error error){
+	private static void displayErrorMessage(Error error, Object infor){
+		Shell shell = Display.getCurrent().getActiveShell();
 		
+		switch (error) {
+		case LOCATION_X_IS_STRING:
+			MessageDialog.openError(shell, Word.ERROR, error.toString(null));
+			break;
+		case LOCATION_X_OUT_RANGE:
+			MessageDialog.openError(shell, Word.ERROR, error.toString((Point)infor));
+			break;
+
+		default:
+			break;
+		}
 	}
 	
 	public static boolean isInteger(String value){

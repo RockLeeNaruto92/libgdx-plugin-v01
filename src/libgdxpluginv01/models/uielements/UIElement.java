@@ -378,5 +378,6 @@ public abstract class UIElement {
 	
 	private void setY(int yValue){
 		bound.y = yValue;
+		setBound(bound);
 	}
 }
