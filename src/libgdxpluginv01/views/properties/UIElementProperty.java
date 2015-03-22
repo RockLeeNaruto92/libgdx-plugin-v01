@@ -7,8 +7,6 @@ import libgdxpluginv01.models.uielements.UIElement;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -23,7 +21,6 @@ import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class UIElementProperty extends Property{
-	private ScrolledComposite root;
 	private Composite container;
 	private UIElement uielement;
 	private Text textName;
@@ -43,25 +40,18 @@ public abstract class UIElementProperty extends Property{
 	}
 	
 	private void setScrolledComposite(){
-		root.setContent(container);
-		root.setExpandHorizontal(true);
-		root.setAlwaysShowScrollBars(true);
+		getRoot().setContent(container);
+		getRoot().setAlwaysShowScrollBars(true);
 		
 		Point size = getDefaultSize();
 		container.setSize(size);
-		root.setMinSize(size);
+		getRoot().setMinSize(size);
 		getRoot().getParent().setRedraw(true);
 	}
 	
 	private void createContainer(Composite parent) {
-		root = new ScrolledComposite(getRootContainer(), SWT.BORDER | SWT.V_SCROLL);
-		
-//		root.setLayoutData(new FormData());
-		
-		container = new Composite(root, SWT.NONE);
+		container = new Composite(getRoot(), SWT.NONE);
 		container.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));
-		
-		root.setContent(container);
 	}
 
 	public abstract void createOtherProperties();

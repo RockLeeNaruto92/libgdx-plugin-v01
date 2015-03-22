@@ -1,33 +1,34 @@
 package libgdxpluginv01.views.properties;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 public class Property {
-	private Composite rootContainer;
+	private ScrolledComposite root;
 	
 	public Property(Composite parent){
-		rootContainer = new Composite(parent, SWT.NONE);
-		rootContainer.setLayout(new FillLayout());
-		rootContainer.setLayoutData(new FormData());
+		root = new ScrolledComposite(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		
+		FormData data = new FormData();
+		
+		data.top = new FormAttachment(0, 0);
+		data.left = new FormAttachment(0, 0);
+		data.bottom = new FormAttachment(100, 0);
+		data.right = new FormAttachment(100, 0);
+		
+		root.setLayoutData(data);
 	}
 	
-	public Control getRoot() {
-		return getRootContainer();
+	public ScrolledComposite getRoot() {
+		return root;
 	};
 	
-	public Composite getRootContainer() {
-		return rootContainer;
-	}
-
-	public void setRootContainer(Composite rootContainer) {
-		this.rootContainer = rootContainer;
-	}
-
 	public GridData createLayoutData(int width, int height, int horizontalSpan){
 		GridData data = new GridData();
 		data.horizontalAlignment = GridData.FILL;

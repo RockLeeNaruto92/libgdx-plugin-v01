@@ -13,10 +13,13 @@ public class EmptyProperty extends Property{
 	
 	public EmptyProperty(Composite parent){
 		super(parent);
-		label = new Label(getRootContainer(), SWT.NONE);
-//		label.setLayoutData(new FormData());
 		
+		label = new Label(getRoot(), SWT.NONE);
 		label.setText(Word.PROPERTY_EMPTY);
+		
+		getRoot().setContent(label);
+		getRoot().setAlwaysShowScrollBars(true);
+		getRoot().setMinSize(label.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
 	
 	public static EmptyProperty getInstance(Composite parent){
