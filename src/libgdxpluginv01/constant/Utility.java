@@ -20,6 +20,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ColorDialog;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -99,7 +100,7 @@ public class Utility {
 		return data;
 	}
 	
-	public static Text createTextGridData4Columns(Composite parent, String[] labelNames, boolean hasSlider, Point range, int step, UIElementProperty property, final UIElementPropertyType type){
+	public static Text createTextGridData4Columns(Composite parent, String[] labelNames, boolean hasSlider, Point range, final float step, UIElementProperty property, final UIElementPropertyType type){
 		Label label = new Label(parent, SWT.NONE);
 		label.setText(labelNames[0]);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
@@ -119,27 +120,27 @@ public class Utility {
 			final Slider slider = new Slider(parent, SWT.HORIZONTAL);
 			slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
 			
-			slider.setMaximum(range.x);
-			slider.setMinimum(range.y);
-			slider.setIncrement(step);
+			slider.setMaximum((int)(range.x / step));
+			slider.setMinimum((int)(range.y / step));
+			slider.setIncrement((int)step);
 			
 			// add listener for slider
 			slider.addListener(SWT.Selection, new Listener() {
 				@Override
 				public void handleEvent(Event arg0) {
-					text.setText(slider.getSelection() + "");
+					text.setText((slider.getSelection() * step) + "");
 				}
 			});
 			
-			addListenerToText(text, slider, property, type, range);
+			addListenerToText(text, slider, step, property, type, range);
 			
 		} else 
-			addListenerToText(text, null, property, type, range);
+			addListenerToText(text, null, step, property, type, range);
 		
 		return text;
 	}
 	
-	private static Text addListenerToText(final Text text, final Slider slider, final UIElementProperty property, final UIElementPropertyType type, final Object infor){
+	private static Text addListenerToText(final Text text, final Slider slider, final float step, final UIElementProperty property, final UIElementPropertyType type, final Object infor){
 		text.addListener(SWT.Modify, new Listener() {
 			@Override
 			public void handleEvent(Event arg0) {
@@ -147,8 +148,11 @@ public class Utility {
 				Error error = object.isValidProperty(type, text.getText());
 				if (error == Error.VALID){
 					object.setPropertyValue(type, text.getText());
-					if (slider != null)
-						slider.setSelection((int)(object.getPropertyValue(type)));
+					if (slider != null){
+						float value = (float)(object.getPropertyValue(type));
+						int selection = (int) (value / step);
+						slider.setSelection(selection);
+					}
 					
 					object.refresh();
 				}else {
@@ -205,9 +209,44 @@ public class Utility {
 		return checkbox;
 	}
 	
+	public static Combo createComboGridData2Columns(Composite parent, String[] labelNames, String[] items, final UIElementProperty property, final UIElementPropertyType type){
+		for (String string : labelNames) {
+			Label label = new Label(parent, SWT.NONE);
+			label.setText(string);
+			label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
+		} 
+		
+		final Combo combo = new Combo(parent, SWT.READ_ONLY);
+		combo.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 4 - labelNames.length));
+		combo.setItems(items);
+		combo.select(0);
+		combo.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				UIElement obj = property.getUielement();
+				
+				if (obj == null) return;
+				obj.setPropertyValue(type, combo.getSelectionIndex());
+				obj.redraw();
+			}
+		});
+		
+		return combo;
+	}
+	
 	public static boolean isInteger(String value){
 		try {
 			Integer.parseInt(value);
+		} catch (Exception e){
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static boolean isFloat(String value){
+		try {
+			Float.parseFloat(value);
 		} catch (Exception e){
 			return false;
 		}

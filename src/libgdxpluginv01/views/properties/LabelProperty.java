@@ -106,36 +106,13 @@ public class LabelProperty extends UIElementProperty {
 	}
 
 	private void createAlignField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_ALIGN);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		comboAlign = new Combo(getContainer(), SWT.READ_ONLY);
-		comboAlign.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		comboAlign.setItems(Align.getStrings());
-		comboAlign.select(0);
-		comboAlign.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				if (getUielement() == null) return;
-				
-				CLabel obj = (CLabel)getUielement();
-				
-				obj.setLabelAlign(Align.getAlign(comboAlign.getSelectionIndex()));
-				obj.redraw();
-			}
-		});
+		String[] labelNames = new String[]{Word.PROPERTY_ALIGN};
+		comboAlign = Utility.createComboGridData2Columns(getContainer(), labelNames, Align.getStrings(), this, UIElementPropertyType.ALIGN);
 	}
 
 	private void createWrapField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_WRAP);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		checkboxWrap = new Button(getContainer(), SWT.CHECK);
-		checkboxWrap.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		String[] labelNames = new String[]{Word.PROPERTY_WRAP};
+		checkboxWrap = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.WRAP);
 	}
 
 	private void createFontScaleXField() {
@@ -149,13 +126,8 @@ public class LabelProperty extends UIElementProperty {
 	}
 
 	private void createEllipsisField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_ELLIPSIS);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		checkboxEllipsis = new Button(getContainer(), SWT.CHECK);
-		checkboxEllipsis.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		String[] labelNames = new String[]{Word.PROPERTY_ELLIPSIS};
+		checkboxWrap = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.ELLIPSIS);
 	}
 	
 	@Override

@@ -1,10 +1,10 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
-import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -131,8 +131,6 @@ public class CLabel extends UIElement {
 
 	@Override
 	public void onMouseHover() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -200,6 +198,78 @@ public class CLabel extends UIElement {
 	public void setStyle(LabelStyle style) {
 		this.style = style;
 	}
+	
+	@Override
+	public Object getPropertyValue(UIElementPropertyType type) {
+		// TODO Auto-generated method stub
+		Object result = super.getPropertyValue(type);
+		
+		if (result != null) return result;
+		switch (type) {
+		case ALIGN:
+			return labelAlign;
+		case FONT_SCALE_X:
+			return fontScaleX;
+		case FONT_SCALE_Y:
+			return fontScaleY;
+		case ELLIPSIS:
+			return ellipsis;
+		case WRAP:
+			return wrap;
+		case TEXT:
+			return getText();
+		default:
+			break;
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public void setPropertyValue(UIElementPropertyType type, Object value) {
+		// TODO Auto-generated method stub
+		super.setPropertyValue(type, value);
+		switch (type) {
+		case ALIGN:
+			setLabelAlign(Align.getAlign((int)value));
+			break;
+		case FONT_SCALE_X:
+			setFontScaleX(Integer.parseInt((String)value));
+			break;
+		case FONT_SCALE_Y:
+			setFontScaleY(Integer.parseInt((String)value));
+			break;
+		case ELLIPSIS:
+			setEllipsis((boolean)value);
+			break;
+		case WRAP:
+			setWrap((boolean)value);
+			break;
+		case TEXT:
+			setText((String)value);
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public Point getRange(UIElementPropertyType type) {
+		// TODO Auto-generated method stub
+		Point result = super.getRange(type);
+		
+		if (result != null) return result;
+		switch (type) {
+		case FONT_SCALE_X:
+			return new Point(0, 2);
+		case FONT_SCALE_Y:
+			return new Point(0, 2);
+		default:
+			break;
+		}
+		return null;
+	}
+
 
 	public class LabelStyle{
 		public BitmapFont font;

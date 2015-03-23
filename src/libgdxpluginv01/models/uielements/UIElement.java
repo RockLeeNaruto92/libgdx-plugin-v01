@@ -301,10 +301,10 @@ public abstract class UIElement {
 	}
 	
 	private Error isValidLocationX(String xValue){
-		if (!Utility.isInteger(xValue))
+		if (!Utility.isFloat(xValue))
 			return Error.LOCATION_X_IS_STRING;
 		
-		int x = Integer.parseInt(xValue);
+		float x = Float.parseFloat(xValue);
 		if (x > getXRange().y | x < getXRange().x)
 			return Error.LOCATION_X_OUT_RANGE;
 		
@@ -312,10 +312,10 @@ public abstract class UIElement {
 	}
 	
 	private Error isValidLocationY(String yValue){
-		if (!Utility.isInteger(yValue))
+		if (!Utility.isFloat(yValue))
 			return Error.LOCATION_Y_IS_STRING;
 		
-		int y = Integer.parseInt(yValue);
+		float y = Float.parseFloat(yValue);
 		if (y > getYRange().y | y < getYRange().x)
 			return Error.LOCATION_X_OUT_RANGE;
 		
@@ -343,14 +343,22 @@ public abstract class UIElement {
 		return Parameter.LOCATION_RANGE_Y;
 	}
 	
-	public void setPropertyValue(UIElementPropertyType type, String value){
+	public void setPropertyValue(UIElementPropertyType type, Object value){
 		switch (type) {
 		case LOCATION_X:
-			setX(Integer.parseInt(value));
+			setX(Float.parseFloat((String)value));
 			break;
-			
 		case LOCATION_Y:
-			setY(Integer.parseInt(value));
+			setY(Float.parseFloat((String)value));
+			break;
+		case SIZE_WIDTH:
+			setWidth(Float.parseFloat((String)value));
+			break;
+		case SIZE_HEIGHT:
+			setHeight(Float.parseFloat((String)value));
+			break;
+		case VISIBLE:
+			setVisible((boolean)value);
 			break;
 
 		default:
@@ -361,9 +369,15 @@ public abstract class UIElement {
 	public Object getPropertyValue(UIElementPropertyType type){
 		switch (type) {
 		case LOCATION_X:
-			return bound.x;
+			return bound.x * 1.0f;
 		case LOCATION_Y:
-			return bound.y;
+			return bound.y * 1.0f;
+		case SIZE_WIDTH:
+			return bound.width * 1.0f;
+		case SIZE_HEIGHT:
+			return bound.height * 1.0f;
+		case VISIBLE:
+			return visible;
 		default:
 			break;
 		}
@@ -371,13 +385,40 @@ public abstract class UIElement {
 		return null;
 	}
 	
-	private void setX(int xValue){
-		bound.x = xValue;
+	public Point getRange(UIElementPropertyType type){
+		switch (type) {
+		case LOCATION_X:
+			return Parameter.LOCATION_RANGE_X;
+		case LOCATION_Y:
+			return Parameter.LOCATION_RANGE_Y;
+		case SIZE_WIDTH:
+			return Parameter.LOCATION_RANGE_X;
+		case SIZE_HEIGHT:
+			return Parameter.LOCATION_RANGE_Y;
+		default:
+			break;
+		}
+		
+		return null;
+	}
+	
+	private void setX(float xValue){
+		bound.x = (int)xValue;
 		setBound(bound);
 	}
 	
-	private void setY(int yValue){
-		bound.y = yValue;
+	private void setY(float yValue){
+		bound.y = (int)yValue;
+		setBound(bound);
+	}
+	
+	private void setWidth(float widthValue){
+		bound.width = (int)widthValue;
+		setBound(bound);
+	}
+	
+	private void setHeight(float heightValue){
+		bound.height = (int)heightValue;
 		setBound(bound);
 	}
 }

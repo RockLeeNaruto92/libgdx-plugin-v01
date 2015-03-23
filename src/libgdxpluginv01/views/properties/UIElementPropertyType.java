@@ -7,6 +7,8 @@ public enum UIElementPropertyType {
 	SIZE_HEIGHT,
 	NAME,
 	VISIBLE,
+	ALIGN,
+	TEXT,
 	FONT_SCALE_X,
 	FONT_SCALE_Y,
 	ELLIPSIS,
