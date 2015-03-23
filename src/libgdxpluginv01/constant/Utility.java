@@ -100,7 +100,7 @@ public class Utility {
 		return data;
 	}
 	
-	public static Text createTextGridData4Columns(Composite parent, String[] labelNames, boolean hasSlider, Point range, final float step, UIElementProperty property, final UIElementPropertyType type){
+	public static Text createTextGridData4Columns(Composite parent, String[] labelNames, boolean hasSlider, Point range, final float step, final UIElementProperty property, final UIElementPropertyType type){
 		Label label = new Label(parent, SWT.NONE);
 		label.setText(labelNames[0]);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
@@ -129,6 +129,7 @@ public class Utility {
 				@Override
 				public void handleEvent(Event arg0) {
 					text.setText((slider.getSelection() * step) + "");
+					property.getUielement().redraw();
 				}
 			});
 			
@@ -155,6 +156,7 @@ public class Utility {
 					}
 					
 					object.refresh();
+					object.redraw();
 				}else {
 					displayErrorMessage(error, infor);
 					text.setText(object.getPropertyValue(type) + "");

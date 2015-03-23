@@ -360,7 +360,6 @@ public abstract class UIElement {
 		case VISIBLE:
 			setVisible((boolean)value);
 			break;
-
 		default:
 			break;
 		}

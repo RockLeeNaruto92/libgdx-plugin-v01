@@ -234,10 +234,10 @@ public class CLabel extends UIElement {
 			setLabelAlign(Align.getAlign((int)value));
 			break;
 		case FONT_SCALE_X:
-			setFontScaleX(Integer.parseInt((String)value));
+			setFontScaleX(Float.parseFloat((String)value));
 			break;
 		case FONT_SCALE_Y:
-			setFontScaleY(Integer.parseInt((String)value));
+			setFontScaleY(Float.parseFloat((String)value));
 			break;
 		case ELLIPSIS:
 			setEllipsis((boolean)value);
@@ -261,9 +261,9 @@ public class CLabel extends UIElement {
 		if (result != null) return result;
 		switch (type) {
 		case FONT_SCALE_X:
-			return new Point(0, 2);
+			return Parameter.FONT_SCALE_RANGE_X;
 		case FONT_SCALE_Y:
-			return new Point(0, 2);
+			return Parameter.FONT_SCALE_RANGE_Y;
 		default:
 			break;
 		}

@@ -117,12 +117,12 @@ public class LabelProperty extends UIElementProperty {
 
 	private void createFontScaleXField() {
 		String[] labelNames = new String[]{Word.PROPERTY_FONT, Word.PROPERTY_X};
-		textFontScaleX = Utility.createTextGridData4Columns(getContainer(), labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.FONT_SCALE_X);
+		textFontScaleX = Utility.createTextGridData4Columns(getContainer(), labelNames, true, Parameter.FONT_SCALE_RANGE_X, 0.02f, this, UIElementPropertyType.FONT_SCALE_X);
 	}
 	
 	private void createFontScaleYField(){
 		String[] labelNames = new String[]{"", Word.PROPERTY_Y};
-		textFontScaleY = Utility.createTextGridData4Columns(getContainer(), labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.FONT_SCALE_Y);
+		textFontScaleY = Utility.createTextGridData4Columns(getContainer(), labelNames, true, Parameter.LOCATION_RANGE_X, 0.02f, this, UIElementPropertyType.FONT_SCALE_Y);
 	}
 
 	private void createEllipsisField() {
