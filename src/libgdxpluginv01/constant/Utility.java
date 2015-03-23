@@ -18,6 +18,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -103,12 +104,15 @@ public class Utility {
 		label.setText(labelNames[0]);
 		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
 		
-		label = new Label(parent, SWT.NONE);
-		label.setText(labelNames[1]);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
+		if (labelNames.length > 1){
+			label = new Label(parent, SWT.NONE);
+			label.setText(labelNames[1]);
+			label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
+		}
 		
+		int horizontalSpan = (hasSlider) ? 3 - labelNames.length : 4 - labelNames.length;
 		final Text text = new Text(parent, SWT.BORDER);
-		text.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, hasSlider ? 1 : 2));
+		text.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, horizontalSpan));
 		
 		if (hasSlider){
 			// create slider
@@ -171,6 +175,34 @@ public class Utility {
 		default:
 			break;
 		}
+	}
+	
+	public static Button createCheckboxGridData4Columns(Composite parent, String[] labelNames, final UIElementProperty property, final UIElementPropertyType type){
+		Label label = new Label(parent, SWT.NONE);
+		label.setText(labelNames[0]);
+		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
+		
+		if (labelNames.length > 1){
+			label = new Label(parent, SWT.NONE);
+			label.setText(labelNames[1]);
+			label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
+		}
+		
+		int horizontalSpan = 4 - labelNames.length;
+		Button checkbox = new Button(parent, SWT.CHECK);
+		checkbox.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, horizontalSpan));
+		checkbox.setSelection(true);
+		checkbox.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				UIElement obj = property.getUielement();
+				
+				if (obj == null) return;
+				obj.setVisible(!obj.isVisible());
+			}
+		});
+		
+		return checkbox;
 	}
 	
 	public static boolean isInteger(String value){

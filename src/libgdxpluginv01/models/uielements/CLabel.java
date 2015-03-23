@@ -207,7 +207,8 @@ public class CLabel extends UIElement {
 		public Image background;
 		
 		public LabelStyle(){
-			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
+//			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
+			font = new BitmapFont(Display.getCurrent(), "datas\\default.fnt");
 			fontColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		}
 		

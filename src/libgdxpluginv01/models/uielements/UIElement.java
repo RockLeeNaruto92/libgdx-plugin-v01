@@ -35,7 +35,7 @@ public abstract class UIElement {
 	private Point scale;
 	private float rotation;
 	private Color color;
-	private boolean visible;
+	private boolean visible = true;
 	private boolean debug;
 	private boolean selected = true;
 	private UIController uiController;

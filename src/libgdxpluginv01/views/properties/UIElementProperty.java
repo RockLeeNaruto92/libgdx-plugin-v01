@@ -5,19 +5,11 @@ import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.UIElement;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
 public abstract class UIElementProperty extends Property{
@@ -80,46 +72,13 @@ public abstract class UIElementProperty extends Property{
 	}
 	
 	private void createNameField(){
-		Label label = new Label(container, SWT.NONE);
-		
-		label.setText(Word.PROPERTY_NAME);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textName = new Text(container, SWT.BORDER);
-		textName.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		textName.addListener(SWT.FocusOut, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				if (uielement == null) return;
-				
-				if (isValidName(textName.getText())){
-					uielement.setName(textName.getText());
-				} else {
-					MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_NAME);
-					textName.setText(uielement.getName());
-				}
-			}
-		});
+		String[] labelNames = new String[]{Word.PROPERTY_NAME};
+		textLocationX = Utility.createTextGridData4Columns(container, labelNames, false, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.NAME);
 	}
 	
 	private void createLocationXField(){
 		String[] labelNames = new String[]{Word.PROPERTY_LOCATION, Word.PROPERTY_X};
 		textLocationX = Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.LOCATION_X);
-	}
-	
-	private void processLocationY(){
-		if (uielement == null) return;
-		
-		if (isValidPositionY(textLocationY.getText())){
-			Rectangle bound = uielement.getBound();
-			bound.y = Integer.parseInt(textLocationY.getText());
-			
-			uielement.setBound(bound);
-			uielement.refresh();
-		} else {
-			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_Y);
-			textLocationY.setText(uielement.getBound().y + "");
-		}
 	}
 	
 	private void createLocationYField(){
@@ -129,66 +88,17 @@ public abstract class UIElementProperty extends Property{
 	
 	private void createSizeWidthField(){
 		String[] labelNames = new String[]{Word.PROPERTY_SIZE, Word.PROPERTY_WIDTH};
-		textLocationY= Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.SIZE_WIDTH);
-	}
-	
-	private void processSizeWidth(){
-		if (uielement == null) return;
-		
-		if (isValidSizeWidth(textSizeWidth.getText())){
-			Rectangle bound = uielement.getBound();
-			bound.width = Integer.parseInt(textSizeWidth.getText());
-			
-			uielement.setBound(bound);
-			uielement.refresh();
-		} else {
-			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_WIDTH);
-			textSizeWidth.setText(uielement.getBound().width + "");
-		}
-	}
-	
-	private void processSizeHeight(){
-		if (uielement == null) return;
-		
-		if (isValidSizeHeight(textSizeHeight.getText())){
-			Rectangle bound = uielement.getBound();
-			bound.height = Integer.parseInt(textSizeHeight.getText());
-			
-			uielement.setBound(bound);
-			uielement.refresh();
-		} else {
-			MessageDialog.openError(uielement.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_HEIGHT);
-			textSizeHeight.setText(uielement.getBound().height + "");
-		}
+		textSizeWidth = Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.SIZE_WIDTH);
 	}
 	
 	private void createSizeHeightField(){
 		String[] labelNames = new String[]{"", Word.PROPERTY_HEIGHT};
-		textLocationY= Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.SIZE_HEIGHT);
+		textSizeHeight = Utility.createTextGridData4Columns(container, labelNames, true, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.SIZE_HEIGHT);
 	}
 	
 	private void createVisbleField(){
-		Label label = new Label(container, SWT.NONE);
-		label.setText(Word.PROPERTY_VISIBLE);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		checkboxVisible = new Button(container, SWT.CHECK);
-		checkboxVisible.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		checkboxVisible.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				UIElement obj = getUielement();
-				
-				if (obj == null){
-					return;
-				}
-				
-				obj.setVisible(!obj.isVisible());
-			}
-			
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-			}
-		});
+		String[] labelNames = new String[]{Word.PROPERTY_VISIBLE};
+		checkboxVisible = Utility.createCheckboxGridData4Columns(container, labelNames, this, UIElementPropertyType.VISIBLE);
 	}
 	
 	public void setObjectPropertiesToView(UIElement object){
@@ -234,36 +144,20 @@ public abstract class UIElementProperty extends Property{
 		return true;
 	}
 	
-	private boolean isValidPositionX(String x){
-		return isIntegerNum(x);
-	}
-	
-	private boolean isValidPositionY(String y){
-		return isIntegerNum(y);
-	}
-	
-	private boolean isValidSizeWidth(String width){
-		return isIntegerNum(width);
-	}
-	
-	private boolean isValidSizeHeight(String height){
-		return isIntegerNum(height);
-	}
-	
-	public Slider createSlider(Composite parent, final Text target, Point range, int step, int width, int height, int horizontalSpan){
-		final Slider slider = new Slider(parent, SWT.HORIZONTAL);
-		
-		slider.setMinimum(range.x);
-		slider.setMaximum(range.y);
-		slider.setIncrement(step);
-		slider.setLayoutData(createLayoutData(width, height, horizontalSpan));
-		slider.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event e) {
-				target.setText(slider.getSelection() + "");
-			}
-		});
-		
-		return slider;
-	}
+//	public Slider createSlider(Composite parent, final Text target, Point range, int step, int width, int height, int horizontalSpan){
+//		final Slider slider = new Slider(parent, SWT.HORIZONTAL);
+//		
+//		slider.setMinimum(range.x);
+//		slider.setMaximum(range.y);
+//		slider.setIncrement(step);
+//		slider.setLayoutData(createLayoutData(width, height, horizontalSpan));
+//		slider.addListener(SWT.Selection, new Listener() {
+//			@Override
+//			public void handleEvent(Event e) {
+//				target.setText(slider.getSelection() + "");
+//			}
+//		});
+//		
+//		return slider;
+//	}
 }
