@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.views.properties.Error;
 import libgdxpluginv01.views.properties.UIElementProperty;
@@ -234,6 +236,27 @@ public class Utility {
 		});
 		
 		return combo;
+	}
+	
+	public static void createSetStyleButton(Composite parent, final UIElementProperty property){
+		Label label = new Label(parent, SWT.NONE);
+		label.setText(Word.PROPERTY_STYLE);
+		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
+		
+		Button setStyleBtn = new Button(parent, SWT.PUSH);
+		setStyleBtn.setText(Word.PROPERTY_SET_STYLE);
+		setStyleBtn.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		setStyleBtn.addListener(SWT.MouseDown, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				UIElement obj = property.getUielement();
+				
+				if (obj == null) return;
+				
+				UIController uiController = obj.getUiController();
+				uiController.setPropertyView(obj, true);
+			}
+		});
 	}
 	
 	public static boolean isInteger(String value){

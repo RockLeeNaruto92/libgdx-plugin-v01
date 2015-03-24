@@ -9,6 +9,8 @@ public enum UIElementPropertyType {
 	VISIBLE,
 	ALIGN,
 	TEXT,
+	CHECK,
+	DISABLE,
 	FONT_SCALE_X,
 	FONT_SCALE_Y,
 	ELLIPSIS,

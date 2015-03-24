@@ -67,6 +67,8 @@ public abstract class UIElement {
 		addPaintListener();
 		addMouseListener();
 		
+		System.out.println("Create new ui element: " + location + "-" + defaultSize);
+		
 		Display.getCurrent().timerExec((int)(ACTION_UPDATE_TIME * 1000), getAnimationThread());
 	}
 	

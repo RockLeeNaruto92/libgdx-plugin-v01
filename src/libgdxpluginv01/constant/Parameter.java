@@ -14,10 +14,10 @@ public class Parameter {
 	public static final int PROPERTY_COLUMN_4_WIDTH = 100;
 	
 	public static final int SLIDER_STEP = 1;
-	public static final Point LOCATION_RANGE_X = new Point(-100, 100);
-	public static final Point LOCATION_RANGE_Y = new Point(-100, 100);
-	public static final Point SIZE_RANGE_WIDTH = new Point(-100, 100);
-	public static final Point SIZE_RANGE_HEIGHT = new Point(-100, 100);
+	public static final Point LOCATION_RANGE_X = new Point(0, 3000);
+	public static final Point LOCATION_RANGE_Y = new Point(0, 3000);
+	public static final Point SIZE_RANGE_WIDTH = new Point(0, 3000);
+	public static final Point SIZE_RANGE_HEIGHT = new Point(0, 3000);
 	public static final Point FONT_SCALE_RANGE_X = new Point(0, 2);
 	public static final Point FONT_SCALE_RANGE_Y = new Point(0, 2);
 	

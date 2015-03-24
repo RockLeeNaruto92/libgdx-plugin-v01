@@ -1,6 +1,7 @@
 package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.models.uielements.CButton;
@@ -50,54 +51,13 @@ public class ButtonProperty extends UIElementProperty{
 	}
 	
 	protected void createCheckField(){
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_DISABLE);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		checkboxCheck = new Button(getContainer(), SWT.CHECK);
-		checkboxCheck.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		checkboxCheck.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (getUielement() == null) return;
-				
-				CButton obj = (CButton)getUielement();
-				obj.setChecked(!obj.isChecked());
-				obj.redraw();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				
-			}
-		});
+		String[] labelNames = new String[]{Word.PROPERTY_CHECK};
+		checkboxCheck = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.CHECK);
 	}
 	
 	protected void createDisableField(){
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_CHECK);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		checkboxDisable = new Button(getContainer(), SWT.CHECK);
-		checkboxDisable.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		checkboxDisable.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (getUielement() == null) return;
-				
-				CButton obj = (CButton)getUielement();
-				obj.setDisabled(!obj.isDisabled());
-				obj.redraw();
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		String[] labelNames = new String[]{Word.PROPERTY_DISABLE};
+		checkboxDisable = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.DISABLE);
 	}
 	
 	protected void createStyleField(){

@@ -1,6 +1,7 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
@@ -277,8 +278,8 @@ public class CLabel extends UIElement {
 		public Image background;
 		
 		public LabelStyle(){
-//			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
-			font = new BitmapFont(Display.getCurrent(), "datas\\default.fnt");
+			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
+//			font = new BitmapFont(Display.getCurrent(), "datas\\default.fnt");
 			fontColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		}
 		

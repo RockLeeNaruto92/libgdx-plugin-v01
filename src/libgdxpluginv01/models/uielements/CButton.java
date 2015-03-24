@@ -156,8 +156,10 @@ public class CButton extends UIElement {
 		public float unpressedOffsetY;
 		
 		public ButtonStyle(){
-			up = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/up.png").toString());
-			down = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/down.png").toString());
+//			up = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/up.png").toString());
+//			down = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/down.png").toString());
+			up = new Image(Display.getCurrent(), "datas\\up.png");
+			down = new Image(Display.getCurrent(), "datas\\down.png");
 			over = up;
 			checked = up;
 			checkedOver = up;

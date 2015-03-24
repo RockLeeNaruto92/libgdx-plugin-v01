@@ -10,7 +10,6 @@ import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CImage;
 import libgdxpluginv01.models.uielements.CLabel;
-import libgdxpluginv01.models.uielements.CLabel.LabelStyle;
 import libgdxpluginv01.models.uielements.CSlider;
 import libgdxpluginv01.models.uielements.CSprite;
 import libgdxpluginv01.models.uielements.UIElement;
@@ -19,7 +18,6 @@ import libgdxpluginv01.views.PropertyView;
 import libgdxpluginv01.views.properties.AnimationProperty;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.ButtonStyleProperty;
-import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.CheckboxStyleProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.ImageProperty;
@@ -89,7 +87,7 @@ public class UIController {
 			break;
 			
 		case UIElementType.CHECKBOX:
-			view = CheckboxProperty.getInstance(propertyView.getParent());
+//			view = CheckboxProperty.getInstance(propertyView.getParent());
 			break;
 			
 		case UIElementType.SPRITE:

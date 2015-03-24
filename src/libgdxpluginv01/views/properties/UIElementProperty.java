@@ -73,7 +73,7 @@ public abstract class UIElementProperty extends Property{
 	
 	private void createNameField(){
 		String[] labelNames = new String[]{Word.PROPERTY_NAME};
-		textLocationX = Utility.createTextGridData4Columns(container, labelNames, false, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.NAME);
+		textName = Utility.createTextGridData4Columns(container, labelNames, false, Parameter.LOCATION_RANGE_X, 1, this, UIElementPropertyType.NAME);
 	}
 	
 	private void createLocationXField(){
