@@ -14,6 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -121,6 +122,23 @@ public abstract class UIElement {
 				onMouseMove();
 			}
 		});
+		
+		container.addMouseTrackListener(new MouseTrackListener() {
+			@Override
+			public void mouseHover(MouseEvent e) {
+				onMouseHover();
+			}
+			
+			@Override
+			public void mouseExit(MouseEvent e) {
+				onMouseExit();
+			}
+			
+			@Override
+			public void mouseEnter(MouseEvent arg0) {
+				onMouseEnter();
+			}
+		});
 
 	}
 	
@@ -141,6 +159,10 @@ public abstract class UIElement {
 	public abstract void onMouseHover();
 	
 	public abstract void onMouseMove();
+	
+	public abstract void onMouseExit();
+	
+	public abstract void onMouseEnter();
 	
 	public void remove(){
 		Display.getCurrent().timerExec(-1, getAnimationThread());

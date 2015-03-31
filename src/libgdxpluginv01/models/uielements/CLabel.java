@@ -138,6 +138,16 @@ public class CLabel extends UIElement {
 	public void onMouseMove() {
 	}
 	
+	@Override
+	public void onMouseExit() {
+	}
+
+	@Override
+	public void onMouseEnter() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public int getLabelAlign() {
 		return labelAlign;
 	}

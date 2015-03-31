@@ -66,6 +66,14 @@ public class CSprite extends UIElement {
 	public void onMouseMove() {
 	}
 
+	@Override
+	public void onMouseExit() {
+	}
+
+	@Override
+	public void onMouseEnter() {
+	}
+
 	public Image getImage() {
 		if (image == null){
 			image = new Image(Display.getCurrent(), Utility.getFile("datas/default/Sprite/libgdx.png").toString());

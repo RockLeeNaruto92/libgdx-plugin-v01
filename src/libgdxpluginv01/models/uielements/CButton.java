@@ -44,33 +44,41 @@ public class CButton extends UIElement {
 	@Override
 	public void onMouseUp() {
 		up = true;
-		if (getStyle().up != null){
-			redraw();
-		}
+		redraw();
 	}
 
 	@Override
 	public void onMouseDown() {
 		up = false;
-		if (getStyle().down != null){
-			redraw();
-		}
+		redraw();
 	}
 
 	@Override
 	public void onMouseHover() {
 		over = true;
-		if (getStyle().over != null){
-			redraw();
-		}
+		redraw();
 	}
 
 	@Override
 	public void onMouseMove() {
+		if (up){
+			over = true;
+			redraw();
+		}
 	}
 	
 	@Override
 	public void onMouseDoubleClick() {
+	}
+
+	@Override
+	public void onMouseExit() {
+		over = false;
+		redraw();
+	}
+
+	@Override
+	public void onMouseEnter() {
 	}
 
 	@Override

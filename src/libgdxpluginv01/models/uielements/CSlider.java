@@ -66,31 +66,30 @@ public class CSlider extends UIElement {
 
 	@Override
 	public void onMouseUp() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseDown() {
-
 	}
 
 	@Override
 	public void onMouseDoubleClick() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseHover() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseMove() {
-		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void onMouseExit() {
+	}
 
+	@Override
+	public void onMouseEnter() {
 	}
 
 	public boolean isDisabled() {

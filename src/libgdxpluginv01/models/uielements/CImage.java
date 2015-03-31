@@ -137,32 +137,34 @@ public class CImage extends UIElement {
 
 	@Override
 	public void onMouseUp() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseDown() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseDoubleClick() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseHover() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onMouseMove() {
-		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void onMouseExit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseEnter() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public Image getImage() {
