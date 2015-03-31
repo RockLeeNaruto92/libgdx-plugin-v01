@@ -59,15 +59,14 @@ public abstract class UIElement {
 		createControls();
 
 		Point defaultSize = getDefaultSize();
+		
+		setBound(new Rectangle(location.x, location.y, defaultSize.x, defaultSize.y));
 		container.setSize(defaultSize);
+		
 		setSize(defaultSize);
 
-		setBound(new Rectangle(location.x, location.y, defaultSize.x, defaultSize.y));
-		
 		addPaintListener();
 		addMouseListener();
-		
-		System.out.println("Create new ui element: " + location + "-" + defaultSize);
 		
 		Display.getCurrent().timerExec((int)(ACTION_UPDATE_TIME * 1000), getAnimationThread());
 	}
@@ -183,10 +182,15 @@ public abstract class UIElement {
 	public Point getSize() {
 		size.x = bound.width;
 		size.y = bound.height;
+		
 		return size;
 	}
 
 	public void setSize(Point size) {
+		bound.width = size.x;
+		bound.height = size.y;
+		setBound(bound);
+		
 		this.size = size;
 	}
 	

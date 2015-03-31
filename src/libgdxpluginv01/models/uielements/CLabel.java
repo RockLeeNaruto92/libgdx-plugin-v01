@@ -69,6 +69,11 @@ public class CLabel extends UIElement {
 		Point size = getSize();
 		Point defaultSize = getDefaultSize();
 		
+		if (size.x < defaultSize.x || size.y < defaultSize.y){
+			setSize(defaultSize);
+			size = defaultSize;
+		}
+		
 		// draw background
 		if (style.background != null){
 			Rectangle bound = style.background.getBounds();
