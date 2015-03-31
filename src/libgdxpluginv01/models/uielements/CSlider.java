@@ -3,7 +3,6 @@ package libgdxpluginv01.models.uielements;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
-import libgdxpluginv01.swt.custom.BitmapFont;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;

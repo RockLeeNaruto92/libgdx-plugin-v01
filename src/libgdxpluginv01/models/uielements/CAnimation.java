@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
-import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.PlayMode;
 

@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import libgdxpluginv01.controller.UIController;
-import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.views.properties.Error;
 import libgdxpluginv01.views.properties.UIElementProperty;

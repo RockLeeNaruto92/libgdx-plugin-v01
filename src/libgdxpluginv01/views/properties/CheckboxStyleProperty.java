@@ -5,7 +5,6 @@ import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CCheckbox.CheckboxStyle;
 
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 

@@ -1,9 +1,7 @@
 package libgdxpluginv01.views.properties;
 
-import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
-import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.UIElement;
 
@@ -11,9 +9,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 
 public class ButtonProperty extends UIElementProperty{
 	private static ButtonProperty _instance;

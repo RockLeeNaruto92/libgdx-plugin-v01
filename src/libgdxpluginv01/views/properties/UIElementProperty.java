@@ -111,36 +111,4 @@ public abstract class UIElementProperty extends Property{
 		textSizeHeight.setText(object.getBound().height + "");
 		checkboxVisible.setSelection(object.isVisible());
 	}
-	
-	private boolean isValidName(String name){
-		if (name == null) 
-			return false;
-		if (name.length() == 0)
-			return false;
-		if (name.charAt(0) <= '9' && name.charAt(0) >= '0')
-			return false;
-		if (name.contains(Parameter.SPECIAL_CHARACTER))
-			return false;
-		
-		return true;
-	}
-	
-	public boolean isIntegerNum(String text){
-		for (int i = 0; i < text.length(); i++){
-			if (!Character.isDigit(text.charAt(i)))
-				return false;
-		}
-		
-		return true;
-	}
-	
-	public boolean isFloatNum(String text){
-		try {
-			Float.parseFloat(text);
-		} catch (Exception e){
-			return false;
-		}
-		
-		return true;
-	}
 }

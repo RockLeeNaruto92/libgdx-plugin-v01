@@ -5,6 +5,7 @@ import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
+import libgdxpluginv01.views.properties.Error;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.SWT;
@@ -269,7 +270,25 @@ public class CLabel extends UIElement {
 		}
 		return null;
 	}
+	
+	private Error isValidText(String text){
+		return Error.VALID;
+	}
 
+	@Override
+	public Error isValidProperty(UIElementPropertyType type, String value) {
+		Error result = super.isValidProperty(type, value);
+		
+		if (result == Error.VALID) return result;
+		switch (type) {
+		case TEXT:
+			return isValidText(value);
+		default:
+			break;
+		}
+		
+		return Error.VALID;
+	}
 
 	public class LabelStyle{
 		public BitmapFont font;
