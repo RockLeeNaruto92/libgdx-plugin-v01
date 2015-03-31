@@ -3,6 +3,7 @@ package libgdxpluginv01.models.uielements;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
@@ -70,8 +71,6 @@ public class CButton extends UIElement {
 	
 	@Override
 	public void onMouseDoubleClick() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -94,6 +93,20 @@ public class CButton extends UIElement {
 		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, 0, 0, getSize().x, getSize().y);
 	}
 	
+	@Override
+	public void setPropertyValue(UIElementPropertyType type, Object value) {
+		super.setPropertyValue(type, value);
+		
+		switch (type) {
+		case CHECK:
+			setChecked((boolean)value);
+			break;
+
+		default:
+			break;
+		}
+	}
+
 	public boolean isChecked() {
 		return checked;
 	}

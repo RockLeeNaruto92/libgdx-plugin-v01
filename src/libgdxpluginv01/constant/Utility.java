@@ -196,7 +196,7 @@ public class Utility {
 		}
 		
 		int horizontalSpan = 4 - labelNames.length;
-		Button checkbox = new Button(parent, SWT.CHECK);
+		final Button checkbox = new Button(parent, SWT.CHECK);
 		checkbox.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, horizontalSpan));
 		checkbox.setSelection(true);
 		checkbox.addListener(SWT.Selection, new Listener() {
@@ -205,7 +205,8 @@ public class Utility {
 				UIElement obj = property.getUielement();
 				
 				if (obj == null) return;
-				obj.setVisible(!obj.isVisible());
+				obj.setPropertyValue(type, checkbox.getSelection());
+				obj.redraw();
 			}
 		});
 		
