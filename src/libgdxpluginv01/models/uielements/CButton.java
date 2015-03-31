@@ -1,6 +1,7 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 
 import org.eclipse.swt.events.PaintEvent;
@@ -65,7 +66,6 @@ public class CButton extends UIElement {
 
 	@Override
 	public void onMouseMove() {
-		
 	}
 	
 	@Override
@@ -130,8 +130,6 @@ public class CButton extends UIElement {
 		this.style = style;
 	}
 
-
-
 	public static class ButtonStyle {
 		public Image checked;
 		public Image checkedOver;
@@ -145,10 +143,10 @@ public class CButton extends UIElement {
 		public float unpressedOffsetY;
 		
 		public ButtonStyle(){
-//			up = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/up.png").toString());
-//			down = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/down.png").toString());
-			up = new Image(Display.getCurrent(), "datas\\up.png");
-			down = new Image(Display.getCurrent(), "datas\\down.png");
+			up = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/up.png").toString());
+			down = new Image(Display.getCurrent(), Utility.getFile("datas/default/ButtonStyle/down.png").toString());
+//			up = new Image(Display.getCurrent(), "datas\\up.png");
+//			down = new Image(Display.getCurrent(), "datas\\down.png");
 			over = up;
 			checked = up;
 			checkedOver = up;

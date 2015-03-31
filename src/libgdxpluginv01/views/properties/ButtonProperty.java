@@ -55,26 +55,8 @@ public class ButtonProperty extends UIElementProperty{
 		checkboxDisable = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.DISABLE);
 	}
 	
-	protected void createStyleField(){
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_STYLE);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		Button button = new Button(getContainer(), SWT.PUSH);
-		button.setText(Word.PROPERTY_SET_STYLE);
-		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		button.addListener(SWT.MouseDown, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				if (getUielement() == null) return;
-				
-				UIElement obj = getUielement();
-				UIController uiController = obj.getUiController();
-				
-				uiController.setPropertyView(obj, true);
-			}
-		});
+	protected void createStyleField() {
+		Utility.createSetStyleButton(getContainer(), this);
 	}
 
 	@Override

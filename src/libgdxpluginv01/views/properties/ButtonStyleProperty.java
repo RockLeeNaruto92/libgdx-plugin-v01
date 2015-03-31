@@ -45,44 +45,43 @@ public class ButtonStyleProperty extends StyleProperty {
 			case 0:{
 				Image image = (Image)datas[0];
 				style.up = image;
+				up.redraw();
 				break;
 			}
 			case 1:{
 				Image image = (Image)datas[0];
 				style.down = image;
+				down.redraw();
 				break;
 			}
 			case 2:{
 				Image image = (Image)datas[0];
 				style.checked = image;
+				checked.redraw();
 				break;
 			}
 			case 3:{
 				Image image = (Image)datas[0];
 				style.disabled = image;
+				disabled.redraw();
 				break;
 			}
 			case 4: {
 				Image image = (Image)datas[0];
 				style.over = image;
+				over.redraw();
 				break;
 			}
 			case 5:{
 				Image image = (Image)datas[0];
 				style.checkedOver = image;
+				checkover.redraw();
 				break;
 			}
 			default:
 				break;
 			}
 		}
-		
-		up.redraw();
-		down.redraw();
-		checked.redraw();
-		disabled.redraw();
-		checkover.redraw();
-		over.redraw();
 		
 		obj.redraw();
 	}
