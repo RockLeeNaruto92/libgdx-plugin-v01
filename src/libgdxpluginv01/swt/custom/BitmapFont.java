@@ -219,10 +219,15 @@ public class BitmapFont {
 	}
 	
 	public void dispose(){
-		while (images.size() != 0){
+		// dispose all image
+		while (!images.isEmpty()){
 			Image image = images.remove(0);
 			image.dispose();
 		}
+		
+		// remove all characters in character list
+		while (!characters.isEmpty())
+			characters.remove(0);
 	}
 	
 	private void draw(GC gc, CCharacter cchar, int x, int y, float scaleX, float scaleY){

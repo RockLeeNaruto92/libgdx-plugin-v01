@@ -108,7 +108,7 @@ public class LabelProperty extends UIElementProperty {
 
 	private void createEllipsisField() {
 		String[] labelNames = new String[]{Word.PROPERTY_ELLIPSIS};
-		checkboxWrap = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.ELLIPSIS);
+		checkboxEllipsis = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.ELLIPSIS);
 	}
 	
 	@Override
