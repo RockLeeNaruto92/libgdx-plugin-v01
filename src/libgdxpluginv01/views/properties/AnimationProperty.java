@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.CAnimation;
 import libgdxpluginv01.swt.custom.PlayMode;
@@ -291,18 +292,18 @@ public class AnimationProperty extends UIElementProperty {
 	}
 	
 	private boolean isValidOriginX(String x){
-		return isIntegerNum(x);
+		return Utility.isInteger(x);
 	}
 	
 	private boolean isValidOriginY(String y){
-		return isIntegerNum(y);
+		return Utility.isInteger(y);
 	}
 	
 	private boolean isValidFrameDuration(String time){
-		return isFloatNum(time);
+		return Utility.isFloat(time);
 	}
 	
 	private boolean isValidCount(String count){
-		return isIntegerNum(count);
+		return Utility.isInteger(count);
 	}
 }

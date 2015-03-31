@@ -52,34 +52,6 @@ public class LabelProperty extends UIElementProperty {
 	}
 
 	private void createTextField() {
-//		Label label = new Label(getContainer(), SWT.NONE);
-//		
-//		label.setText(Word.PROPERTY_TEXT);
-//		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-//		
-//		textText = new Text(getContainer(), SWT.BORDER);
-//		textText.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-//		textText.addListener(SWT.Modify, new Listener() {
-//			@Override
-//			public void handleEvent(Event arg0) {
-//				if (getUielement() == null) return;
-//				
-//				CLabel obj = (CLabel)getUielement();
-//				
-//				obj.setText(textText.getText());
-//				
-//				Point size = obj.getDefaultSize();
-//				Rectangle bound = obj.getBound();
-//				
-//				if (bound.width < size.x) bound.width = size.x;
-//				if (bound.height < size.y) bound.height = size.y;
-//				
-//				obj.setBound(bound);
-//				
-//				obj.refresh();
-//				obj.redraw();
-//			}
-//		});
 		String[] labelNames = new String[]{Word.PROPERTY_TEXT};
 		textText = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.TEXT);
 	}
