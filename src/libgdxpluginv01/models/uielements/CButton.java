@@ -84,18 +84,18 @@ public class CButton extends UIElement {
 	@Override
 	public void drawContent(PaintEvent e) {
 		Image drawable = null;
+		ButtonStyle style = getStyle();
 		
-		if (disabled){
-			drawable = getStyle().disabled;
-		} else if (checked){
-			drawable = over ? getStyle().checkedOver : getStyle().checked;
-		} else {
-			if (up){
-				drawable = over ? getStyle().over : getStyle().up;
-			} else {
-				drawable = getStyle().down;
-			}
-		}
+		if (disabled & style.disabled != null)
+			drawable = style.disabled;
+		else if (!up && style.down != null)
+			drawable = style.down;
+		else if (checked && style.checked != null)
+			drawable = (style.checkedOver != null && over) ? style.checkedOver : style.checked;
+		else if (over & style.over != null)
+			drawable = style.over;
+		else if (style.up != null)
+			drawable = style.up;
 		
 		Rectangle bound = drawable.getBounds();
 		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, 0, 0, getSize().x, getSize().y);
