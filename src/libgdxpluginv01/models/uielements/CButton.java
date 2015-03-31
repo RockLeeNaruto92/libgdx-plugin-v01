@@ -101,7 +101,9 @@ public class CButton extends UIElement {
 		case CHECK:
 			setChecked((boolean)value);
 			break;
-
+		case DISABLE:
+			setDisabled((boolean)value);
+			break;
 		default:
 			break;
 		}
