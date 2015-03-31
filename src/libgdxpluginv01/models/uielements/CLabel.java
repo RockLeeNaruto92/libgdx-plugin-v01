@@ -104,6 +104,10 @@ public class CLabel extends UIElement {
 			x = size.x - defaultSize.x;
 			y = size.y - defaultSize.y;
 			break;
+		case Align.center:
+			x = (size.x - defaultSize.x) / 2;
+			y = (size.y - defaultSize.y) / 2;
+			break;
 		default:
 			x = 0;
 			y = 0;
@@ -278,8 +282,8 @@ public class CLabel extends UIElement {
 		public Image background;
 		
 		public LabelStyle(){
-			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
-//			font = new BitmapFont(Display.getCurrent(), "datas\\default.fnt");
+//			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
+			font = new BitmapFont(Display.getCurrent(), "datas\\font.fnt");
 			fontColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		}
 		

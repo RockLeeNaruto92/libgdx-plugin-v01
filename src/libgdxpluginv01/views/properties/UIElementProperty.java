@@ -143,21 +143,4 @@ public abstract class UIElementProperty extends Property{
 		
 		return true;
 	}
-	
-//	public Slider createSlider(Composite parent, final Text target, Point range, int step, int width, int height, int horizontalSpan){
-//		final Slider slider = new Slider(parent, SWT.HORIZONTAL);
-//		
-//		slider.setMinimum(range.x);
-//		slider.setMaximum(range.y);
-//		slider.setIncrement(step);
-//		slider.setLayoutData(createLayoutData(width, height, horizontalSpan));
-//		slider.addListener(SWT.Selection, new Listener() {
-//			@Override
-//			public void handleEvent(Event e) {
-//				target.setText(slider.getSelection() + "");
-//			}
-//		});
-//		
-//		return slider;
-//	}
 }

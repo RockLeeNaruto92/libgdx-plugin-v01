@@ -226,7 +226,7 @@ public class BitmapFont {
 	}
 	
 	private void draw(GC gc, CCharacter cchar, int x, int y, float scaleX, float scaleY){
-		gc.drawImage(images.get(cchar.page), cchar.x, cchar.y, cchar.width, cchar.height, x + cchar.xOffset, y + cchar.yOffset, (int)(cchar.width * scaleX), (int)(cchar.height * scaleY));
+		gc.drawImage(images.get(cchar.page), cchar.x, cchar.y, cchar.width, cchar.height, x + (int)(cchar.xOffset * scaleX), y + (int)(cchar.yOffset * scaleY), (int)(cchar.width * scaleX), (int)(cchar.height * scaleY));
 	}
 	
 	public void drawString(GC gc, String str, int x, int y, float scaleX, float scaleY){
@@ -257,7 +257,7 @@ public class BitmapFont {
 			CCharacter cchar = findCharacter(str.charAt(i));
 			
 			sumWidth += (int)(cchar.xAdvance * scaleX);
-			int height = (int)(cchar.height * scaleY);
+			int height = (int)((cchar.height + cchar.yOffset) * scaleY);
 			
 			if (maxHeight < height)
 				maxHeight = height;

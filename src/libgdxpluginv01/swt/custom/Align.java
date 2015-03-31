@@ -23,7 +23,8 @@ public class Align {
 			Word.ALIGN_TOP_LEFT,
 			Word.ALIGN_TOP_RIGHT,
 			Word.ALIGN_BOTTOM_LEFT,
-			Word.ALIGN_BOTTOM_RIGHT
+			Word.ALIGN_BOTTOM_RIGHT,
+			Word.ALIGN_CENTER
 		};
 	}
 	
@@ -45,6 +46,8 @@ public class Align {
 			return 6;
 		case bottomRight:
 			return 7;
+		case center:
+			return 8;
 		default:
 			return -1;
 		}
@@ -68,6 +71,8 @@ public class Align {
 			return bottomLeft;
 		case 7:
 			return bottomRight;
+		case 8:
+			return center;
 		default:
 			break;
 		}

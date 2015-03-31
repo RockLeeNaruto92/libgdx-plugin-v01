@@ -86,6 +86,10 @@ public class CImage extends UIElement {
 			x = size.x - bound.width;
 			y = size.y - bound.height;
 			break;
+		case Align.center:
+			x = (size.x - bound.width) / 2;
+			y = (size.y - bound.height) / 2;
+			break;
 
 		default:
 			break;

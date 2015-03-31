@@ -4,6 +4,7 @@ public class Word {
 	public static String PAGE_VISUAL_EDITOR = "Design";
 	public static String PAGE_SOURCE_CODE = "Source";
 	
+	public static String ALIGN_CENTER = "Center";
 	public static String ALIGN_LEFT = "Left";
 	public static String ALIGN_RIGHT = "Right";
 	public static String ALIGN_TOP = "Top";
