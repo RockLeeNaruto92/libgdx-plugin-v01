@@ -56,16 +56,6 @@ public class CCheckbox extends CButton {
 	}
 
 	@Override
-	public void createControls() {
-	}
-
-	@Override
-	public void displayBound(boolean display) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void drawContent(PaintEvent e) {
 		super.drawContent(e);
 		

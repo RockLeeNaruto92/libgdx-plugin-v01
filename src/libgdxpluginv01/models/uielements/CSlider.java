@@ -47,18 +47,6 @@ public class CSlider extends UIElement {
 	}
 
 	@Override
-	public void createControls() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void displayBound(boolean display) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void drawContent(PaintEvent e) {
 		// draw background and knob
 		Image image;

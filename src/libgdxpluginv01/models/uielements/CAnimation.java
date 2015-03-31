@@ -72,15 +72,6 @@ public class CAnimation extends UIElement {
 	}
 
 	@Override
-	public void createControls() {
-
-	}
-
-	@Override
-	public void displayBound(boolean display) {
-	}
-
-	@Override
 	public void drawContent(PaintEvent e) {
 		// draw image
 		if (keyFrames == null)

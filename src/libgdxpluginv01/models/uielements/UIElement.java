@@ -56,8 +56,6 @@ public abstract class UIElement {
 		container = new CustomComposite(root, SWT.NO_TRIM, location);
 		container.setLayout(new FillLayout());
 
-		createControls();
-
 		Point defaultSize = getDefaultSize();
 		
 		setBound(new Rectangle(location.x, location.y, defaultSize.x, defaultSize.y));
@@ -132,10 +130,6 @@ public abstract class UIElement {
 	
 	public abstract Point getMinSize();
 
-	public abstract void createControls();
-	
-	public abstract void displayBound(boolean display);
-	
 	public abstract void drawContent(PaintEvent e);
 	
 	public abstract void onMouseUp();

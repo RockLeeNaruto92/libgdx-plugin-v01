@@ -5,14 +5,9 @@ import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.models.uielements.CButton;
-import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.UIElement;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;

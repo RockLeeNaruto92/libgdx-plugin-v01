@@ -40,14 +40,6 @@ public class CSprite extends UIElement {
 	}
 
 	@Override
-	public void createControls() {
-	}
-
-	@Override
-	public void displayBound(boolean display) {
-	}
-
-	@Override
 	public void drawContent(PaintEvent e) {
 		Rectangle bound = getImage().getBounds();
 		

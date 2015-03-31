@@ -43,15 +43,6 @@ public class CImage extends UIElement {
 	}
 
 	@Override
-	public void createControls() {
-	}
-
-	@Override
-	public void displayBound(boolean display) {
-
-	}
-
-	@Override
 	public void drawContent(PaintEvent e) {
 		Rectangle bound = getImage().getBounds();
 		int x = 0, y = 0;

@@ -1,7 +1,6 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
-import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 
 import org.eclipse.swt.events.PaintEvent;
@@ -40,16 +39,6 @@ public class CButton extends UIElement {
 		return Parameter.BUTTON_MIN_SIZE;
 	}
 
-	@Override
-	public void createControls() {
-	}
-
-	@Override
-	public void displayBound(boolean display) {
-		// TODO Auto-generated method stub
-		setSelected(display);
-	}
-	
 	@Override
 	public void onMouseUp() {
 		up = true;

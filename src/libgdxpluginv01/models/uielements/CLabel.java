@@ -54,16 +54,6 @@ public class CLabel extends UIElement {
 	}
 
 	@Override
-	public void createControls() {
-	}
-
-	@Override
-	public void displayBound(boolean display) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void drawContent(PaintEvent e) {
 		int x = 0, y = 0;
 		Point size = getSize();
