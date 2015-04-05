@@ -33,13 +33,11 @@ public class CCheckbox extends CButton {
 
 	@Override
 	public String getDefaultNamePattern() {
-		// TODO Auto-generated method stub
 		return Parameter.DEFAULT_CHECKBOX_NAME_PATTERN;
 	}
 
 	@Override
 	public Point getDefaultSize() {
-		// TODO Auto-generated method stub
 		Point defaultSize = getStyle().font.getActualSize(getText(), 1, 1);
 		Rectangle bound = getStyle().checkboxOn.getBounds();
 		
@@ -51,7 +49,6 @@ public class CCheckbox extends CButton {
 
 	@Override
 	public Point getMinSize() {
-		// TODO Auto-generated method stub
 		return getDefaultSize();
 	}
 
