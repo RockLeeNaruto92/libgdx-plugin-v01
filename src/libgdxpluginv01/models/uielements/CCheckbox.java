@@ -5,6 +5,7 @@ import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
@@ -17,9 +18,10 @@ import org.eclipse.swt.widgets.Display;
 public class CCheckbox extends CButton {
 	private CheckboxStyle style;
 	private String text;
-	private float scaleX = 1, scaleY = 1;
+//	private float scaleX = 1, scaleY = 1;
 	private int align = Align.left;
 	private int padLeft, padRight, padTop, padBottom;
+	private float fontScaleX = 1, fontScaleY = 1;
 	private boolean on;
 	
 	public CCheckbox(Composite root, Point location, UIController uiController,
@@ -44,6 +46,13 @@ public class CCheckbox extends CButton {
 		defaultSize.x += bound.width;
 		defaultSize.y = (defaultSize.y > bound.height) ? defaultSize.y : bound.height;
 		
+		Point textSize = getStyle().font.getActualSize(getText(), fontScaleX, fontScaleY);
+		
+		if (textSize.x > defaultSize.x)
+			defaultSize.x = textSize.x;
+		if (textSize.y > defaultSize.y)
+			defaultSize.y = textSize.y;
+		
 		return defaultSize;
 	}
 
@@ -57,7 +66,6 @@ public class CCheckbox extends CButton {
 		super.drawContent(e);
 		
 		int x = 0, y = 0;
-		
 		Image drawable;
 		
 		// draw checkbox
@@ -71,14 +79,13 @@ public class CCheckbox extends CButton {
 			}
 		}
 		
-		Rectangle bound = drawable.getBounds();
-		
-		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, padLeft, padTop, (int)(bound.width * scaleX), (int)(bound.height * scaleY));
-		
-		int nextX = (int)((2 * padLeft + bound.width) * scaleX);
+//		Rectangle bound = drawable.getBounds();
+//		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, padLeft, padTop, (int)(bound.width * scaleX), (int)(bound.height * scaleY));
 		// draw String
 		Point size = getSize();
 		Point defaultSize = getDefaultSize();
+		Point textSize = getStyle().font.getActualSize(getText(), fontScaleX, fontScaleY);
+		int nextX = defaultSize.x - padRight - textSize.x; 
 		
 		switch (align) {
 		case Align.left:
@@ -115,7 +122,11 @@ public class CCheckbox extends CButton {
 			break;
 		}
 		
-		getStyle().font.drawString(e.gc, getText(), x, y, scaleX, scaleY);
+		getStyle().font.drawString(e.gc, getText(), x, y, fontScaleX, fontScaleY);
+		Rectangle bound = drawable.getBounds();
+		int imageY = (getBound().height - bound.height) / 2;
+		int imageWidth = defaultSize.x - textSize.x;
+		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, padLeft, imageY, imageWidth, bound.height);
 	}
 
 	@Override
@@ -143,10 +154,47 @@ public class CCheckbox extends CButton {
 		super.onMouseMove();
 	}
 
+	@Override
+	public void setPropertyValue(UIElementPropertyType type, Object value) {
+		super.setPropertyValue(type, value);
+		
+		switch (type) {
+		case TEXT:
+			setText((String)value);
+			break;
+		case FONT_SCALE_X:
+			setFontScaleX(Float.parseFloat((String)value));
+			break;
+		case FONT_SCALE_Y:
+			setFontScaleY(Float.parseFloat((String)value));
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public Object getPropertyValue(UIElementPropertyType type) {
+		Object result = super.getPropertyValue(type);
+		
+		if (result != null) return result;
+		switch (type) {
+		case FONT_SCALE_X:
+			return fontScaleX;
+		case FONT_SCALE_Y:
+			return fontScaleY;
+		default:
+			break;
+		}
+		
+		return null;
+	}
+
 	public CheckboxStyle getStyle() {
 		if (style == null){
 			style = new CheckboxStyle();
 		}
+		
 		return style;
 	}
 
@@ -162,22 +210,6 @@ public class CCheckbox extends CButton {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public float getScaleX() {
-		return scaleX;
-	}
-
-	public void setScaleX(float scaleX) {
-		this.scaleX = scaleX;
-	}
-
-	public float getScaleY() {
-		return scaleY;
-	}
-
-	public void setScaleY(float scaleY) {
-		this.scaleY = scaleY;
 	}
 
 	public int getAlign() {
@@ -226,6 +258,22 @@ public class CCheckbox extends CButton {
 
 	public void setOn(boolean on) {
 		this.on = on;
+	}
+
+	public float getFontScaleX() {
+		return fontScaleX;
+	}
+
+	public void setFontScaleX(float fontScaleX) {
+		this.fontScaleX = fontScaleX;
+	}
+
+	public float getFontScaleY() {
+		return fontScaleY;
+	}
+
+	public void setFontScaleY(float fontScaleY) {
+		this.fontScaleY = fontScaleY;
 	}
 
 

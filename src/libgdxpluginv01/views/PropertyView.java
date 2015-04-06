@@ -7,6 +7,7 @@ import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.views.properties.AnimationProperty;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.ButtonStyleProperty;
+import libgdxpluginv01.views.properties.CheckboxProperty;
 import libgdxpluginv01.views.properties.CheckboxStyleProperty;
 import libgdxpluginv01.views.properties.EmptyProperty;
 import libgdxpluginv01.views.properties.ImageProperty;
@@ -39,7 +40,7 @@ public class PropertyView extends ViewPart {
 		properties.add(ButtonProperty.getInstance(parent));
 		properties.add(LabelProperty.getInstance(parent));
 		properties.add(SliderProperty.getInstance(parent));
-//		properties.add(CheckboxProperty.getInstance(parent));
+		properties.add(CheckboxProperty.getInstance(parent));
 		properties.add(SpriteProperty.getInstance(parent));
 		properties.add(ImageProperty.getInstance(parent));
 		properties.add(AnimationProperty.getInstance(parent));
