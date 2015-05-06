@@ -58,7 +58,7 @@ public class CLabel extends UIElement {
 	public void drawContent(PaintEvent e) {
 		int x = 0, y = 0;
 		Point size = getSize();
-		Point defaultSize = getDefaultSize();
+		Point defaultSize = style.font.getActualSize(text, fontScaleX, fontScaleY);
 		
 		if (size.x < defaultSize.x || size.y < defaultSize.y){
 			setSize(defaultSize);
@@ -295,7 +295,7 @@ public class CLabel extends UIElement {
 	public Error isValidProperty(UIElementPropertyType type, String value) {
 		Error result = super.isValidProperty(type, value);
 		
-		if (result == Error.VALID) return result;
+		if (result != Error.VALID) return result;
 		switch (type) {
 		case TEXT:
 			return isValidText(value);
