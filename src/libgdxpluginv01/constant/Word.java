@@ -104,4 +104,17 @@ public class Word {
 	public static String ERROR_INVALID_PAD_LEFT = "Pad left must be integer number";
 	public static String ERROR_INVALID_PAD_TOP = "Pad top must be integer number";
 	public static String ERROR_INVALID_PAD_BOTTOM = "Pad bottom must be integer number";
+	public static String LABEL_PROJECT_NAME = "Project Name";
+	public static String LABEL_PROJECT_MAIN_PACKAGE = "Package";
+	public static String LABEL_PROJECT_MAIN_CLASS = "Game class";
+	public static String LABEL_PROJECT_DESTINATION_FOLDER = "Destination";
+	public static String LABEL_BUTTON_BROWSE = "Browse";
+	public static String LABEL_DESKTOP_PROJECT = "Desktop project";
+	public static String DEFAULT_PROJECT_NAME = "NewLibgdxGameProject";
+	public static String DEFAULT_PROJECT_MAIN_PACKAGE="your.libgdx.project";
+	public static String DEFAULT_PROJECT_MAIN_CLASS = "GameClass";
+	public static String DEFAULT_PROJECT_DESTIONATION_FOLDER = "/home/superman/PluginExample";
+	public static String WIZARD_PAGE_NAME = "libgdxProjctCreationWizardPage";
+	public static String WIZARD_PAGE_TITLE = "Create new libgdx project";
+	public static String WIZARD_PAGE_DESCRIPTION = "This wizard creates new libgdx project.";
 }

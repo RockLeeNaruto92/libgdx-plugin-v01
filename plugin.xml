@@ -85,4 +85,18 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Libgdx game mobile development"
+            id="PluginForLibgdx">
+      </category>
+      <wizard
+            name="Libgdx game mobile development"
+            icon="icons/sample.gif"
+            category="PluginForLibgdx"
+            class="libgdxpluginv01.winzards.LibgdxProjectCreation"
+            id="libgdxpluginv01.wizards.LibgdxProjectCreation">
+      </wizard>
+   </extension>
 </plugin>
