@@ -1,5 +1,7 @@
 package libgdxpluginv01.winzards;
 
+import javax.swing.JFileChooser;
+
 import libgdxpluginv01.constant.Word;
 
 import org.eclipse.core.resources.IContainer;
@@ -37,6 +39,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	private Text textProjectMainPackageContainer;
 	private Text textProjectMainClassContainer;
 	private Text textProjectDestinationFolder;
+	private Text textAndroidSdkPath;
 	private Button checkboxDesktopVersion;
 
 	private ISelection selection;
@@ -71,6 +74,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 		createMainPackageInputText(container);
 		createMainClassInputText(container);
 		createDestinationFolderInputText(container);
+		createAndroidSdkPathInputText(container);
 		createDesktopVersionCheckbox(container);
 
 		initialize();
@@ -78,6 +82,29 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 		setControl(container);
 	}
 	
+	private void createAndroidSdkPathInputText(Composite container){
+		Label label = new Label(container, SWT.NULL);
+		label.setText(Word.LABEL_PROJECT_ANDROID_SDK_PATH);
+		
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		
+		textAndroidSdkPath = new Text(container, SWT.BORDER | SWT.SINGLE);
+		textAndroidSdkPath.setLayoutData(gd);
+		textAndroidSdkPath.setText(Word.DEFAULT_PROJECT_DESTIONATION_FOLDER);
+		textAndroidSdkPath.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				dialogChanged();
+			}
+		});
+		
+		Button button = new Button(container, SWT.PUSH);
+		button.setText(Word.LABEL_BUTTON_BROWSE);
+		button.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				handleBrowse(textAndroidSdkPath);
+			}
+		});
+	}
 	
 	/***
 	 * Create name input container include project name label and project name's inputText element
@@ -169,10 +196,9 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 		button.setText(Word.LABEL_BUTTON_BROWSE);
 		button.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				handleBrowse();
+				handleBrowse(textProjectDestinationFolder);
 			}
 		});
-
 	}
 	
 	/**
@@ -224,16 +250,12 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	 * the container field.
 	 */
 
-	private void handleBrowse() {
-		ContainerSelectionDialog dialog = new ContainerSelectionDialog(
-				getShell(), ResourcesPlugin.getWorkspace().getRoot(), false,
-				"Select new file container");
-		if (dialog.open() == ContainerSelectionDialog.OK) {
-			Object[] result = dialog.getResult();
-			if (result.length == 1) {
-//				containerText.setText(((Path) result[0]).toString());
-			}
-		}
+	private void handleBrowse(Text text) {
+		JFileChooser dialog = new JFileChooser();
+		dialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			text.setText(dialog.getSelectedFile().getPath());
 	}
 
 	/**

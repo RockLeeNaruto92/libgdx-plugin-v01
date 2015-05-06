@@ -110,6 +110,7 @@ public class Word {
 	public static String LABEL_PROJECT_DESTINATION_FOLDER = "Destination";
 	public static String LABEL_BUTTON_BROWSE = "Browse";
 	public static String LABEL_DESKTOP_PROJECT = "Desktop project";
+	public static String LABEL_PROJECT_ANDROID_SDK_PATH = "Android SDK";
 	public static String DEFAULT_PROJECT_NAME = "NewLibgdxGameProject";
 	public static String DEFAULT_PROJECT_MAIN_PACKAGE="your.libgdx.project";
 	public static String DEFAULT_PROJECT_MAIN_CLASS = "GameClass";
