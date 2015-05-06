@@ -25,7 +25,6 @@ public class LabelProperty extends UIElementProperty {
 	
 	public LabelProperty(Composite parent) {
 		super(parent);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public static LabelProperty getInstance(Composite parent){

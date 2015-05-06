@@ -92,6 +92,13 @@ public class CheckboxStyleProperty extends ButtonStyleProperty{
 			}
 		}
 		
+		if (style == null){
+			System.out.println("Style null");
+		} else {
+			if (font == null){
+				System.out.println("CHeckbox style not null");
+			}
+		}
 		font.setText(style.font.getName());
 		fontColor.setBackground(style.fontColor);
 		downFontColor.setBackground(style.downFontColor);

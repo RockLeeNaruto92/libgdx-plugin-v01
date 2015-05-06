@@ -5,6 +5,7 @@ import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
@@ -17,9 +18,9 @@ import org.eclipse.swt.widgets.Display;
 public class CCheckbox extends CButton {
 	private CheckboxStyle style;
 	private String text;
-	private float scaleX = 1, scaleY = 1;
-	private int align = Align.left;
+	private int align = Align.top;
 	private int padLeft, padRight, padTop, padBottom;
+	private float fontScaleX = 1, fontScaleY = 1;
 	private boolean on;
 	
 	public CCheckbox(Composite root, Point location, UIController uiController,
@@ -33,25 +34,29 @@ public class CCheckbox extends CButton {
 
 	@Override
 	public String getDefaultNamePattern() {
-		// TODO Auto-generated method stub
 		return Parameter.DEFAULT_CHECKBOX_NAME_PATTERN;
 	}
 
 	@Override
 	public Point getDefaultSize() {
-		// TODO Auto-generated method stub
 		Point defaultSize = getStyle().font.getActualSize(getText(), 1, 1);
 		Rectangle bound = getStyle().checkboxOn.getBounds();
 		
 		defaultSize.x += bound.width;
 		defaultSize.y = (defaultSize.y > bound.height) ? defaultSize.y : bound.height;
 		
+		Point textSize = getStyle().font.getActualSize(getText(), fontScaleX, fontScaleY);
+		
+		if (textSize.x > defaultSize.x)
+			defaultSize.x = textSize.x;
+		if (textSize.y > defaultSize.y)
+			defaultSize.y = textSize.y;
+		
 		return defaultSize;
 	}
 
 	@Override
 	public Point getMinSize() {
-		// TODO Auto-generated method stub
 		return getDefaultSize();
 	}
 
@@ -60,7 +65,7 @@ public class CCheckbox extends CButton {
 		super.drawContent(e);
 		
 		int x = 0, y = 0;
-		
+		int imgX = padLeft, imgY;
 		Image drawable;
 		
 		// draw checkbox
@@ -74,51 +79,92 @@ public class CCheckbox extends CButton {
 			}
 		}
 		
-		Rectangle bound = drawable.getBounds();
-		
-		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, padLeft, padTop, (int)(bound.width * scaleX), (int)(bound.height * scaleY));
-		
-		int nextX = (int)((2 * padLeft + bound.width) * scaleX);
 		// draw String
 		Point size = getSize();
 		Point defaultSize = getDefaultSize();
+		Point textSize = getStyle().font.getActualSize(getText(), fontScaleX, fontScaleY);
+		Rectangle imgBound = drawable.getBounds();
 		
 		switch (align) {
 		case Align.left:
-			x = nextX;
+			x = defaultSize.x - padRight - textSize.x;;
+			y = (size.y - textSize.y) / 2;
+			imgY = (size.y - imgBound.height) / 2;
+			imgX = padLeft;
 			break;
 		case Align.right:
 			x = size.x - defaultSize.x - padRight;
+			y = (size.y - textSize.y) / 2;
+			imgY = (size.y - imgBound.height) / 2;
+			imgX = x - imgBound.width;
 			break;
 		case Align.top:
+			if (size.x > textSize.x + imgBound.width){
+				imgX = (size.x - textSize.x - imgBound.width) / 2;
+				x = imgX + imgBound.width;
+			}else{
+				x = size.x / 2 - textSize.x / 2;
+				imgX = padLeft;
+			}
 			y = padTop;
+			imgY = padTop;
 			break;
 		case Align.bottom:
+			if (size.x > textSize.x + imgBound.width){
+				imgX = (size.x - textSize.x - imgBound.width) / 2;
+				x = imgX + imgBound.width;
+			}else{
+				x = size.x / 2 - textSize.x / 2;
+				imgX = padLeft;
+			}
 			y = size.y - padBottom - defaultSize.y;
+			imgY = y;
 			break;
 		case Align.topLeft:
-			x = nextX;
+			x = defaultSize.x - padRight - textSize.x;;
 			y = padTop;
+			imgY = padTop;
+			imgX = padLeft;
 			break;
 		case Align.topRight:
 			x = size.x - defaultSize.x - padRight;
 			y = padTop;
+			imgY = padTop;
+			imgX = x - imgBound.width;
 			break;
 		case Align.bottomLeft:
-			x = nextX;
+			x = defaultSize.x - padRight - textSize.x;;
 			y = size.y - padBottom - defaultSize.y;
+			imgY = padTop;
+			imgX = padLeft;
 			break;
 		case Align.bottomRight:
 			x = size.x - defaultSize.x - padRight;
 			y = size.y - defaultSize.y - padBottom;
+			imgY = y;
+			imgX = (x - imgBound.width > 0) ? x - imgBound.width : 0;
+			break;
+		case Align.center:
+			if (size.x > textSize.x + imgBound.width){
+				imgX = (size.x - textSize.x - imgBound.width) / 2;
+				x = imgX + imgBound.width;
+			}else{
+				x = size.x / 2 - textSize.x / 2;
+				imgX = padLeft;
+			}
+			y = (size.y - textSize.y) / 2;
+			imgY = (size.y - imgBound.height) / 2;
 			break;
 		default:
-			x = nextX;
-			y = padTop;
 			break;
 		}
 		
-		getStyle().font.drawString(e.gc, getText(), x, y, scaleX, scaleY);
+		getStyle().font.drawString(e.gc, getText(), x, y, fontScaleX, fontScaleY);
+		
+		int imageY = (getBound().height - imgBound.height) / 2;
+		int imageWidth = defaultSize.x - textSize.x;
+		
+		e.gc.drawImage(drawable, 0, 0, imgBound.width, imgBound.height, padLeft, imageY, imageWidth, imgBound.height);
 	}
 
 	@Override
@@ -146,10 +192,47 @@ public class CCheckbox extends CButton {
 		super.onMouseMove();
 	}
 
+	@Override
+	public void setPropertyValue(UIElementPropertyType type, Object value) {
+		super.setPropertyValue(type, value);
+		
+		switch (type) {
+		case TEXT:
+			setText((String)value);
+			break;
+		case FONT_SCALE_X:
+			setFontScaleX(Float.parseFloat((String)value));
+			break;
+		case FONT_SCALE_Y:
+			setFontScaleY(Float.parseFloat((String)value));
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public Object getPropertyValue(UIElementPropertyType type) {
+		Object result = super.getPropertyValue(type);
+		
+		if (result != null) return result;
+		switch (type) {
+		case FONT_SCALE_X:
+			return fontScaleX;
+		case FONT_SCALE_Y:
+			return fontScaleY;
+		default:
+			break;
+		}
+		
+		return null;
+	}
+
 	public CheckboxStyle getStyle() {
 		if (style == null){
 			style = new CheckboxStyle();
 		}
+		
 		return style;
 	}
 
@@ -165,22 +248,6 @@ public class CCheckbox extends CButton {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public float getScaleX() {
-		return scaleX;
-	}
-
-	public void setScaleX(float scaleX) {
-		this.scaleX = scaleX;
-	}
-
-	public float getScaleY() {
-		return scaleY;
-	}
-
-	public void setScaleY(float scaleY) {
-		this.scaleY = scaleY;
 	}
 
 	public int getAlign() {
@@ -229,6 +296,22 @@ public class CCheckbox extends CButton {
 
 	public void setOn(boolean on) {
 		this.on = on;
+	}
+
+	public float getFontScaleX() {
+		return fontScaleX;
+	}
+
+	public void setFontScaleX(float fontScaleX) {
+		this.fontScaleX = fontScaleX;
+	}
+
+	public float getFontScaleY() {
+		return fontScaleY;
+	}
+
+	public void setFontScaleY(float fontScaleY) {
+		this.fontScaleY = fontScaleY;
 	}
 
 
