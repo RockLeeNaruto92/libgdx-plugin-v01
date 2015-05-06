@@ -284,6 +284,12 @@ public class CLabel extends UIElement {
 	private Error isValidText(String text){
 		return Error.VALID;
 	}
+	
+	private Error isValidFontScale(String text){
+		if (text.length() == 0) return Error.FONT_SCALE_IS_EMPTY;
+		
+		return Error.VALID;
+	}
 
 	@Override
 	public Error isValidProperty(UIElementPropertyType type, String value) {
@@ -293,6 +299,9 @@ public class CLabel extends UIElement {
 		switch (type) {
 		case TEXT:
 			return isValidText(value);
+		case FONT_SCALE_X:
+		case FONT_SCALE_Y:
+			return isValidFontScale(value);
 		default:
 			break;
 		}

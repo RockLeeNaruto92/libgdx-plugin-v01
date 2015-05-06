@@ -73,7 +73,7 @@ public class UIController {
 	}
 	
 	public void setPropertyView(UIElement uielement){
-		Property view = null; 
+		Property view = null;
 		switch (uielement.getType()) {
 		case UIElementType.BUTTON:
 			view = ButtonProperty.getInstance(propertyView.getParent());
@@ -83,7 +83,7 @@ public class UIController {
 			view = LabelProperty.getInstance(propertyView.getParent());
 			break;
 			
-		case UIElementType.SLIDER:
+		case UIElementType.SLIDER: 
 			view = SliderProperty.getInstance(propertyView.getParent());
 			break;
 			

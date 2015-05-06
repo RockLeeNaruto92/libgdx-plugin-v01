@@ -7,7 +7,8 @@ public enum Error {
 	LOCATION_X_IS_STRING ("Location x value must be integer number!"),
 	LOCATION_X_OUT_RANGE ("Location x is out of range: "),
 	LOCATION_Y_IS_STRING ("Location y value must be integer number!"),
-	LOCATION_Y_OUT_RANGE ("Lication y is out of range: ");
+	LOCATION_Y_OUT_RANGE ("Location y is out of range: "),
+	FONT_SCALE_IS_EMPTY ("Font scale must be float number");
 	
 	private String name;
 	private Error (String str){
@@ -18,3 +19,4 @@ public enum Error {
 		return name + range;
 	}
 }
+
