@@ -18,8 +18,7 @@ import org.eclipse.swt.widgets.Display;
 public class CCheckbox extends CButton {
 	private CheckboxStyle style;
 	private String text;
-//	private float scaleX = 1, scaleY = 1;
-	private int align = Align.left;
+	private int align = Align.top;
 	private int padLeft, padRight, padTop, padBottom;
 	private float fontScaleX = 1, fontScaleY = 1;
 	private boolean on;
@@ -66,6 +65,7 @@ public class CCheckbox extends CButton {
 		super.drawContent(e);
 		
 		int x = 0, y = 0;
+		int imgX = padLeft, imgY;
 		Image drawable;
 		
 		// draw checkbox
@@ -79,54 +79,92 @@ public class CCheckbox extends CButton {
 			}
 		}
 		
-//		Rectangle bound = drawable.getBounds();
-//		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, padLeft, padTop, (int)(bound.width * scaleX), (int)(bound.height * scaleY));
 		// draw String
 		Point size = getSize();
 		Point defaultSize = getDefaultSize();
 		Point textSize = getStyle().font.getActualSize(getText(), fontScaleX, fontScaleY);
-		int nextX = defaultSize.x - padRight - textSize.x; 
+		Rectangle imgBound = drawable.getBounds();
 		
 		switch (align) {
 		case Align.left:
-			x = nextX;
+			x = defaultSize.x - padRight - textSize.x;;
+			y = (size.y - textSize.y) / 2;
+			imgY = (size.y - imgBound.height) / 2;
+			imgX = padLeft;
 			break;
 		case Align.right:
 			x = size.x - defaultSize.x - padRight;
+			y = (size.y - textSize.y) / 2;
+			imgY = (size.y - imgBound.height) / 2;
+			imgX = x - imgBound.width;
 			break;
 		case Align.top:
+			if (size.x > textSize.x + imgBound.width){
+				imgX = (size.x - textSize.x - imgBound.width) / 2;
+				x = imgX + imgBound.width;
+			}else{
+				x = size.x / 2 - textSize.x / 2;
+				imgX = padLeft;
+			}
 			y = padTop;
+			imgY = padTop;
 			break;
 		case Align.bottom:
+			if (size.x > textSize.x + imgBound.width){
+				imgX = (size.x - textSize.x - imgBound.width) / 2;
+				x = imgX + imgBound.width;
+			}else{
+				x = size.x / 2 - textSize.x / 2;
+				imgX = padLeft;
+			}
 			y = size.y - padBottom - defaultSize.y;
+			imgY = y;
 			break;
 		case Align.topLeft:
-			x = nextX;
+			x = defaultSize.x - padRight - textSize.x;;
 			y = padTop;
+			imgY = padTop;
+			imgX = padLeft;
 			break;
 		case Align.topRight:
 			x = size.x - defaultSize.x - padRight;
 			y = padTop;
+			imgY = padTop;
+			imgX = x - imgBound.width;
 			break;
 		case Align.bottomLeft:
-			x = nextX;
+			x = defaultSize.x - padRight - textSize.x;;
 			y = size.y - padBottom - defaultSize.y;
+			imgY = padTop;
+			imgX = padLeft;
 			break;
 		case Align.bottomRight:
 			x = size.x - defaultSize.x - padRight;
 			y = size.y - defaultSize.y - padBottom;
+			imgY = y;
+			imgX = (x - imgBound.width > 0) ? x - imgBound.width : 0;
+			break;
+		case Align.center:
+			if (size.x > textSize.x + imgBound.width){
+				imgX = (size.x - textSize.x - imgBound.width) / 2;
+				x = imgX + imgBound.width;
+			}else{
+				x = size.x / 2 - textSize.x / 2;
+				imgX = padLeft;
+			}
+			y = (size.y - textSize.y) / 2;
+			imgY = (size.y - imgBound.height) / 2;
 			break;
 		default:
-			x = nextX;
-			y = padTop;
 			break;
 		}
 		
 		getStyle().font.drawString(e.gc, getText(), x, y, fontScaleX, fontScaleY);
-		Rectangle bound = drawable.getBounds();
-		int imageY = (getBound().height - bound.height) / 2;
+		
+		int imageY = (getBound().height - imgBound.height) / 2;
 		int imageWidth = defaultSize.x - textSize.x;
-		e.gc.drawImage(drawable, 0, 0, bound.width, bound.height, padLeft, imageY, imageWidth, bound.height);
+		
+		e.gc.drawImage(drawable, 0, 0, imgBound.width, imgBound.height, padLeft, imageY, imageWidth, imgBound.height);
 	}
 
 	@Override
