@@ -3,6 +3,8 @@ package libgdxpluginv01.models.uielements;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.views.properties.Error;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
@@ -59,7 +61,10 @@ public class CSlider extends UIElement {
 		image = disabled ? style.disabledKnob : style.knob;
 		Rectangle kBound = image.getBounds();
 		
-		int x = (int)(value / (max - min));
+		int x = (int)(((value - min) / (max - min)) * size.x);
+		System.out.println("value: " + value);
+		System.out.println((value - min) / (max - min));
+		System.out.println("x: " + x);
 		
 		e.gc.drawImage(image, 0, 0, kBound.width, kBound.height, x, 0, (int)(size.x * (kBound.width * 1f / bBound.width)), size.y);
 	}
@@ -149,6 +154,88 @@ public class CSlider extends UIElement {
 
 	public void setStyle(SliderStyle style) {
 		this.style = style;
+	}
+
+	@Override
+	public Error isValidProperty(UIElementPropertyType type, String value) {
+		Error error = super.isValidProperty(type, value);
+		
+		if (error != Error.VALID) return error;
+		switch (type) {
+		case MAX:
+		case MIN:
+		case STEP_SIZE:
+		case VALUE:
+			return isFloatNum((String)value);
+		default:
+			break;
+		}
+		
+		return Error.VALID;
+	}
+	
+	private Error isFloatNum(String value){
+		try {
+			Float.parseFloat(value);
+		}catch (Exception e){
+			return Error.MAX_MIN_STEP_IS_NOT_FLOAT_NUM;
+		}
+		
+		return Error.VALID;
+	}
+
+	@Override
+	public void setPropertyValue(UIElementPropertyType type, Object value) {
+		super.setPropertyValue(type, value);
+		
+		System.out.println("set property value: " + type + ":" + value);
+		switch (type) {
+		case VALUE:
+			this.value = Float.parseFloat((String)value);
+			break;
+		case MAX:
+			max = Float.parseFloat((String)value);
+			break;
+		case MIN:
+			min = Float.parseFloat((String)value);
+			break;
+		case STEP_SIZE:
+			stepSize = Float.parseFloat((String)value);
+			break;
+		case DISABLE:
+			disabled = (boolean)value;
+			break;
+		case VERTICAL:
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public Object getPropertyValue(UIElementPropertyType type) {
+		Object result = super.getPropertyValue(type);
+		
+		if (result != null) return result;
+		switch (type) {
+		case VALUE:
+			return getValue();
+		case MIN:
+			return getMin();
+		case MAX:
+			return getMax();
+		case STEP_SIZE:
+			return getStepSize();
+		case DISABLE:
+			return isDisabled();
+		case VERTICAL:
+			return isVertical();
+		default:
+			break;
+		}
+		
+		return null;
 	}
 
 	static public class SliderStyle{

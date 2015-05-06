@@ -1,6 +1,7 @@
 package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.CSlider;
 import libgdxpluginv01.models.uielements.UIElement;
@@ -54,43 +55,23 @@ public class SliderProperty extends UIElementProperty {
 	}
 
 	private void createMaxField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_MAX);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textMax = new Text(getContainer(), SWT.BORDER);
-		textMax.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		String[] labelNames = new String[]{Word.PROPERTY_MAX};
+		textMax = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.MAX);
 	}
 
 	private void createMinField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_MIN);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textMin = new Text(getContainer(), SWT.BORDER);
-		textMin.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		String[] labelNames = new String[]{Word.PROPERTY_MIN};
+		textMin = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.MIN);
 	}
 
 	private void createStepField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_STEP);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textStep = new Text(getContainer(), SWT.BORDER);
-		textStep.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		String[] labelNames = new String[]{Word.PROPERTY_STEP};
+		textStep = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.STEP_SIZE);
 	}
 
 	private void createValueField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_VALUE);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textValue = new Text(getContainer(), SWT.BORDER);
-		textValue.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
+		String[] labelNames = new String[]{Word.PROPERTY_VALUE};
+		textValue = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.VALUE);
 	}
 	
 	private void createStyleField() {

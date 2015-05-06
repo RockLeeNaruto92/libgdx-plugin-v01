@@ -15,5 +15,9 @@ public enum UIElementPropertyType {
 	FONT_SCALE_Y,
 	ELLIPSIS,
 	WRAP,
-	
+	VALUE,
+	MIN,
+	MAX,
+	STEP_SIZE,
+	VERTICAL
 }

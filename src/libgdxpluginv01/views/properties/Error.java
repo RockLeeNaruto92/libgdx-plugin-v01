@@ -8,7 +8,8 @@ public enum Error {
 	LOCATION_X_OUT_RANGE ("Location x is out of range: "),
 	LOCATION_Y_IS_STRING ("Location y value must be integer number!"),
 	LOCATION_Y_OUT_RANGE ("Location y is out of range: "),
-	FONT_SCALE_IS_EMPTY ("Font scale must be float number");
+	FONT_SCALE_IS_EMPTY ("Font scale must be float number"),
+	MAX_MIN_STEP_IS_NOT_FLOAT_NUM ("Max, min, step size, value must be float number");
 	
 	private String name;
 	private Error (String str){
