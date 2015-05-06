@@ -86,44 +86,46 @@ public class CImage extends UIElement {
 			break;
 		}
 		
+		int width = 0, height = 0;
+		
 		switch (scaling) {
 		case Scaling.fit:{
 			float targetRatio = size.x * 1f / size.y;
 			float sourceRatio = bound.height * 1f / bound.width;
 			float scale = targetRatio > sourceRatio ? size.x * 1f / bound.width : size.y * 1f/ bound.height;
-			bound.width = (int)(bound.width * scale);
-			bound.height = (int)(bound.height * scale);
+			width = (int)(bound.width * scale);
+			height = (int)(bound.height * scale);
 			break;
 		}
 		case Scaling.fill:{
 			float targetRatio = size.x * 1f / size.y;
 			float sourceRatio = bound.height * 1f / bound.width;
 			float scale = targetRatio < sourceRatio ? size.x * 1f / bound.width : size.y * 1f/ bound.height;
-			bound.width = (int)(bound.width * scale);
-			bound.height = (int)(bound.height * scale);
+			width = (int)(bound.width * scale);
+			height = (int)(bound.height * scale);
 			break;
 		}
 		case Scaling.fillX:{
 			float scale = size.x * 1f / bound.width;
-			bound.width = (int)(bound.width * scale);
-			bound.height = (int)(bound.height * scale);
+			width = (int)(bound.width * scale);
+			height = (int)(bound.height * scale);
 			break;
 		}
 		case Scaling.fillY:{
 			float scale = size.y * 1f / bound.height;
-			bound.width = (int)(bound.width * scale);
-			bound.height = (int)(bound.height * scale);
+			width = (int)(bound.width * scale);
+			height = (int)(bound.height * scale);
 			break;
 		}
 		case Scaling.stretch:
-			bound.width = size.x;
-			bound.height = size.y;
+			width = size.x;
+			height = size.y;
 			break;
 		case Scaling.stretchX:
-			bound.width = size.x;
+			width = size.x;
 			break;
 		case Scaling.stretchY:
-			bound.height = size.y;
+			height = size.y;
 			break;
 		case Scaling.none:
 			break;
@@ -132,7 +134,7 @@ public class CImage extends UIElement {
 			break;
 		}
 		
-		e.gc.drawImage(image, 0, 0, bound.width, bound.height, x, y, bound.width, bound.height);
+		e.gc.drawImage(image, 0, 0, bound.width, bound.height, x, y, width, height);
 	}
 
 	@Override
