@@ -13,5 +13,8 @@ public class Message {
 	protected static String PROJECT_MAIN_CLASS_BEGINS_WITH_LOWERCASE_CHARACTER = "Game class must begin with uppercase letter!";
 	
 	protected static String PROJECT_DESTINATION_FOLDER_IS_NULL = "Destination folder must be specified!!";
-	protected static String PROJECT_DESTINATION_FOLDER_IS_NOT_EXIST = "Destination folder is not exist!";
+	protected static String PROJECT_DESTINATION_FOLDER_IS_NOT_EMPTY = "Destination folder must be empty!!";
+	
+	protected static String PROJECT_ANDROID_SDK_IS_NULL = "Android sdk path must be specificed!";
+	protected static String PROJECT_ANDROID_SDK_IS_INVALID = "Android sdk path is invalid!";
 }

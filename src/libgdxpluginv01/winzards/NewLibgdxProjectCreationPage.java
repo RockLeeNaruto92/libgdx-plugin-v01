@@ -6,7 +6,6 @@ import libgdxpluginv01.constant.Word;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -22,7 +21,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.dialogs.ContainerSelectionDialog;
+
+import com.badlogic.gdx.setup.GdxSetup;
 
 /**
  * The "New" wizard page allows setting the container for the new file as well
@@ -217,7 +217,6 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
 				super.widgetSelected(e);
 				createDesktopProject = checkboxDesktopVersion.getSelection();
 			}
@@ -263,7 +262,8 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	 */
 
 	private void dialogChanged() {
-		if (isValidProjectName() && isValidProjectMainPackage() && isValidProjectMainClass() && isValidProjectDestinationFolder())
+		if (isValidProjectName() && isValidProjectMainPackage() && isValidProjectMainClass() 
+				&& isValidProjectDestinationFolder() && isValidProjectAndroidSdkPatg())
 			updateStatus(null);
 	}
 
@@ -275,7 +275,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	/**
 	 * Check inputed project name
 	 */
-	boolean isValidProjectName(){
+	private boolean isValidProjectName(){
 		String projectName = getProjectName();
 		
 		if (projectName.length() == 0){
@@ -291,7 +291,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 		return true;
 	}
 	
-	boolean isValidProjectMainPackage(){
+	private boolean isValidProjectMainPackage(){
 		String projectMainPackage = getProjectMainPackage();
 		
 		if  (projectMainPackage.length() == 0){
@@ -311,7 +311,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 		return true;
 	}
 	
-	boolean isValidProjectMainClass(){
+	private boolean isValidProjectMainClass(){
 		String projectMainClass = getProjectMainClass();
 		
 		if (projectMainClass.length() == 0){
@@ -331,7 +331,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 		return true;
 	}
 	
-	boolean isValidProjectDestinationFolder(){
+	private boolean isValidProjectDestinationFolder(){
 		String projectDestinationFolder = getProjectDestinationFolder();
 		
 		if (projectDestinationFolder.length() == 0){
@@ -339,9 +339,27 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 			return false;
 		}
 		
-		// TODO
 		// Check destination folder exist
-		// TODO
+		if (!GdxSetup.isEmptyDirectory(projectDestinationFolder)){
+			updateStatus(Message.PROJECT_DESTINATION_FOLDER_IS_NOT_EMPTY);
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean isValidProjectAndroidSdkPatg(){
+		String androidSDKPath = getProjectAndroidSdkPath();
+		
+		if (androidSDKPath.length() == 0){
+			updateStatus(Message.PROJECT_ANDROID_SDK_IS_NULL);
+			return false;
+		}
+		
+		if (!GdxSetup.isSdkLocationValid(androidSDKPath)){
+			updateStatus(Message.PROJECT_ANDROID_SDK_IS_INVALID);
+			return false;
+		}
 		
 		return true;
 	}
@@ -367,5 +385,9 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	
 	public boolean isCreateDesktopProject(){
 		return createDesktopProject;
+	}
+
+	public String getProjectAndroidSdkPath() {
+		return textAndroidSdkPath.getText();
 	}
 }
