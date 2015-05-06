@@ -74,7 +74,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 		createMainPackageInputText(container);
 		createMainClassInputText(container);
 		createDestinationFolderInputText(container);
-		createAndroidSdkPathInputText(container);
+//		createAndroidSdkPathInputText(container);
 		createDesktopVersionCheckbox(container);
 
 		initialize();
@@ -263,7 +263,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 
 	private void dialogChanged() {
 		if (isValidProjectName() && isValidProjectMainPackage() && isValidProjectMainClass() 
-				&& isValidProjectDestinationFolder() && isValidProjectAndroidSdkPatg())
+				&& isValidProjectDestinationFolder())
 			updateStatus(null);
 	}
 
