@@ -77,13 +77,9 @@ public class LibgdxProjectCreationWizard extends Wizard implements INewWizard {
 			boolean isCreateDesktopVersion, IProgressMonitor monitor) throws CoreException{
 		NewProjectLibgdxCreation creation = new NewProjectLibgdxCreation(pName, pMainPackage, pMainClass, pDestinationFolder, isCreateDesktopVersion);
 		
-		System.out.println("Do finish");
 		String desc = creation.createCoreProject();
-		System.out.println("Desc: " + desc);
 		importProject(desc, monitor);
-		System.out.println("import core project");
 		importProject(creation.createAndroidProject(), monitor);
-		System.out.println("import android project");
 		if (isCreateDesktopVersion)
 			importProject(creation.createDesktopProject(), monitor);
 	}

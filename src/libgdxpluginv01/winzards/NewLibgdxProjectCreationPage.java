@@ -1,11 +1,10 @@
 package libgdxpluginv01.winzards;
 
-import javax.swing.JFileChooser;
-
 import libgdxpluginv01.constant.Word;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -19,8 +18,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
 import com.badlogic.gdx.setup.GdxSetup;
 
@@ -43,6 +45,8 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	private Button checkboxDesktopVersion;
 
 	private ISelection selection;
+	
+	private Composite parent;
 
 	/**
 	 * Constructor for NewLibgdxProjectCreationWizardPage.
@@ -63,6 +67,7 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	 */
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
+		this.parent = parent;
 		
 		GridLayout layout = new GridLayout(NUMBER_OF_INPUT_FIELD, false);
 		layout.numColumns = 3;
@@ -250,11 +255,11 @@ public class NewLibgdxProjectCreationPage extends WizardPage {
 	 */
 
 	private void handleBrowse(Text text) {
-		JFileChooser dialog = new JFileChooser();
-		dialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		DirectoryDialog dialog = new DirectoryDialog(parent.getShell());
 		
-		if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-			text.setText(dialog.getSelectedFile().getPath());
+		String result = dialog.open();
+		if (result != null)
+			text.setText(result);
 	}
 
 	/**

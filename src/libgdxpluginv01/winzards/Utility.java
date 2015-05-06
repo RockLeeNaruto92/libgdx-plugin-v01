@@ -27,7 +27,6 @@ public class Utility {
 	public static File getPluginResourcesFile(String path){
 		URL fileUrl = Platform.getBundle(Constant.BUNDLE_NAME).getEntry(path);
 		File file = null;
-		System.out.println("2. get plugin resouze " + path);
 		
 		try {
 			file = new File(FileLocator.resolve(fileUrl).toURI());
