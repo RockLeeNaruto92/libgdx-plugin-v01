@@ -69,6 +69,7 @@ public class CLabel extends UIElement {
 		if (style.background != null){
 			Rectangle bound = style.background.getBounds();
 			e.gc.drawImage(style.background, 0, 0, bound.width, bound.height, 0, 0, size.x, size.y);
+			System.out.println("style background not null");
 		}
 		
 		switch (labelAlign) {
