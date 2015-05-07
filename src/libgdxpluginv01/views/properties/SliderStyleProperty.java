@@ -1,17 +1,11 @@
 package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Word;
-import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.CSlider;
-import libgdxpluginv01.models.uielements.CLabel.LabelStyle;
 import libgdxpluginv01.models.uielements.CSlider.SliderStyle;
-import libgdxpluginv01.winzards.Utility;
 
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 
 public class SliderStyleProperty extends StyleProperty {
 	private static SliderStyleProperty _instance;
@@ -45,14 +39,7 @@ public class SliderStyleProperty extends StyleProperty {
 		
 		SliderStyle style = obj.getStyle();
 
-		System.out.println("On slider  property: " + datas);
-		if (datas == null){
-			background.setBackgroundImage(style.background);
-			if (style.disabledBackground != null) disableBackground.setBackgroundImage(style.disabledBackground);
-			knob.setBackgroundImage(style.knob);
-			if (style.disabledKnob != null) disabledKnob.setBackgroundImage(style.disabledKnob);
-			return;
-		}
+		if (datas == null) return;
 		
 		switch ((int)datas[1]) {
 		case 0:

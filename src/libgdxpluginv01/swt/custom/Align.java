@@ -78,4 +78,31 @@ public class Align {
 		}
 		return -1;
 	}
+	
+	public static String toString(int align){
+		switch (align) {
+		case Align.left:
+			return "Left";
+		case Align.right:
+			return "Right";
+		case Align.top:
+			return "Top";
+		case Align.bottom:
+			return "Bottom";
+		case Align.topLeft:
+			return "Top left";
+		case Align.topRight:
+			return "Top right";
+		case Align.bottomLeft:
+			return "Bottom left";
+		case Align.bottomRight:
+			return "Bottom right";
+		case Align.center:
+			return "center";
+		default:
+			break;
+		}
+		
+		return null;
+	}
 }

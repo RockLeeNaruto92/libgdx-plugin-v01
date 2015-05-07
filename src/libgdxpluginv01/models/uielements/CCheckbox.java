@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Display;
 public class CCheckbox extends CButton {
 	private CheckboxStyle style;
 	private String text;
-	private int align = Align.top;
+	private int align = Align.center;
 	private int padLeft, padRight, padTop, padBottom;
 	private float fontScaleX = 1, fontScaleY = 1;
 	private boolean on;
@@ -65,7 +65,7 @@ public class CCheckbox extends CButton {
 		super.drawContent(e);
 		
 		int x = 0, y = 0;
-		int imgX = padLeft, imgY;
+		int imgX = padLeft, imgY = 0;
 		Image drawable;
 		
 		// draw checkbox
@@ -84,73 +84,89 @@ public class CCheckbox extends CButton {
 		Point defaultSize = getDefaultSize();
 		Point textSize = getStyle().font.getActualSize(getText(), fontScaleX, fontScaleY);
 		Rectangle imgBound = drawable.getBounds();
+		int imgWidth = 0;
+		System.out.println("size: " + size);
+		System.out.println("default size: " + defaultSize);
+		System.out.println("Align: " + Align.toString(align));
 		
 		switch (align) {
 		case Align.left:
-			x = defaultSize.x - padRight - textSize.x;;
+			imgX = padLeft;
+			imgWidth = (size.x > defaultSize.x) ? imgBound.width : size.x - textSize.x;
+			x = imgX + imgWidth;
 			y = (size.y - textSize.y) / 2;
 			imgY = (size.y - imgBound.height) / 2;
-			imgX = padLeft;
 			break;
 		case Align.right:
-			x = size.x - defaultSize.x - padRight;
+			imgWidth = (size.x > defaultSize.x) ? imgBound.width : size.x - textSize.x;
+			x = (size.x > textSize.x) ? size.x - padRight - defaultSize.x : 0;
+			imgX = x - imgWidth;
 			y = (size.y - textSize.y) / 2;
 			imgY = (size.y - imgBound.height) / 2;
-			imgX = x - imgBound.width;
 			break;
 		case Align.top:
-			if (size.x > textSize.x + imgBound.width){
+			if (size.x > defaultSize.x){
 				imgX = (size.x - textSize.x - imgBound.width) / 2;
 				x = imgX + imgBound.width;
+				imgWidth = imgBound.width;
 			}else{
-				x = size.x / 2 - textSize.x / 2;
 				imgX = padLeft;
+				imgWidth = size.x - textSize.x;
+				x = imgWidth + imgX;
 			}
 			y = padTop;
 			imgY = padTop;
 			break;
 		case Align.bottom:
-			if (size.x > textSize.x + imgBound.width){
+			if (size.x > defaultSize.x){
 				imgX = (size.x - textSize.x - imgBound.width) / 2;
 				x = imgX + imgBound.width;
+				imgWidth = imgBound.width;
 			}else{
-				x = size.x / 2 - textSize.x / 2;
 				imgX = padLeft;
+				imgWidth = size.x - textSize.x;
+				x = imgWidth + imgX;
 			}
 			y = size.y - padBottom - defaultSize.y;
 			imgY = y;
 			break;
 		case Align.topLeft:
-			x = defaultSize.x - padRight - textSize.x;;
+			imgX = padLeft;
+			imgWidth = (size.x > defaultSize.x) ? imgBound.width : size.x - textSize.x;
+			x = imgX + imgWidth;
 			y = padTop;
 			imgY = padTop;
-			imgX = padLeft;
 			break;
 		case Align.topRight:
-			x = size.x - defaultSize.x - padRight;
+			imgWidth = (size.x > defaultSize.x) ? imgBound.width : size.x - textSize.x;
+			x = (size.x > textSize.x) ? size.x - padRight - defaultSize.x : 0;
+			imgX = x - imgWidth;
 			y = padTop;
 			imgY = padTop;
-			imgX = x - imgBound.width;
 			break;
 		case Align.bottomLeft:
-			x = defaultSize.x - padRight - textSize.x;;
-			y = size.y - padBottom - defaultSize.y;
-			imgY = padTop;
 			imgX = padLeft;
+			imgWidth = (size.x > defaultSize.x) ? imgBound.width : size.x - textSize.x;
+			x = imgX + imgWidth;
+			y = size.y - padBottom - defaultSize.y;
+			imgY = y;
 			break;
 		case Align.bottomRight:
-			x = size.x - defaultSize.x - padRight;
+			imgWidth = (size.x > defaultSize.x) ? imgBound.width : size.x - textSize.x;
+			x = (size.x > textSize.x) ? size.x - padRight - defaultSize.x : 0;
+			imgX = x - imgWidth;
 			y = size.y - defaultSize.y - padBottom;
 			imgY = y;
-			imgX = (x - imgBound.width > 0) ? x - imgBound.width : 0;
 			break;
 		case Align.center:
-			if (size.x > textSize.x + imgBound.width){
+			if (size.x > defaultSize.x){
 				imgX = (size.x - textSize.x - imgBound.width) / 2;
 				x = imgX + imgBound.width;
+				imgWidth = imgBound.width;
 			}else{
-				x = size.x / 2 - textSize.x / 2;
 				imgX = padLeft;
+				imgWidth = size.x - textSize.x;
+				x = imgWidth + imgX;
 			}
 			y = (size.y - textSize.y) / 2;
 			imgY = (size.y - imgBound.height) / 2;
@@ -161,10 +177,7 @@ public class CCheckbox extends CButton {
 		
 		getStyle().font.drawString(e.gc, getText(), x, y, fontScaleX, fontScaleY);
 		
-		int imageY = (getBound().height - imgBound.height) / 2;
-		int imageWidth = defaultSize.x - textSize.x;
-		
-		e.gc.drawImage(drawable, 0, 0, imgBound.width, imgBound.height, padLeft, imageY, imageWidth, imgBound.height);
+		e.gc.drawImage(drawable, 0, 0, imgBound.width, imgBound.height, imgX, imgY, imgWidth, imgBound.height);
 	}
 
 	@Override
@@ -206,6 +219,9 @@ public class CCheckbox extends CButton {
 		case FONT_SCALE_Y:
 			setFontScaleY(Float.parseFloat((String)value));
 			break;
+		case ALIGN:
+			setAlign(Align.getAlign((int)value));
+			break;
 		default:
 			break;
 		}
@@ -221,6 +237,8 @@ public class CCheckbox extends CButton {
 			return fontScaleX;
 		case FONT_SCALE_Y:
 			return fontScaleY;
+		case ALIGN:
+			return align;
 		default:
 			break;
 		}
