@@ -9,13 +9,8 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -42,8 +37,23 @@ public class LibgdxVisualEditor extends MultiPageEditorPart implements IResource
 		composite.setLayout(layout);
 		
 		editorInterface = new EditorInterface(composite);
-		index = addPage(composite);
+		editorInterface.createPartControl(composite);
+		try {
+			editorInterface.init(getEditorSite(), getEditorInput());
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			index = addPage(editorInterface, editorInterface.getEditorInput());
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
 		setPageText(index, Word.PAGE_VISUAL_EDITOR);
+		System.out.println("design index: " + index);
+		if (getEditor(index) == null) System.out.println("Editor 0 null");
+		else System.out.println("Editor 0 is not null");
+		
 	}
 	
 	void createSourcePage() {
@@ -71,7 +81,8 @@ public class LibgdxVisualEditor extends MultiPageEditorPart implements IResource
 	 * Saves the multi-page editor's document.
 	 */
 	public void doSave(IProgressMonitor monitor) {
-		getEditor(0).doSave(monitor);
+		System.out.println("save now");
+		editorInterface.doSave(monitor);
 	}
 	/**
 	 * Saves the multi-page editor's document as another file.
@@ -79,9 +90,10 @@ public class LibgdxVisualEditor extends MultiPageEditorPart implements IResource
 	 * to correspond to the nested editor's.
 	 */
 	public void doSaveAs() {
+		if (getEditor(0) == null) System.out.println("Editor 0 null");
+		else System.out.println("Editor 0 is not null");
 		IEditorPart editor = getEditor(0);
 		editor.doSaveAs();
-		setPageText(0, editor.getTitle());
 		setInput(editor.getEditorInput());
 	}
 	/* (non-Javadoc)

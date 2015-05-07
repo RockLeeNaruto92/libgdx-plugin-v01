@@ -12,6 +12,11 @@
             class="libgdxpluginv01.editors.LibgdxVisualEditor"
             id="libgdxpluginv01.editors.LibgdxVisualEditor">
       </editor>
+      <editor 
+      		name="Editor Interface"
+      		class="libgdxpluginv01.editors.EditorInterface"
+      		id="libgdxpluginv01.editors.EditorInterface">
+      </editor>
    </extension>
    <extension
          point="org.eclipse.ui.views">

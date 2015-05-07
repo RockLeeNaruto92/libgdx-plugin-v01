@@ -7,6 +7,7 @@ import libgdxpluginv01.dnd.UIElementDropAdapter;
 import libgdxpluginv01.models.Element;
 import libgdxpluginv01.models.uielements.UIElementType;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
@@ -20,6 +21,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
@@ -27,17 +29,23 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.part.EditorPart;
 
-public class EditorInterface {
+public class EditorInterface extends EditorPart{
 	private ScrolledComposite root;
 	private Canvas dragComposite;
 	private LocalSelectionTransfer transfer;
 	private UIController uiController;
+	private IEditorInput input;
+	private IEditorSite site;
 
 	public EditorInterface(Composite parent) {
-		createScrolledLayout(parent);
-		createDragComposite();
-		
 		uiController = UIController.getInstance();
 		transfer = LocalSelectionTransfer.getTransfer();
 	}
@@ -150,5 +158,103 @@ public class EditorInterface {
 			return UIElementType.ANIMATION;
 		// TO DO
 		return -1;
+	}
+
+	@Override
+	public void doSave(IProgressMonitor monitor) {
+		uiController.save();
+	}
+
+	@Override
+	public void doSaveAs() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void init(IEditorSite site, IEditorInput input)
+			throws PartInitException {
+		this.site = site;
+		this.input = input;
+	}
+
+	@Override
+	public boolean isDirty() {
+		firePropertyChange(IEditorPart.PROP_DIRTY);
+		return true;
+	}
+
+	@Override
+	public boolean isSaveAsAllowed() {
+		return false;
+	}
+
+	@Override
+	public void createPartControl(Composite parent) {
+		createScrolledLayout(parent);
+		createDragComposite();
+	}
+
+	@Override
+	public void setFocus() {
+	}
+
+	@Override
+	public void addPropertyListener(IPropertyListener arg0) {
+		
+	}
+
+	@Override
+	public void dispose() {
+		
+	}
+
+	@Override
+	public IWorkbenchPartSite getSite() {
+		return site;
+	}
+
+	@Override
+	public String getTitle() {
+		return null;
+	}
+
+	@Override
+	public Image getTitleImage() {
+		return null;
+	}
+
+	@Override
+	public String getTitleToolTip() {
+		return null;
+	}
+
+	@Override
+	public void removePropertyListener(IPropertyListener arg0) {
+		
+	}
+
+	@Override
+	public Object getAdapter(Class arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isSaveOnCloseNeeded() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IEditorInput getEditorInput() {
+		// TODO Auto-generated method stub
+		return input;
+	}
+
+	@Override
+	public IEditorSite getEditorSite() {
+		// TODO Auto-generated method stub
+		return site;
 	}
 }
