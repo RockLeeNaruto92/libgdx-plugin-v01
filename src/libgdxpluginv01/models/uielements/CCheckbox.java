@@ -85,9 +85,6 @@ public class CCheckbox extends CButton {
 		Point textSize = getStyle().font.getActualSize(getText(), fontScaleX, fontScaleY);
 		Rectangle imgBound = drawable.getBounds();
 		int imgWidth = 0;
-		System.out.println("size: " + size);
-		System.out.println("default size: " + defaultSize);
-		System.out.println("Align: " + Align.toString(align));
 		
 		switch (align) {
 		case Align.left:
@@ -331,7 +328,6 @@ public class CCheckbox extends CButton {
 	public void setFontScaleY(float fontScaleY) {
 		this.fontScaleY = fontScaleY;
 	}
-
 
 	public static class CheckboxStyle extends ButtonStyle{
 		public BitmapFont font;

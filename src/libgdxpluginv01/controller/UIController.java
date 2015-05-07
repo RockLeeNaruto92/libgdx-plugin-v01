@@ -76,6 +76,10 @@ public class UIController {
 	public void setPropertyView(UIElement uielement){
 		Property view = null;
 		switch (uielement.getType()) {
+		case UIElementType.CHECKBOX:
+			view = CheckboxProperty.getInstance(propertyView.getParent());
+			break;
+			
 		case UIElementType.BUTTON:
 			view = ButtonProperty.getInstance(propertyView.getParent());
 			break;
@@ -86,10 +90,6 @@ public class UIController {
 			
 		case UIElementType.SLIDER: 
 			view = SliderProperty.getInstance(propertyView.getParent());
-			break;
-			
-		case UIElementType.CHECKBOX:
-			view = CheckboxProperty.getInstance(propertyView.getParent());
 			break;
 			
 		case UIElementType.SPRITE:
@@ -128,16 +128,16 @@ public class UIController {
 				view = LabelStyleProperty.getInstance(propertyView.getParent(), ((CLabel)uielement).getStyle());
 				break;
 				
+			case UIElementType.CHECKBOX:
+				System.out.println("Chckbox");
+				view = CheckboxStyleProperty.getInstance(propertyView.getParent(), ((CCheckbox)uielement).getStyle());
+				break;
+				
 			case UIElementType.BUTTON:
 				view = ButtonStyleProperty.getInstance(propertyView.getParent(), ((CButton)uielement).getStyle());
 				break;
 				
-			case UIElementType.CHECKBOX:
-				view = CheckboxStyleProperty.getInstance(propertyView.getParent(), ((CCheckbox)uielement).getStyle());
-				break;
-				
 			case UIElementType.SLIDER:
-				System.out.println("Slider styoe");
 				view = SliderStyleProperty.getInstance(propertyView.getParent(), ((CSlider)uielement).getStyle());
 				break;
 				

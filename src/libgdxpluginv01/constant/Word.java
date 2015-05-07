@@ -90,6 +90,10 @@ public class Word {
 	public static String PROPERTY_DISABLED_BACKGROUND = "Disabled background";
 	public static String PROPERTY_KNOB = "Knob";
 	public static String PROPERTY_DISABLED_KNOB = "Disabled knob";
+	public static String PROPERTY_ON = "On";
+	public static String PROPERTY_OFF = "Off";
+	public static String PROPERTY_ON_DISABLED = "On disabled";
+	public static String PROPERTY_OFF_DISABLED = "Off disabled";
 	
 	public static String OPEN = "Open";
 	public static String CHOOSE_COLOR = "Choose a color";
