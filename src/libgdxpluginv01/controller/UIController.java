@@ -26,6 +26,7 @@ import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.LabelStyleProperty;
 import libgdxpluginv01.views.properties.Property;
 import libgdxpluginv01.views.properties.SliderProperty;
+import libgdxpluginv01.views.properties.SliderStyleProperty;
 import libgdxpluginv01.views.properties.SpriteProperty;
 import libgdxpluginv01.views.properties.StyleProperty;
 import libgdxpluginv01.views.properties.UIElementProperty;
@@ -134,7 +135,12 @@ public class UIController {
 			case UIElementType.CHECKBOX:
 				view = CheckboxStyleProperty.getInstance(propertyView.getParent(), ((CCheckbox)uielement).getStyle());
 				break;
-
+				
+			case UIElementType.SLIDER:
+				System.out.println("Slider styoe");
+				view = SliderStyleProperty.getInstance(propertyView.getParent(), ((CSlider)uielement).getStyle());
+				break;
+				
 			default:
 				break;
 			}

@@ -15,6 +15,7 @@ import libgdxpluginv01.views.properties.LabelProperty;
 import libgdxpluginv01.views.properties.LabelStyleProperty;
 import libgdxpluginv01.views.properties.Property;
 import libgdxpluginv01.views.properties.SliderProperty;
+import libgdxpluginv01.views.properties.SliderStyleProperty;
 import libgdxpluginv01.views.properties.SpriteProperty;
 
 import org.eclipse.swt.layout.FormLayout;
@@ -47,6 +48,7 @@ public class PropertyView extends ViewPart {
 		properties.add(LabelStyleProperty.getInstance(parent, null));
 		properties.add(ButtonStyleProperty.getInstance(parent, null));
 		properties.add(CheckboxStyleProperty.getInstance(parent, null));
+		properties.add(SliderStyleProperty.getInstance(parent, null));
 		
 		return properties;
 	}

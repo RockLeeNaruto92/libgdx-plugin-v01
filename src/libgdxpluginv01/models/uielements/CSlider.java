@@ -62,9 +62,6 @@ public class CSlider extends UIElement {
 		Rectangle kBound = image.getBounds();
 		
 		int x = (int)(((value - min) / (max - min)) * size.x);
-		System.out.println("value: " + value);
-		System.out.println((value - min) / (max - min));
-		System.out.println("x: " + x);
 		
 		e.gc.drawImage(image, 0, 0, kBound.width, kBound.height, x, 0, (int)(size.x * (kBound.width * 1f / bBound.width)), size.y);
 	}
@@ -257,7 +254,6 @@ public class CSlider extends UIElement {
 			this.background = background;
 			this.knob = knob;
 		}
-		
 	}
 	
 }

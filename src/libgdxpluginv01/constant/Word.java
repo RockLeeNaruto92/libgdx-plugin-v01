@@ -87,6 +87,9 @@ public class Word {
 	public static String PROPERTY_KEY_FRAMES = "Images";
 	public static String PROPERTY_COUNT = "Count";
 	public static String PROPERTY_FRAME = "Frame ";
+	public static String PROPERTY_DISABLED_BACKGROUND = "Disabled background";
+	public static String PROPERTY_KNOB = "Knob";
+	public static String PROPERTY_DISABLED_KNOB = "Disabled knob";
 	
 	public static String OPEN = "Open";
 	public static String CHOOSE_COLOR = "Choose a color";
