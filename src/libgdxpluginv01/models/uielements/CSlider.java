@@ -203,6 +203,7 @@ public class CSlider extends UIElement {
 			disabled = (boolean)value;
 			break;
 		case VERTICAL:
+			vertical = (boolean)value;
 			break;
 
 		default:

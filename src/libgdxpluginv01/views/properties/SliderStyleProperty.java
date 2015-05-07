@@ -54,23 +54,27 @@ public class SliderStyleProperty extends StyleProperty {
 			return;
 		}
 		
-		System.out.println(datas);
 		switch ((int)datas[1]) {
 		case 0:
-			background.setBackgroundImage((Image)datas[0]);
+			style.background = (Image)datas[0];
 			break;
 		case 1:
-			disableBackground.setBackgroundImage((Image)datas[0]);
+			style.disabledBackground = (Image)datas[0];
 			break;
 		case 2:
-			knob.setBackgroundImage((Image)datas[0]);
+			style.knob = (Image)datas[0];
 			break;
 		case 3:
-			disabledKnob.setBackgroundImage((Image)datas[0]);
+			style.disabledKnob = (Image)datas[0];
 			break;
 		default:
 			break;
 		}
+		
+		background.setBackgroundImage(style.background);
+		if (style.disabledBackground != null) disableBackground.setBackgroundImage(style.disabledBackground);
+		knob.setBackgroundImage(style.knob);
+		if (style.disabledKnob != null) disabledKnob.setBackgroundImage(style.disabledKnob);
 		
 		obj.redraw();
 	}
