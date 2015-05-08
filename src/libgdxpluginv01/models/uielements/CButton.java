@@ -185,4 +185,31 @@ public class CButton extends UIElement {
 			this.disabled = up;
 		}
 	}
+
+	@Override
+	public StringBuffer generateImportCode() {
+		StringBuffer code = new StringBuffer("\nimport com.badlogic.gdx.scenes.scene2d.ui.Button;");
+		
+		code.append("\nimport com.badlogic.gdx.scenes.scene2d.ui.Button.*;");
+		
+		return code; 
+	}
+
+	@Override
+	public StringBuffer generateTypeCode() {
+		return new StringBuffer("Button");
+	}
+
+	@Override
+	public StringBuffer generateCreationMethodContent() {
+		StringBuffer code = new StringBuffer();
+		code.append("\n\t\tButton " + getName() + " = new Button(skin);\n");
+		code.append("\n\t\t" + getName() + ".setBound(" + getBound().x + ", " + getBound().y + ", " + getBound().width + ", " + getBound().height + ");");
+		
+		if (disabled) code.append("\n\t\t" + getName() + ".setDisabled(" + disabled + ");");
+		if (checked) code.append("\n\t\t" + getName() + ".setChecked(" + checked + ");");
+		if (isVisible()) code.append("\n\t\t" + getName() + ".setVisible(" + isVisible() + ");");
+		
+		return code;
+	}
 }

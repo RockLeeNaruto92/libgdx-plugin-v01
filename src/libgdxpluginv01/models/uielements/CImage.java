@@ -195,4 +195,22 @@ public class CImage extends UIElement {
 	public void setScaling(int scaling) {
 		this.scaling = scaling;
 	}
+
+	@Override
+	public StringBuffer generateImportCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public StringBuffer generateTypeCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public StringBuffer generateCreationMethodContent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

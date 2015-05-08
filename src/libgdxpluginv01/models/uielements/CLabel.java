@@ -326,4 +326,22 @@ public class CLabel extends UIElement {
 			this.fontColor = fontColor;
 		}
 	}
+
+	@Override
+	public StringBuffer generateImportCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public StringBuffer generateTypeCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public StringBuffer generateCreationMethodContent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

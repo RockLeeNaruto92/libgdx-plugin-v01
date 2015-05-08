@@ -165,6 +165,45 @@ public abstract class UIElement {
 	
 	public abstract void onMouseEnter();
 	
+	public abstract StringBuffer generateImportCode();
+	
+	public abstract StringBuffer generateTypeCode();
+	
+	public abstract StringBuffer generateCreationMethodContent();
+	
+	// private void createname(){
+	//		name = new Type(...)
+	// }
+	public StringBuffer generateCreationCode() {
+		StringBuffer code = new StringBuffer();
+		code.append("\n\tprivate void create" + name + "(){");
+		code.append(generateCreationMethodContent());
+		code.append("\n\t}");
+		return code;
+	}
+	
+	// Generate
+	// private Type name;
+	public StringBuffer generateVariableCode(){
+		StringBuffer code = new StringBuffer();
+		
+		code.append("\n\tprivate " + generateTypeCode() + " " + name + ";");
+		
+		return code;
+	}
+	
+	// public Type getName{
+	// 		return name;
+	// }
+	public StringBuffer generateGetMethodCode(){
+		StringBuffer code = new StringBuffer();
+		
+		code.append("\n\tpublic " + generateTypeCode() + " get" + name + " {");
+		code.append("\n\t\treturn " + name + ";");
+		code.append("\n\t}");
+		return code;
+	}
+	
 	public void remove(){
 		Display.getCurrent().timerExec(-1, getAnimationThread());
 		container.dispose();
