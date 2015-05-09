@@ -1,6 +1,7 @@
 package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.swt.custom.BitmapFont;
@@ -92,7 +93,13 @@ public abstract class StyleProperty extends Property{
 				
 				if (imageFile == null) return;
 				
-				Image image = new Image(Display.getCurrent(), imageFile);
+				Image image = Resources.getImageByPath(imageFile);
+				
+				if (image == null){
+					Resources.addImage(imageFile);
+					image = Resources.getImageByPath(imageFile);
+				}
+				
 				setPropertyToView(getObject(), new Object[]{image, new Integer(index)});
 			}
 		});

@@ -178,6 +178,7 @@ public abstract class UIElement {
 		StringBuffer code = new StringBuffer();
 		code.append("\n\tprivate void create" + name + "(){");
 		code.append(generateCreationMethodContent());
+		code.append("\n\t\tstage.addActor(" + getName() +");");
 		code.append("\n\t}");
 		return code;
 	}
@@ -198,7 +199,7 @@ public abstract class UIElement {
 	public StringBuffer generateGetMethodCode(){
 		StringBuffer code = new StringBuffer();
 		
-		code.append("\n\tpublic " + generateTypeCode() + " get" + name + " {");
+		code.append("\n\tpublic " + generateTypeCode() + " get" + name + "(){");
 		code.append("\n\t\treturn " + name + ";");
 		code.append("\n\t}");
 		return code;

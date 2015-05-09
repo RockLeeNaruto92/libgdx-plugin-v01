@@ -23,4 +23,6 @@ public class Constant {
 	public static String ANDROID_MANIFEST_XML_FILE = "AndroidManifest.xml";
 	
 	public static String PACKAGE_SEPARATE = "-";
+	
+	
 }

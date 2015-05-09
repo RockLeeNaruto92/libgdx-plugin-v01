@@ -490,7 +490,6 @@ public class UIController {
 	}
 
 	public void save() {
-		System.out.println("Ui controlller save now " + uiElements.size());
 		// generate code
 		for (UIElement element : uiElements) {
 			System.out.println(element.generateImportCode());
