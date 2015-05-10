@@ -7,6 +7,7 @@ import libgdxpluginv01.dnd.UIElementDropAdapter;
 import libgdxpluginv01.models.Element;
 import libgdxpluginv01.models.uielements.UIElementType;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -36,6 +37,7 @@ import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.part.FileEditorInput;
 
 public class EditorInterface extends EditorPart{
 	private ScrolledComposite root;
@@ -234,6 +236,7 @@ public class EditorInterface extends EditorPart{
 		
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Object getAdapter(Class arg0) {
 		// TODO Auto-generated method stub

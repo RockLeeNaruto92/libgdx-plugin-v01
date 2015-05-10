@@ -171,6 +171,10 @@ public abstract class UIElement {
 	
 	public abstract StringBuffer generateCreationMethodContent();
 	
+	public StringBuffer generateShortCreationCode(){
+		return new StringBuffer("create" + name + "();");
+	}
+	
 	// private void createname(){
 	//		name = new Type(...)
 	// }
@@ -199,7 +203,7 @@ public abstract class UIElement {
 	public StringBuffer generateGetMethodCode(){
 		StringBuffer code = new StringBuffer();
 		
-		code.append("\n\tpublic " + generateTypeCode() + " get" + name + "(){");
+		code.append("\n\n\tpublic " + generateTypeCode() + " get" + name + "(){");
 		code.append("\n\t\treturn " + name + ";");
 		code.append("\n\t}");
 		return code;
