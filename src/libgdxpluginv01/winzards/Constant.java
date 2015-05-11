@@ -20,6 +20,8 @@ public class Constant {
 	public static String PATTERN_MAIN_PACKAGE = "thubm.hust.libgdxpattern";
 	public static String PATTERN_PROJECT_FILE = ".project";
 	public static String PATTERN_CLASS_PATH_FILE = ".classpath";
+	public static String PATTERN_DESIGN_CLASS_FILE_NAME = "Design.java";
+	public static String PATTERN_DESIGN_FILE_NAME = "Design.gdx";
 	public static String ANDROID_MANIFEST_XML_FILE = "AndroidManifest.xml";
 	
 	public static String PACKAGE_SEPARATE = "-";

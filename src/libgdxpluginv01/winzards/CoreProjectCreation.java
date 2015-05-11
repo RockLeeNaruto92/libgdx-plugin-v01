@@ -64,6 +64,7 @@ public class CoreProjectCreation {
 		String srcPath = createSrcStructure();
 		// move and modify file java
 		modifyJavaFile(srcPath);
+		modifyDesignFile(srcPath);
 	}
 	
 	/**
@@ -84,9 +85,45 @@ public class CoreProjectCreation {
 		}
 		
 		System.out.println(srcFolder);
-		System.out.println(srcPath);
+		System.out.println("Src path: " + srcPath);
 		
 		return srcPath;
+	}
+	
+	private void modifyDesignFile(String srcPath){
+		String javaFilePatternPath = path + "/" + projectName + "/" +  Constant.PATTERN_DESIGN_CLASS_FILE_NAME;
+		String destJavaFilePath = srcPath + "/" + Constant.PATTERN_DESIGN_CLASS_FILE_NAME;
+		
+		File srcFile = new File(javaFilePatternPath);
+		File dstFile = new File(destJavaFilePath);
+		
+		try {
+			FileUtils.copyFile(srcFile, dstFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			String content = FileUtils.readFileToString(srcFile);
+			content = content.replaceAll(Constant.PATTERN_MAIN_PACKAGE, projectMainPackage);
+			FileUtils.writeStringToFile(dstFile, content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		srcFile.delete();
+		
+		// move Design.gdx 
+		String gdxFilePath = path + "/" + projectName + "/" +  Constant.PATTERN_DESIGN_FILE_NAME;
+		
+		File file = new File(gdxFilePath);
+		try {
+			FileUtils.copyFileToDirectory(file, new File(srcPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		file.delete();
 	}
 	
 	/**

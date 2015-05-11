@@ -503,18 +503,6 @@ public class UIController {
 	}
 
 	public void save() {
-		// generate code
-//		for (UIElement element : uiElements) {
-//			System.out.println(element.generateImportCode());
-//			System.out.println(element.generateVariableCode());
-//			System.out.println(element.generateCreationCode());
-//			System.out.println(element.generateGetMethodCode());
-//		}
-//		
-//		System.out.println();
-//		System.out.println("Working Directory = " +
-//	              System.getProperty("user.dir"));
-		// save to file
 		System.out.println("Save to file: " + saveToFile(generateCode(), getFilePath()));
 	}
 	
@@ -579,9 +567,8 @@ public class UIController {
 		
 		code.append(creationCode);
 		
-		code.append("\n\n\tpublic void render(){");
-		code.append("\n\t\tstage.act(Gdx.graphics.getDeltaTime());");
-		code.append("\n\t\tstage.draw();");
+		code.append("\n\n\tpublic void render(float deltaTime){");
+		code.append("\n\t\t// TODO: draw all animations, sprite by batch\n");
 		code.append("\n\t}");
 		code.append("\n}");
 		return code;
