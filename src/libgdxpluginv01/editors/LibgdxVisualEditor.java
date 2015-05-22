@@ -16,12 +16,14 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
 public class LibgdxVisualEditor extends MultiPageEditorPart implements IResourceChangeListener{
 	
 	EditorInterface editorInterface;
+	TextEditor sourceTab;
 	int index;
 	
 	/*---------------------------------------------------------------------------------------------------------------*/
@@ -57,6 +59,13 @@ public class LibgdxVisualEditor extends MultiPageEditorPart implements IResource
 	}
 	
 	void createSourcePage() {
+		sourceTab = new TextEditor();
+		try {
+			index = addPage(sourceTab, getEditorInput());
+			setPageText(index, Word.PAGE_SOURCE_CODE);
+		} catch (PartInitException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -83,6 +92,7 @@ public class LibgdxVisualEditor extends MultiPageEditorPart implements IResource
 	public void doSave(IProgressMonitor monitor) {
 		System.out.println("save now");
 		editorInterface.doSave(monitor);
+		sourceTab.doSave(monitor);
 	}
 	/**
 	 * Saves the multi-page editor's document as another file.
