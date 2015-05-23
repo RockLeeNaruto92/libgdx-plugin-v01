@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public abstract class UIElement {
 	public static int i = 0;
@@ -470,5 +471,22 @@ public abstract class UIElement {
 		ownerNode.appendChild(el);
 	}
 	
+	public String readValue(Element parentNode, Object tag){
+		NodeList list = parentNode.getElementsByTagName(tag.toString());
+		
+		if (list.getLength() == 0) return null;
+		
+		Element el = (Element)list.item(0);
+		return el.getTextContent();
+	}
 	
+	public void restore(Element element){
+		int width = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_WIDTH));
+		int height = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_HEIGHT));
+		
+		setSize(new Point(width, height));
+		
+		String visibleValue = readValue(element, UIElementPropertyType.VISIBLE);
+		visible = (visibleValue == null) ? true : false;
+	}
 }

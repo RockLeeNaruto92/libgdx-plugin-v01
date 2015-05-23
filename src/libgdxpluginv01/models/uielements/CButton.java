@@ -1,6 +1,5 @@
 package libgdxpluginv01.models.uielements;
 
-import libgdxpluginv01.constant.Default;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.constant.Utility;
@@ -206,4 +205,15 @@ public class CButton extends UIElement {
 		
 		return el;
 	}
+
+	@Override
+	public void restore(Element element) {
+		super.restore(element);
+		
+		checked = (readValue(element, UIElementPropertyType.CHECK) == null) ? false : true;
+		disabled = (readValue(element, UIElementPropertyType.DISABLE) == null) ? false : true;
+		
+		// restore style
+	}
+	
 }

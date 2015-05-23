@@ -633,11 +633,10 @@ public class UIController {
 				int type = Integer.parseInt(readValue(element, UIElementPropertyType.TYPE));
 				int x = Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_X));
 				int y = Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_Y));
-				int width = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_WIDTH));
-				int height = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_HEIGHT));
 				
 				UIElement uiElement = createUIElementWhenRestore(dragComposite, type, new Point(x, y));
-				uiElement.setSize(new Point(width, height));
+				uiElement.restore(element);
+				
 				dragComposite.layout(new Control[]{uiElement.getContainer()});
 				
 				addUIElement(uiElement);
