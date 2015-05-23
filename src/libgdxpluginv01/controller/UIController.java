@@ -1,12 +1,19 @@
 package libgdxpluginv01.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.editors.EditorInterface;
 import libgdxpluginv01.models.uielements.CAnimation;
 import libgdxpluginv01.models.uielements.CButton;
 import libgdxpluginv01.models.uielements.CCheckbox;
@@ -33,9 +40,6 @@ import libgdxpluginv01.views.properties.SpriteProperty;
 import libgdxpluginv01.views.properties.StyleProperty;
 import libgdxpluginv01.views.properties.UIElementProperty;
 
-import org.apache.commons.io.FileUtils;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Cursor;
@@ -46,12 +50,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.w3c.dom.Document;
 
 public class UIController {
 	private int currentMouseStyle;
@@ -502,108 +502,61 @@ public class UIController {
 		}
 	}
 
-	public void save() {
-		System.out.println("Save to file: " + saveToFile(generateCode(), getFilePath()));
+	public void save(EditorInterface editor) {
+		generateXml(getFilePath(editor));
 	}
 	
-	private String getFilePath(){
-		IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
-		String relativePath = ((FileEditorInput)input).getPath().toString();
-		
-		return relativePath.substring(0, relativePath.lastIndexOf('.'));
+	private String getFilePath(EditorInterface editor){
+		IEditorInput input = editor.getEditorInput();
+		return ((FileEditorInput)input).getPath().toString();
 	}
 	
-	public StringBuffer generateCode(){
-		StringBuffer code = new StringBuffer();
-		StringBuffer importCode = new StringBuffer();
-		StringBuffer varCode = new StringBuffer();
-		StringBuffer getMethodCode = new StringBuffer();
-		StringBuffer initCode = new StringBuffer();
-		StringBuffer creationCode = new StringBuffer();
+	public Document generateXml(String fileName){
+		System.out.println("file xml to save: " + fileName);
+		Document doc = null;
 		
-		importCode.append("\nimport com.badlogic.gdx.graphics.g2d.SpriteBatch;");
-		importCode.append("\nimport com.badlogic.gdx.scenes.scene2d.Stage;");
-		importCode.append("\nimport com.badlogic.gdx.scenes.scene2d.ui.Skin;");
-		importCode.append("\nimport com.badlogic.gdx.Gdx;");
-		
-		for (UIElement element : uiElements) {
-			if (!importCode.toString().contains(element.generateImportCode()))
-				importCode.append(element.generateImportCode());
-			varCode.append(element.generateVariableCode());
-			initCode.append("\n\t\t" + element.generateShortCreationCode());
-			getMethodCode.append("\n" + element.generateGetMethodCode());
-			creationCode.append("\n" + element.generateCreationCode());
-		}
-		
-		// generate package code
-		code.append(generatePackageCode() + ";\n");
-		
-		// import
-		code.append(importCode);
-		// public class 
-		code.append("\npublic class " + generateClassCode() + "{");
-		code.append("\n\tprivate Stage stage;");
-		code.append("\n\tprivate Skin skin;");
-		code.append("\n\tprivate SpriteBatch batch;\n");
-		
-		code.append("\n\tpublic " + generateClassCode() + "(){");
-		code.append("\n\t\tstage = new Stage();");
-		code.append("\n\t\tskin = new Skin(Gdx.files.internal(\"skin.json\"));");
-		code.append("\n\t\tbatch = new SpriteBatch();");
-		code.append("\n\t\tinit();");
-		code.append("\n\t}");
-
-		code.append("\n\n\tpublic " + generateClassCode() +"(Stage stage, Skin skin, SpriteBatch batch){");
-		code.append("\n\t\tthis.stage = stage;");
-		code.append("\n\t\tthis.skin = skin;");
-		code.append("\n\t\tthis.batch = batch;");
-		code.append("\n\t\tinit();");
-		
-		code.append("\n\t}");
-		
-		code.append("\n\n\tprivate void init(){");
-		code.append(initCode);
-		code.append("\n\t}");
-		
-		code.append(creationCode);
-		
-		code.append("\n\n\tpublic void render(float deltaTime){");
-		code.append("\n\t\t// TODO: draw all animations, sprite by batch\n");
-		code.append("\n\t}");
-		code.append("\n}");
-		return code;
-	}
-	
-	private StringBuffer generatePackageCode(){
-		IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
-		String relativePath = ((FileEditorInput)input).getFile().getProjectRelativePath().toString();
-		
-		relativePath = relativePath.substring(4, relativePath.lastIndexOf('/'));
-		relativePath = relativePath.replaceAll("/", ".");
-		
-		return new StringBuffer("package " + relativePath);
-	}
-	
-	private StringBuffer generateClassCode(){
-		IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().getEditorInput();
-		String relativePath = ((FileEditorInput)input).getFile().getProjectRelativePath().toString();
-		
-		relativePath = relativePath.substring(relativePath.lastIndexOf('/') + 1, relativePath.lastIndexOf('.'));
-		
-		return new StringBuffer(relativePath);
-	}
-	
-	private String saveToFile(StringBuffer code, String filePath){
-		File file = new File(filePath + ".java");
-		
-		file.deleteOnExit();
-		try {
-			file.createNewFile();
-			FileUtils.writeStringToFile(file, code.toString());
-		} catch (IOException e) {
+		try{
+			// create new Document
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			
+			doc = docBuilder.newDocument();
+			
+			// create root elements
+			// type:
+			//		<libgdx name="Design">
+			//		....
+			//		</libgdx>
+			org.w3c.dom.Element rootElement = doc.createElement("libgdx");
+			rootElement.setAttribute("name", fileName);
+			doc.appendChild(rootElement);
+			
+			// generate all uielements
+			// each element has type:
+			// 			<uielement>
+			//				<infor></infor>
+			//				<infor></infor>
+			//				<infor></infor>
+			//			</uielement>
+			for (UIElement element : uiElements) {
+				// each element generate xml
+			}
+			
+			// save to file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File(fileName));
+	 
+			// Output to console for testing
+			// StreamResult result = new StreamResult(System.out);
+			transformer.transform(source, result);
+			
+			System.out.println("Save to " + fileName);
+		} catch (Exception e){
 			e.printStackTrace();
 		}
 		
-		return file.getPath();
+		return doc;
 	}
 }

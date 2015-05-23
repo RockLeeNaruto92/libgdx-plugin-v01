@@ -164,7 +164,7 @@ public class EditorInterface extends EditorPart{
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		uiController.save();
+		uiController.save(this);
 	}
 
 	@Override
