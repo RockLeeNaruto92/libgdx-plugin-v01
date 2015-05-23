@@ -1,4 +1,4 @@
-package libgdxpluginv01.winzards;
+package libgdxpluginv01.wizards;
 
 import libgdxpluginv01.constant.Word;
 

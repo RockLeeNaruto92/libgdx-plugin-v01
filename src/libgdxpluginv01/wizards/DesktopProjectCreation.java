@@ -1,4 +1,5 @@
-package libgdxpluginv01.winzards;
+package libgdxpluginv01.wizards;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -6,14 +7,14 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 
 
-public class AndroidProjectCreation {
+public class DesktopProjectCreation {
 	private String path;
 	private String projectName;
 	private String projectMainClass;
 	private String projectMainPackage;
 	private String srcFolder;
 	
-	public AndroidProjectCreation(String path, String projectName,
+	public DesktopProjectCreation(String path, String projectName,
 			String projectMainClass, String projectMainPackage) {
 		super();
 		this.path = path;
@@ -24,28 +25,27 @@ public class AndroidProjectCreation {
 	}
 	
 	public String create(){
-		createAndroidProjectFolder();
+		createDesktopProjectFolder();
 		createSrcFolder();
-		modifyManifestFile();
-		modifyProjectFile();
 		modifyClasspathFile();
+		modifyProjectFile();
 		
-		return path + "/" + projectName + Constant.EXTENSION_ANDROID + "/" + Constant.PATTERN_PROJECT_FILE;
+		return path + "/" + projectName + Constant.EXTENSION_DESKTOP + "/"+ Constant.PATTERN_PROJECT_FILE;
 	}
-
-	private void createAndroidProjectFolder() {
+	
+	private void createDesktopProjectFolder() {
 		// TODO Auto-generated method stub
-		String androidFolderPath = path + "/" + projectName + Constant.EXTENSION_ANDROID;
-		String patternAndroidFolderPath = Constant.PATTERN_FOLDER + "/" + Constant.PATTERN_ANDROID_FOLDER;
-		File androidFolder;
+		String desktopFolderPath = path + "/" + projectName + Constant.EXTENSION_DESKTOP;
+		String patternAndroidFolderPath = Constant.PATTERN_FOLDER + "/" + Constant.PATTERN_DESKTOP_FOLDER;
+		File desktopFolder;
 		File patternFolder;
 		
-		Utility.createFolder(androidFolderPath);
-		androidFolder = new File(androidFolderPath);
+		Utility.createFolder(desktopFolderPath);
+		desktopFolder = new File(desktopFolderPath);
 		patternFolder = Utility.getPluginResourcesFile(patternAndroidFolderPath);
 		
 		try {
-			FileUtils.copyDirectory(patternFolder, androidFolder);
+			FileUtils.copyDirectory(patternFolder, desktopFolder);
 		} catch (IOException e) {
 			System.out.println("Not found pattern folder");
 //			e.printStackTrace();
@@ -53,7 +53,6 @@ public class AndroidProjectCreation {
 	}
 
 	private void createSrcFolder() {
-		// TODO Auto-generated method stub
 		// create structure of src folder
 		String srcPath = createSrcStructure();
 		// move and modify file java
@@ -65,7 +64,7 @@ public class AndroidProjectCreation {
 	 * @return
 	 */
 	private String createSrcStructure(){
-		String srcPath = path + "/" + projectName + Constant.EXTENSION_ANDROID + "/src";
+		String srcPath = path + "/" + projectName + Constant.EXTENSION_DESKTOP + "/src";
 		String tempStr = projectMainPackage.replace(".", "-");
 		String parts[] = tempStr.split("-");
 		
@@ -89,8 +88,8 @@ public class AndroidProjectCreation {
 	 */
 	private void modifyJavaFile(String srcPath){
 		// move java file to srcPath
-		String javaFilePatternPath = path + "/" + projectName + Constant.EXTENSION_ANDROID + "/" +  Constant.PATTERN_MAIN_ANDROID_CLASS_FILE;
-		String destJavaFilePath = srcPath + "/" + Constant.PATTERN_MAIN_ANDROID_CLASS_FILE;
+		String javaFilePatternPath = path + "/" + projectName + Constant.EXTENSION_DESKTOP + "/" +  Constant.PATTERN_MAIN_DESKTOP_CLASS_FILE;
+		String destJavaFilePath = srcPath + "/" + Constant.PATTERN_MAIN_DESKTOP_CLASS_FILE;
 		
 		File srcFile = new File(javaFilePatternPath);
 		File destFile = new File(destJavaFilePath);
@@ -125,37 +124,10 @@ public class AndroidProjectCreation {
 		}
 	}
 
-	private void modifyManifestFile() {
-		// TODO Auto-generated method stub
-		String manifestFilePath = path + "/" + projectName + Constant.EXTENSION_ANDROID + "/" + Constant.ANDROID_MANIFEST_XML_FILE;
-		File file = new File(manifestFilePath);
-		String content = null;
-		
-		if (!file.exists()){
-			return;
-		}
-		
-		try {
-			content = FileUtils.readFileToString(file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		content = content.replaceAll(Constant.PATTERN_MAIN_PACKAGE, projectMainPackage);
-		
-		try {
-			FileUtils.writeStringToFile(file, content);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	private void modifyProjectFile() {
 		// TODO Auto-generated method stub
 		// modify file project
-		String projectFilePath = path + "/" + projectName + Constant.EXTENSION_ANDROID + "/" + Constant.PATTERN_PROJECT_FILE;
+		String projectFilePath = path + "/" + projectName + Constant.EXTENSION_DESKTOP + "/"+ Constant.PATTERN_PROJECT_FILE;
 		File file = new File(projectFilePath);
 		String content = null;
 
@@ -183,7 +155,7 @@ public class AndroidProjectCreation {
 
 	private void modifyClasspathFile() {
 		// TODO Auto-generated method stub
-		String classPathFilePath = path + "/" + projectName + Constant.EXTENSION_ANDROID + "/" + Constant.PATTERN_CLASS_PATH_FILE;
+		String classPathFilePath = path + "/" + projectName + Constant.EXTENSION_DESKTOP + "/" + Constant.PATTERN_CLASS_PATH_FILE;
 		File file = new File(classPathFilePath);
 		String content = null;
 		
@@ -209,4 +181,5 @@ public class AndroidProjectCreation {
 		}
 		
 	}
+	
 }

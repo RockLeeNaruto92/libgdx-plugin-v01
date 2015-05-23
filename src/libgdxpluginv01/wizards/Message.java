@@ -1,4 +1,4 @@
-package libgdxpluginv01.winzards;
+package libgdxpluginv01.wizards;
 
 public class Message {
 	protected static String PROJECT_NAME_IS_NULL = "Project name must be specified!";

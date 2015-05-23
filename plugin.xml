@@ -100,7 +100,7 @@
             name="Libgdx game mobile development"
             icon="icons/sample.gif"
             category="PluginForLibgdx"
-            class="libgdxpluginv01.winzards.LibgdxProjectCreationWizard"
+            class="libgdxpluginv01.wizards.LibgdxProjectCreationWizard"
             id="libgdxpluginv01.wizards.LibgdxProjectCreationWizard">
       </wizard>
    </extension>

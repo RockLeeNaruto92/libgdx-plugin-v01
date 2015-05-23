@@ -1,9 +1,7 @@
-package libgdxplugin.wizards;
+package libgdxpluginv01.wizards;
+
 import java.io.File;
 import java.io.IOException;
-
-import libgdxpluginv01.winzards.Constant;
-import libgdxpluginv01.winzards.Utility;
 
 import org.apache.commons.io.FileUtils;
 
