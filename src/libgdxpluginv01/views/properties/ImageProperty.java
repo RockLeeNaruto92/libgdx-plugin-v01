@@ -29,6 +29,7 @@ public class ImageProperty extends UIElementProperty {
 	public static ImageProperty getInstance(Composite parent){
 		if (_instance == null){
 			_instance = new ImageProperty(parent);
+			System.out.println("Get ImageProperty Instance");
 		}
 		
 		return _instance;

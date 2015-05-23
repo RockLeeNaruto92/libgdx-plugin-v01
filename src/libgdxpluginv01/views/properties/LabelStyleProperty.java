@@ -22,6 +22,7 @@ public class LabelStyleProperty extends StyleProperty {
 	public static LabelStyleProperty getInstance(Composite parent, Object object){
 		if (_instance == null){
 			_instance = new LabelStyleProperty(parent, object);
+			System.out.println("Get LabelStyleProperty Instance");
 		}
 		
 		return _instance;

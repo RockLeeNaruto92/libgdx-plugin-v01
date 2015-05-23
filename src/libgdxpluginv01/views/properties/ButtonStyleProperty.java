@@ -18,6 +18,7 @@ public class ButtonStyleProperty extends StyleProperty {
 	public static ButtonStyleProperty getInstance(Composite parent, Object style){
 		if (_instance == null){
 			_instance = new ButtonStyleProperty(parent, style);
+			System.out.println("Get ButtonStyleProperty Instance");
 		}
 		
 		return _instance;

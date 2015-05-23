@@ -48,7 +48,6 @@ public class EditorInterface extends EditorPart{
 	private IEditorSite site;
 
 	public EditorInterface(Composite parent) {
-		uiController = UIController.getInstance();
 		transfer = LocalSelectionTransfer.getTransfer();
 	}
 	
@@ -195,6 +194,16 @@ public class EditorInterface extends EditorPart{
 	public void createPartControl(Composite parent) {
 		createScrolledLayout(parent);
 		createDragComposite();
+		restore();
+	}
+	
+	private void restore(){
+		if (uiController == null){
+			uiController = new UIController();
+			uiController.setDragComposite(dragComposite);
+		}
+		
+		uiController.restore(this);
 	}
 
 	@Override

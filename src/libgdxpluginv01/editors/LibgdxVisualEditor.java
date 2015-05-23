@@ -39,15 +39,16 @@ public class LibgdxVisualEditor extends MultiPageEditorPart implements IResource
 		composite.setLayout(layout);
 		
 		editorInterface = new EditorInterface(composite);
-		editorInterface.createPartControl(composite);
-		try {
-			editorInterface.init(getEditorSite(), getEditorInput());
-		} catch (PartInitException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			editorInterface.init(getEditorSite(), getEditorInput());
+//		} catch (PartInitException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		editorInterface.createPartControl(composite);
 		
 		try {
-			index = addPage(editorInterface, editorInterface.getEditorInput());
+			index = addPage(editorInterface, getEditorInput());
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}

@@ -30,6 +30,7 @@ public class LabelProperty extends UIElementProperty {
 	public static LabelProperty getInstance(Composite parent){
 		if (_instance == null){
 			_instance = new LabelProperty(parent);
+			System.out.println("Get LabelProperty Instance");
 		}
 		
 		return _instance;

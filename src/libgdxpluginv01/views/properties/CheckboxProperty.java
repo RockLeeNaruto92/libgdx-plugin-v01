@@ -25,8 +25,10 @@ public class CheckboxProperty extends ButtonProperty {
 	}
 	
 	public static CheckboxProperty getInstance(Composite parent){
-		if (_instance == null)
+		if (_instance == null){
 			_instance = new CheckboxProperty(parent);
+			System.out.println("Get CheckboxProperty Instance");
+		}
 		
 		return _instance;
 	}

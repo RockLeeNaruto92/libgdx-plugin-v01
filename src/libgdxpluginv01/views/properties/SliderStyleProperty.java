@@ -18,6 +18,7 @@ public class SliderStyleProperty extends StyleProperty {
 	public static SliderStyleProperty getInstance(Composite parent, Object object){
 		if (_instance == null){
 			_instance = new SliderStyleProperty(parent, object);
+			System.out.println("Get SliderStyleProperty Instance");
 		}
 		
 		return _instance;

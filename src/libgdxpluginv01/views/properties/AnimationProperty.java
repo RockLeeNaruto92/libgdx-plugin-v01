@@ -38,6 +38,7 @@ public class AnimationProperty extends UIElementProperty {
 	public static AnimationProperty getInstance(Composite parent){
 		if (_instance == null){
 			_instance = new AnimationProperty(parent);
+			System.out.println("Get AnimationProperty Instance");
 		}
 		
 		return _instance;

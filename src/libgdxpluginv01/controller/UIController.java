@@ -39,6 +39,7 @@ import libgdxpluginv01.views.properties.SliderStyleProperty;
 import libgdxpluginv01.views.properties.SpriteProperty;
 import libgdxpluginv01.views.properties.StyleProperty;
 import libgdxpluginv01.views.properties.UIElementProperty;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -52,6 +53,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class UIController {
 	private int currentMouseStyle;
@@ -65,6 +69,7 @@ public class UIController {
 	private static UIController _instance;
 	private List<UIElement> uiElements;
 	private List<UIElement> selectedUIElements;
+	private Canvas dragComposite;
 	
 	private PropertyView propertyView;
 	
@@ -80,6 +85,10 @@ public class UIController {
 		}
 		
 		return _instance;
+	}
+	
+	public void setDragComposite(Canvas composite){
+		dragComposite = composite;
 	}
 	
 	public void setPropertyView(PropertyView view){
@@ -178,12 +187,27 @@ public class UIController {
 	}
 
 	public Control createUIElement(Canvas dragComposite, int type, Point location) {
+		UIElement newElement = createUIElementWhenRestore(dragComposite, type, location);
+		
+		if (newElement != null){
+			addUIElement(newElement);
+			addSelectedUIElement(newElement);
+			setPropertyView(newElement);
+			
+			return newElement.getContainer();
+		}
+		
+		return null;
+	}
+	
+	public UIElement createUIElementWhenRestore(Canvas dragComposite, int type, Point location) {
 		UIElement newElement = null;
 		removeAllSelectedUIElements();
 		
 		switch (type){
 		case UIElementType.BUTTON:
 			newElement = new CButton(dragComposite, location, this);
+			System.out.println("Create new c button");
 			break;
 		
 		case UIElementType.LABEL:
@@ -214,15 +238,7 @@ public class UIController {
 			break;
 		}
 		
-		if (newElement != null){
-			addUIElement(newElement);
-			addSelectedUIElement(newElement);
-			setPropertyView(newElement);
-			
-			return newElement.getContainer();
-		}
-		
-		return null;
+		return newElement;
 	}
 	
 	public void addUIElement(UIElement uielement){
@@ -287,6 +303,8 @@ public class UIController {
 	public void onMouseDown(Composite composite){
 		mouseDown = true;
 		mouseDownPoint = Display.getCurrent().getCursorLocation();
+		
+		setPropertyView(PropertyView.getInstance());
 		
 		removeAllSelectedUIElements();
 	}
@@ -507,6 +525,15 @@ public class UIController {
 	}
 	
 	private String getFilePath(EditorInterface editor){
+		if (editor == null)
+			System.out.println("Editor null");
+		else {
+			if (editor.getEditorInput() == null)
+				System.out.println("Editor input null");
+			else 
+				System.out.println("Editor input not null");
+		}
+		
 		IEditorInput input = editor.getEditorInput();
 		return ((FileEditorInput)input).getPath().toString();
 	}
@@ -559,5 +586,58 @@ public class UIController {
 		}
 		
 		return doc;
+	}
+	
+	public void restore(EditorInterface editor){
+		String fileName = getFilePath(editor);
+		
+		System.out.println("-----------------------------------");
+		System.out.println("Restoring " + fileName);
+		
+		try {
+			File xmlFile = new File(fileName);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(xmlFile);
+			
+			doc.getDocumentElement().normalize();
+			// read root element
+			Element rootElement = doc.getDocumentElement();
+			System.out.println("file: " + rootElement.getAttribute("name"));
+			
+			NodeList nList = doc.getElementsByTagName("element");
+			
+			for (int i = 0; i < nList.getLength(); i++){
+				Node nNode = nList.item(i);
+				System.out.println("------------------------------------------");
+				System.out.println("Element " + i + ": " + nNode.getNodeName());
+				System.out.println("Infor: " );
+				
+				Element element = (Element)nNode;
+				
+				// read type
+				int type = Integer.parseInt(readValue(element, UIElementPropertyType.TYPE));
+				int x = Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_X));
+				int y = Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_Y));
+				int width = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_WIDTH));
+				int height = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_HEIGHT));
+				
+				UIElement uiElement = createUIElementWhenRestore(dragComposite, type, new Point(x, y));
+				uiElement.setSize(new Point(width, height));
+				
+				dragComposite.layout(new Control[]{uiElement.getContainer()});
+			}
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		System.out.println("Restored! " + fileName);
+	}
+	
+	public String readValue(Element parentNode, Object tag){
+		NodeList list = parentNode.getElementsByTagName(tag.toString());
+		Element el = (Element)list.item(0);
+		return el.getTextContent();
 	}
 }

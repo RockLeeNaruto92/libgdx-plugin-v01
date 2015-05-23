@@ -24,6 +24,7 @@ public class CheckboxStyleProperty extends ButtonStyleProperty{
 	public static CheckboxStyleProperty getInstance(Composite parent, Object object){
 		if (_instance == null){
 			_instance = new CheckboxStyleProperty(parent, object);
+			System.out.println("Get CheckboxStyleProperty Instance");
 		}
 		
 		return _instance;

@@ -29,6 +29,7 @@ public class SliderProperty extends UIElementProperty {
 	public static SliderProperty getInstance(Composite parent){
 		if (_instance == null){
 			_instance = new SliderProperty(parent);
+			System.out.println("Get SliderProperty Instance");
 		}
 		
 		return _instance;

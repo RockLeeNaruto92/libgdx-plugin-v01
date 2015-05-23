@@ -33,6 +33,7 @@ public class SpriteProperty extends UIElementProperty {
 	public static SpriteProperty getInstance(Composite parent){
 		if (_instance == null){
 			_instance = new SpriteProperty(parent);
+			System.out.println("Get SpriteProperty Instance");
 		}
 		
 		return _instance;

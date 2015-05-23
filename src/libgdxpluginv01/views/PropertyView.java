@@ -23,15 +23,20 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 public class PropertyView extends ViewPart {
+	private static PropertyView _instance = null;
+	
 	private List<Property> properties;
 	private Property view;
-	private UIController uiController;
 	
 	private Composite parent;
 	
-	public PropertyView() {
-		uiController = UIController.getInstance();
-		uiController.setPropertyView(this);
+	public static PropertyView getInstance(){
+		if (_instance == null){
+			_instance = new PropertyView();
+			System.out.println("Get PropertyView instance");
+		}
+		
+		return _instance;
 	}
 	
 	private List<Property> getPropertyInstances(){
@@ -60,6 +65,10 @@ public class PropertyView extends ViewPart {
 		
 		setParent(parent);
 		properties = getPropertyInstances();
+		
+		System.out.println("Created part control of property view");
+		
+		_instance = this;
 	}
 	
 	public void setParent(Composite parent){
