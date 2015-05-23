@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -536,14 +537,14 @@ public class UIController {
 	}
 	
 	private String getFilePath(EditorInterface editor){
-		if (editor == null)
-			System.out.println("Editor null");
-		else {
-			if (editor.getEditorInput() == null)
-				System.out.println("Editor input null");
-			else 
-				System.out.println("Editor input not null");
-		}
+//		if (editor == null)
+//			System.out.println("Editor null");
+//		else {
+//			if (editor.getEditorInput() == null)
+//				System.out.println("Editor input null");
+//			else 
+//				System.out.println("Editor input not null");
+//		}
 		
 		IEditorInput input = editor.getEditorInput();
 		return ((FileEditorInput)input).getPath().toString();
@@ -584,6 +585,8 @@ public class UIController {
 			// save to file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(new File(fileName));
 	 
