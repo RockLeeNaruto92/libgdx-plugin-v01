@@ -3,7 +3,6 @@ package libgdxpluginv01.views;
 import java.util.ArrayList;
 import java.util.List;
 
-import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.views.properties.AnimationProperty;
 import libgdxpluginv01.views.properties.ButtonProperty;
 import libgdxpluginv01.views.properties.ButtonStyleProperty;

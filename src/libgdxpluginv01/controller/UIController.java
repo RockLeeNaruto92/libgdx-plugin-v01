@@ -97,6 +97,12 @@ public class UIController {
 	
 	public void setPropertyView(UIElement uielement){
 		Property view = null;
+		
+		if (propertyView == null)
+			setPropertyView(PropertyView.getInstance());
+		
+		if (propertyView == null) System.out.println("Property view is null");
+		
 		switch (uielement.getType()) {
 		case UIElementType.CHECKBOX:
 			view = CheckboxProperty.getInstance(propertyView.getParent());
@@ -283,6 +289,7 @@ public class UIController {
 	}
 
 	public void onMouseUp(Composite composite) {
+		setPropertyView(PropertyView.getInstance());
 		mouseDown = false;
 		
 		if (selecting){
@@ -312,6 +319,8 @@ public class UIController {
 	public void onMouseDown(MouseEvent e, UIElement element) {
 		mouseDown = true;
 		
+		setPropertyView(PropertyView.getInstance());
+		
 		removeAllSelectedUIElements();
 		addSelectedUIElement(element);
 		
@@ -331,6 +340,8 @@ public class UIController {
 	}
 
 	public void onMouseMove(MouseEvent e) {
+		setPropertyView(PropertyView.getInstance());
+		
 		if (selectedUIElements.size() == 1)
 			onUIElementMouseMove(selectedUIElements.get(0));
 		else if (selectedUIElements.size() > 1)
@@ -624,8 +635,9 @@ public class UIController {
 				
 				UIElement uiElement = createUIElementWhenRestore(dragComposite, type, new Point(x, y));
 				uiElement.setSize(new Point(width, height));
-				
 				dragComposite.layout(new Control[]{uiElement.getContainer()});
+				
+				addUIElement(uiElement);
 			}
 			
 		} catch (Exception e){
