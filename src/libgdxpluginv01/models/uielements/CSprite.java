@@ -100,22 +100,4 @@ public class CSprite extends UIElement {
 	public void setFlipY(boolean flipY) {
 		this.flipY = flipY;
 	}
-
-	@Override
-	public StringBuffer generateImportCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateTypeCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateCreationMethodContent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

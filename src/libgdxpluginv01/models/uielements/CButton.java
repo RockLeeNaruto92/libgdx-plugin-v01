@@ -12,6 +12,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class CButton extends UIElement {
 	private boolean checked, disabled, over, up = true;
@@ -192,60 +194,16 @@ public class CButton extends UIElement {
 	}
 
 	@Override
-	public StringBuffer generateImportCode() {
-		StringBuffer code = new StringBuffer("\nimport com.badlogic.gdx.scenes.scene2d.ui.Button;");
+	public Element generateXml(Document doc, Element parentNode) {
+		Element el = super.generateXml(doc, parentNode);
 		
-		code.append("\nimport com.badlogic.gdx.scenes.scene2d.ui.Button.*;");
+		if (disabled)
+			genenerateAttrXml(doc, el, UIElementPropertyType.DISABLE, disabled);
+		if (checked)
+			genenerateAttrXml(doc, el, UIElementPropertyType.CHECK, checked);
 		
-		return code; 
-	}
-
-	@Override
-	public StringBuffer generateTypeCode() {
-		return new StringBuffer("Button");
-	}
-
-	@Override
-	public StringBuffer generateCreationMethodContent() {
-		StringBuffer code = new StringBuffer();
-		code.append("\n\t\tButton " + getName() + " = new Button(skin);\n");
-		code.append("\n\t\t" + getName() + ".setBound(" + getBound().x + ", " + getBound().y + ", " + getBound().width + ", " + getBound().height + ");");
+		// generate style xml
 		
-		if (disabled) code.append("\n\t\t" + getName() + ".setDisabled(" + disabled + ");");
-		if (checked) code.append("\n\t\t" + getName() + ".setChecked(" + checked + ");");
-		if (isVisible()) code.append("\n\t\t" + getName() + ".setVisible(" + isVisible() + ");");
-		
-		// generate style code
-		if (style == null) return code;
-		// generate new style if button style is not default
-		
-		CharSequence newStyleCode = "\n\n\t\tButtonStyle style = " + getName() + ".getStyle();";
-		CharSequence setStyleCode = "\n\t\t" + getName() + ".setStyle(" + "new ButtonStyle(" + getName() + ".getStyle()" +");";
-
-		code = generateStyleCode("up", style.up, Default.DEFAULT_BUTTON_UP_IMG, newStyleCode, setStyleCode, code);
-		code = generateStyleCode("down", style.down, Default.DEFAULT_BUTTON_DOWN_IMG, newStyleCode, setStyleCode, code);
-		code = generateStyleCode("checked", style.checked, Default.DEFAULT_BUTTON_CHECKED_IMG, newStyleCode, setStyleCode, code);
-		code = generateStyleCode("checkedOver", style.checkedOver, Default.DEFAULT_BUTTON_CHECKED_OVER_IMG, newStyleCode, setStyleCode, code);
-		code = generateStyleCode("disabled", style.disabled, Default.DEFAULT_BUTTON_DISABLED_IMG, newStyleCode, setStyleCode, code);
-		code = generateStyleCode("over", style.over, Default.DEFAULT_BUTTON_OVER_IMG, newStyleCode, setStyleCode, code);
-		
-		return code;
-	}
-	
-	private StringBuffer generateStyleCode(String field, Image img, String defaultValue, CharSequence newStyleCode, CharSequence setStyleCode, StringBuffer code){
-		if (img == null) return code;
-		String path = Resources.getPathOfImage(img);
-		System.out.println(path);
-		
-		if (!path.equals(defaultValue)){
-			// generate up
-			if (!code.toString().contains(setStyleCode)){
-				code.append(setStyleCode);
-				code.append(newStyleCode);
-			}
-			
-			code.append("\n\t\tstyle." + field + " = new TextureRegionDrawble(new TextureRegion(new Texture(Gdx.files.internals(\"" + path + "\"))));");
-		}
-		return code;
+		return el;
 	}
 }

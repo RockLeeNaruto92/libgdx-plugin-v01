@@ -16,9 +16,11 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class CLabel extends UIElement {
-	private int labelAlign = Align.right;
+	private int labelAlign = Align.left;
 	private boolean wrap;
 	private float fontScaleX = 1, fontScaleY = 1;
 	private boolean ellipsis;
@@ -328,20 +330,19 @@ public class CLabel extends UIElement {
 	}
 
 	@Override
-	public StringBuffer generateImportCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateTypeCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateCreationMethodContent() {
-		// TODO Auto-generated method stub
-		return null;
+	public Element generateXml(Document doc, Element parentNode) {
+		Element el = super.generateXml(doc, parentNode);
+		
+		if (labelAlign != Align.left)
+			genenerateAttrXml(doc, el, UIElementPropertyType.ALIGN, labelAlign);
+		genenerateAttrXml(doc, el, UIElementPropertyType.FONT_SCALE_X, fontScaleX);
+		genenerateAttrXml(doc, el, UIElementPropertyType.FONT_SCALE_Y, fontScaleY);
+		genenerateAttrXml(doc, el, UIElementPropertyType.TEXT, text);
+		genenerateAttrXml(doc, el, UIElementPropertyType.WRAP, wrap);
+		genenerateAttrXml(doc, el, UIElementPropertyType.ELLIPSIS, ellipsis);
+		
+		// generate style xml
+		
+		return el;
 	}
 }

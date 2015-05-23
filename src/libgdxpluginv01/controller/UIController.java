@@ -540,6 +540,7 @@ public class UIController {
 			//			</uielement>
 			for (UIElement element : uiElements) {
 				// each element generate xml
+				element.generateXml(doc, rootElement);
 			}
 			
 			// save to file

@@ -256,23 +256,4 @@ public class CSlider extends UIElement {
 			this.knob = knob;
 		}
 	}
-
-	@Override
-	public StringBuffer generateImportCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateTypeCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateCreationMethodContent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

@@ -24,6 +24,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public abstract class UIElement {
 	public static int i = 0;
@@ -164,50 +166,6 @@ public abstract class UIElement {
 	public abstract void onMouseExit();
 	
 	public abstract void onMouseEnter();
-	
-	public abstract StringBuffer generateImportCode();
-	
-	public abstract StringBuffer generateTypeCode();
-	
-	public abstract StringBuffer generateCreationMethodContent();
-	
-	public StringBuffer generateShortCreationCode(){
-		return new StringBuffer("create" + name + "();");
-	}
-	
-	// private void createname(){
-	//		name = new Type(...)
-	// }
-	public StringBuffer generateCreationCode() {
-		StringBuffer code = new StringBuffer();
-		code.append("\n\tprivate void create" + name + "(){");
-		code.append(generateCreationMethodContent());
-		code.append("\n\t\tstage.addActor(" + getName() +");");
-		code.append("\n\t}");
-		return code;
-	}
-	
-	// Generate
-	// private Type name;
-	public StringBuffer generateVariableCode(){
-		StringBuffer code = new StringBuffer();
-		
-		code.append("\n\tprivate " + generateTypeCode() + " " + name + ";");
-		
-		return code;
-	}
-	
-	// public Type getName{
-	// 		return name;
-	// }
-	public StringBuffer generateGetMethodCode(){
-		StringBuffer code = new StringBuffer();
-		
-		code.append("\n\n\tpublic " + generateTypeCode() + " get" + name + "(){");
-		code.append("\n\t\treturn " + name + ";");
-		code.append("\n\t}");
-		return code;
-	}
 	
 	public void remove(){
 		Display.getCurrent().timerExec(-1, getAnimationThread());
@@ -486,5 +444,29 @@ public abstract class UIElement {
 	private void setHeight(float heightValue){
 		bound.height = (int)heightValue;
 		setBound(bound);
+	}
+	
+	public Element generateXml(Document doc, Element parentNode){
+		Element el = doc.createElement("element");
+		
+		genenerateAttrXml(doc, el, UIElementPropertyType.TYPE, type);
+		genenerateAttrXml(doc, el, UIElementPropertyType.LOCATION_X, bound.x);
+		genenerateAttrXml(doc, el, UIElementPropertyType.LOCATION_Y, bound.y);
+		genenerateAttrXml(doc, el, UIElementPropertyType.SIZE_WIDTH, bound.width);
+		genenerateAttrXml(doc, el, UIElementPropertyType.SIZE_HEIGHT, bound.height);
+		
+		if (!visible)
+			genenerateAttrXml(doc, el, UIElementPropertyType.VISIBLE.toString(), visible);
+		
+		parentNode.appendChild(el);
+		
+		return el;
+	}
+	
+	protected void genenerateAttrXml(Document doc, Element ownerNode, Object attrTag, Object value){
+		Element el = doc.createElement(attrTag.toString());
+
+		el.appendChild(doc.createTextNode(value.toString()));
+		ownerNode.appendChild(el);
 	}
 }

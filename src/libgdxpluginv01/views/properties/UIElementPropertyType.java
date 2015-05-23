@@ -19,5 +19,7 @@ public enum UIElementPropertyType {
 	MIN,
 	MAX,
 	STEP_SIZE,
-	VERTICAL
+	VERTICAL,
+	TYPE,
+	SCALING
 }

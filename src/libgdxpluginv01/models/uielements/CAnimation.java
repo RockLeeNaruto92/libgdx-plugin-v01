@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.PlayMode;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
@@ -13,13 +15,14 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class CAnimation extends UIElement {
 	private List<Image> keyFrames;
 	private int count;
 	private Point origin;
 	private float frameDuration;
-	private float animationDuration;
 	private int playMode = PlayMode.NORMAL;
 	private int lastFrameNumber;
 	private float lastStateTime;
@@ -51,7 +54,7 @@ public class CAnimation extends UIElement {
 	private void setDefaultKeyFrames(){
 		for (int i = 1; i < 5; i ++)
 //			keyFrames.add(new Image(Display.getCurrent(),  Utility.getFile("datas/default/Animation/bow" + i + ".png").toString()));
-			keyFrames.add(new Image(Display.getCurrent(), "datas/bow" + i + ".png"));
+			keyFrames.add(new Image(Display.getCurrent(), Utility.getFile("datas/default/Animation/bow" + i + ".png").toString()));
 	}
 
 	@Override
@@ -221,14 +224,6 @@ public class CAnimation extends UIElement {
 		this.frameDuration = frameDuration;
 	}
 
-	public float getAnimationDuration() {
-		return animationDuration;
-	}
-
-	public void setAnimationDuration(float animationDuration) {
-		this.animationDuration = animationDuration;
-	}
-
 	public int getPlayMode() {
 		return playMode;
 	}
@@ -273,20 +268,11 @@ public class CAnimation extends UIElement {
 	}
 
 	@Override
-	public StringBuffer generateImportCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateTypeCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateCreationMethodContent() {
-		// TODO Auto-generated method stub
-		return null;
+	public Element generateXml(Document doc, Element parentNode) {
+		Element el = super.generateXml(doc, parentNode);
+		
+//		genenerateAttrXml(doc, el, UIElementPropertyType., value);
+		
+		return el;
 	}
 }

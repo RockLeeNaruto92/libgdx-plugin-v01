@@ -5,6 +5,7 @@ import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.Scaling;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
@@ -12,6 +13,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class CImage extends UIElement {
 	private Image image;
@@ -197,20 +200,16 @@ public class CImage extends UIElement {
 	}
 
 	@Override
-	public StringBuffer generateImportCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateTypeCode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuffer generateCreationMethodContent() {
-		// TODO Auto-generated method stub
-		return null;
+	public Element generateXml(Document doc, Element parentNode) {
+		Element el = super.generateXml(doc, parentNode);
+		
+		if (align != Align.left)
+			genenerateAttrXml(doc, el, UIElementPropertyType.ALIGN, align);
+		if (scaling != Scaling.fit)
+			genenerateAttrXml(doc, el, UIElementPropertyType.SCALING, scaling);
+		
+		// generate image path
+		
+		return el;
 	}
 }
