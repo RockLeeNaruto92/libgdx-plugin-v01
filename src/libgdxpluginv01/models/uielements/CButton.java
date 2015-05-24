@@ -13,6 +13,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class CButton extends UIElement {
 	private boolean checked, disabled, over, up = true;
@@ -202,10 +203,27 @@ public class CButton extends UIElement {
 			genenerateAttrXml(doc, el, UIElementPropertyType.CHECK, checked);
 		
 		// generate style xml
+		Element styleEl = doc.createElement("style");
+		
+		generateStyleXml(doc, styleEl, "up", Resources.getPathOfImage(style.up));
+		generateStyleXml(doc, styleEl, "down", Resources.getPathOfImage(style.down));
+		generateStyleXml(doc, styleEl, "over", Resources.getPathOfImage(style.over));
+		generateStyleXml(doc, styleEl, "checked", Resources.getPathOfImage(style.checked));
+		generateStyleXml(doc, styleEl, "checkedOver", Resources.getPathOfImage(style.checkedOver));
+		generateStyleXml(doc, styleEl, "disabled", Resources.getPathOfImage(style.disabled));
+		
+		el.appendChild(styleEl);
 		
 		return el;
 	}
-
+	
+	private void generateStyleXml(Document doc, Element element, String tag, String value){
+		Element el = doc.createElement(tag);
+		el.setAttribute("path", value);
+		
+		element.appendChild(el);
+	}
+	
 	@Override
 	public void restore(Element element) {
 		super.restore(element);
@@ -214,6 +232,25 @@ public class CButton extends UIElement {
 		disabled = (readValue(element, UIElementPropertyType.DISABLE) == null) ? false : true;
 		
 		// restore style
+		readStyle(element);
 	}
 	
+	public void readStyle(Element element){
+		NodeList nList = element.getElementsByTagName("style");
+		Element styleEl = (Element)(nList.item(0));
+		
+		style.up = readStyleEl(styleEl, "up");
+		style.down = readStyleEl(styleEl, "down");
+		style.checked = readStyleEl(styleEl, "checked");
+		style.checkedOver = readStyleEl(styleEl, "checkedOver");
+		style.disabled = readStyleEl(styleEl, "disabled");
+		style.over = readStyleEl(styleEl, "over");
+	}
+	
+	private Image readStyleEl(Element styleEl, String tag){
+		NodeList nList = styleEl.getElementsByTagName(tag);
+		Element tagEl = (Element)(nList.item(0));
+		
+		return Resources.getImageByPath(tagEl.getAttribute("path"));
+	}
 }

@@ -14,8 +14,6 @@ import javax.xml.transform.stream.StreamResult;
 import libgdxpluginv01.swt.custom.BitmapFont;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -281,6 +279,7 @@ public class Resources {
 			nList = doc.getElementsByTagName("images");
 			els = (Element)(nList.item(0));
 			nList = els.getElementsByTagName("img");
+			System.out.println("images size: " + nList.getLength());
 			
 			for (int i = 0; i < nList.getLength(); i++){
 				Element el = (Element)nList.item(i);
@@ -309,12 +308,6 @@ public class Resources {
 		IWorkbenchWindow window = wb.getActiveWorkbenchWindow();
 		IWorkbenchPage page = window.getActivePage();
 		IEditorPart editor = page.getActiveEditor();
-		
-		if (editor == null)
-			System.out.println("Editor null");
-		
-		System.out.println(ResourcesPlugin.getWorkspace().getRoot().getProjects().length);
-		
 		IEditorInput input = editor.getEditorInput();
 		
 		return ((FileEditorInput)input).getFile().getProject();

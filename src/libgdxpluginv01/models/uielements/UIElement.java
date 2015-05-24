@@ -10,6 +10,7 @@ import libgdxpluginv01.swt.custom.CustomComposite;
 import libgdxpluginv01.views.properties.Error;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
