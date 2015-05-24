@@ -2,11 +2,13 @@ package libgdxpluginv01.editors;
 
 import libgdxpluginv01.constant.MobileResolution;
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.dnd.UIElementDropAdapter;
 import libgdxpluginv01.models.Element;
 import libgdxpluginv01.models.uielements.UIElementType;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -36,6 +38,7 @@ import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.part.FileEditorInput;
 
 public class EditorInterface extends EditorPart{
 	private ScrolledComposite root;
@@ -175,6 +178,8 @@ public class EditorInterface extends EditorPart{
 			throws PartInitException {
 		this.site = site;
 		this.input = input;
+		setSite(site);
+		setInput(input);
 	}
 
 	@Override
@@ -196,6 +201,11 @@ public class EditorInterface extends EditorPart{
 	}
 	
 	private void restore(){
+		IProject project = ((FileEditorInput)input).getFile().getProject();
+		
+		if (Resources.getResources(project) == null)
+			Resources.restore(project);
+		
 		if (uiController == null){
 			uiController = new UIController();
 			uiController.setDragComposite(dragComposite);

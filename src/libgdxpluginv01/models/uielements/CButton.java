@@ -169,7 +169,7 @@ public class CButton extends UIElement {
 		
 		public ButtonStyle(){
 			String upPath = Utility.getFile("datas/default/ButtonStyle/up.png").toString();
-			String downPath = Utility.getFile("datas/default/ButtonStyle/up.png").toString();
+			String downPath = Utility.getFile("datas/default/ButtonStyle/down.png").toString();
 			Resources.addImage(upPath);
 			Resources.addImage(downPath);
 			up = Resources.getImageByPath(upPath);

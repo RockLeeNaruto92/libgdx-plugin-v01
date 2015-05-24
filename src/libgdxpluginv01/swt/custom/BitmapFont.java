@@ -39,7 +39,6 @@ public class BitmapFont {
 	}
 	
 	private String getName(String path){
-		
 		return path.substring(path.lastIndexOf('\\') + 1);
 	}
 	

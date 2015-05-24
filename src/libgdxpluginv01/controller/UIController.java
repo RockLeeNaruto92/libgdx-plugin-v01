@@ -13,6 +13,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.editors.EditorInterface;
 import libgdxpluginv01.models.uielements.CAnimation;
@@ -534,6 +535,7 @@ public class UIController {
 
 	public void save(EditorInterface editor) {
 		generateXml(getFilePath(editor));
+		Resources.save();
 	}
 	
 	private String getFilePath(EditorInterface editor){
