@@ -73,6 +73,7 @@ public class Resources {
 			res = addNewResources(project);
 		
 		if (res.fontsPath.contains(fontPath)) return;
+		
 		res.fontsPath.add(fontPath);
 		res.fonts.add(new BitmapFont(Display.getCurrent(), fontPath));
 		
@@ -103,6 +104,8 @@ public class Resources {
 		
 		if (res == null)
 			res = addNewResources(project);
+		
+		if (res.imagesPath.contains(imgPath)) return;
 		
 		res.imagesPath.add(imgPath);
 		res.images.add(new Image(Display.getCurrent(), imgPath));
