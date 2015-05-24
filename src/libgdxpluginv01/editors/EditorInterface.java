@@ -202,6 +202,7 @@ public class EditorInterface extends EditorPart{
 	
 	private void restore(){
 		IProject project = ((FileEditorInput)input).getFile().getProject();
+		Resources.setCurrentProject(project);
 		
 		if (Resources.getResources(project) == null)
 			Resources.restore(project);

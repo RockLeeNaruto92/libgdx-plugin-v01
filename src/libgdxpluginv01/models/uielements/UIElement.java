@@ -45,7 +45,6 @@ public abstract class UIElement {
 	private boolean selected = true;
 	private UIController uiController;
 	private int type;
-	
 	private Runnable animationThread;
 	private List<CAction> actions;
 	

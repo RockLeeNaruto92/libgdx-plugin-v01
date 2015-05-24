@@ -239,6 +239,8 @@ public class CButton extends UIElement {
 		NodeList nList = element.getElementsByTagName("style");
 		Element styleEl = (Element)(nList.item(0));
 		
+		if (style == null) style = new ButtonStyle();
+		
 		style.up = readStyleEl(styleEl, "up");
 		style.down = readStyleEl(styleEl, "down");
 		style.checked = readStyleEl(styleEl, "checked");

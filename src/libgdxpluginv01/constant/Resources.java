@@ -35,10 +35,15 @@ public class Resources {
 	private ArrayList<BitmapFont> fonts = new ArrayList<>();
 	private ArrayList<Image> images = new ArrayList<>();
 	
+	private static IProject currentProject;
 	private static ArrayList<Resources> pluginResources = new ArrayList<>();
 	
 	public Resources(IProject project){
 		this.project = project;
+	}
+	
+	public static void setCurrentProject(IProject project){
+		currentProject = project;
 	}
 	
 	public static Resources getResources(IProject project){
@@ -304,12 +309,13 @@ public class Resources {
 	}
 	
 	private static IProject getCurrentProject(){
-		IWorkbench wb = PlatformUI.getWorkbench();
-		IWorkbenchWindow window = wb.getActiveWorkbenchWindow();
-		IWorkbenchPage page = window.getActivePage();
-		IEditorPart editor = page.getActiveEditor();
-		IEditorInput input = editor.getEditorInput();
-		
-		return ((FileEditorInput)input).getFile().getProject();
+//		IWorkbench wb = PlatformUI.getWorkbench();
+//		IWorkbenchWindow window = wb.getActiveWorkbenchWindow();
+//		IWorkbenchPage page = window.getActivePage();
+//		IEditorPart editor = page.getActiveEditor();
+//		IEditorInput input = editor.getEditorInput();
+//		
+//		return ((FileEditorInput)input).getFile().getProject();
+		return currentProject;
 	}
 }
