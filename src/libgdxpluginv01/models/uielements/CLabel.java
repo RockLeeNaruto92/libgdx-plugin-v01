@@ -351,6 +351,8 @@ public class CLabel extends UIElement {
 		
 		generateStyleXml(doc, styleEl, "background", Resources.getPathOfImage(style.background));
 		generateStyleXml(doc, styleEl, "font", Resources.getPathOfFont(style.font));
+		
+		parentNode.appendChild(styleEl);
 		return el;
 	}
 }

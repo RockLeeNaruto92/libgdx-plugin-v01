@@ -70,18 +70,34 @@ public class Resources {
 		if (res == null)
 			res = addNewResources(project);
 		
-		String fontName = getName(fontPath);
-		System.out.println("Font name: " + fontName );
-		if (res.fontsFileName.contains(fontName))
-			fontName += 1;
+		if (isExist(project, fontPath, "font")) return;
+		// Neu fontPath chua co trong fontsFilePath va chua co trong fontsFileName cua resources
 		
-		fontPath = moveFontToAssets(project, fontPath, fontName);
-		System.out.println("Font path new: " + fontPath);
+		String newFontPath = getAndroidProjectPath(project) + "/assets/fonts/" + getName(fontPath);
 		
-		if (res.fontsPath.contains(fontPath)) return;
+		if (res.fontsFileName.contains(newFontPath)){
+			// rename of choosed font
+			// newFont.fnt ==> newFont1.fnt
+			newFontPath = newFontPath.substring(0, newFontPath.lastIndexOf(".")) + 1 + newFontPath.substring(newFontPath.lastIndexOf('.'));
+		}
 		
+		System.out.println("Font name: " + newFontPath );
+		
+		// copy fontPath --> newFontPath
+		try {
+			FileUtils.copyFile(new File(fontPath), new File(newFontPath));
+			
+			String imgFontPath = fontPath.substring(0, fontPath.lastIndexOf('.')) + ".png";
+			String newImgFontPath = newFontPath.substring(0, newFontPath.lastIndexOf('.')) + ".png";
+			
+			FileUtils.copyFile(new File(imgFontPath), new File(newImgFontPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		res.fontsFileName.add(newFontPath);
 		res.fontsPath.add(fontPath);
-		res.fonts.add(new BitmapFont(Display.getCurrent(), fontPath));
+		res.fonts.add(new BitmapFont(Display.getCurrent(), newFontPath));
 		
 		System.out.println("Add new font: " + fontPath);
 	}
@@ -292,7 +308,7 @@ public class Resources {
 			for (int i = 0; i < res.fontsPath.size(); i++){
 				Element font = doc.createElement("font");
 				
-				font.setAttribute("path", res.fonts.get(i).getPath());
+				font.setAttribute("path", res.fonts.get(i).getPath() + res.fonts.get(i).getName());
 				
 				fontsEl.appendChild(font);
 				System.out.println("Generate font: " + res.fonts.get(i).getPath());
@@ -395,5 +411,22 @@ public class Resources {
 	
 	public static IProject getCurrentProject(){
 		return currentProject;
+	}
+	
+	private static boolean isExist(IProject project, String path, String compareTag){
+		switch (compareTag) {
+		case "font":{
+			Resources res = getResources(project);
+			if (Resources.getFontByPath(project, path) != null) return true;
+			
+			if (res.fontsFileName.contains(path)) return true;
+			break;
+		}
+		case "image":{
+			Resources res = getResources(project);
+			return res.getImageByPath(path) == null;
+		}
+		}
+		return false;
 	}
 }
