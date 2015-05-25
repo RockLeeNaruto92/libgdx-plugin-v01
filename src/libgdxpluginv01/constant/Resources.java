@@ -70,11 +70,13 @@ public class Resources {
 		if (res == null)
 			res = addNewResources(project);
 		
-		String fontName = fontPath.substring(fontPath.lastIndexOf('\\') + 1);
+		String fontName = getName(fontPath);
+		System.out.println("Font name: " + fontName );
 		if (res.fontsFileName.contains(fontName))
 			fontName += 1;
 		
 		fontPath = moveFontToAssets(project, fontPath, fontName);
+		System.out.println("Font path new: " + fontPath);
 		
 		if (res.fontsPath.contains(fontPath)) return;
 		
@@ -84,19 +86,45 @@ public class Resources {
 		System.out.println("Add new font: " + fontPath);
 	}
 	
+	private static String getParentFolder(String fullPath){
+		String folder = fullPath.substring(0, fullPath.lastIndexOf('/'));
+		
+		if (folder == null || folder.length() == 0)
+			folder = fullPath.substring(0, fullPath.lastIndexOf('\\'));
+		return folder;
+	}
+	
+	private static String getName(String fullPath){
+		String name = fullPath.substring(fullPath.lastIndexOf('/') + 1);
+		
+		if (name == fullPath)
+			name = fullPath.substring(fullPath.lastIndexOf('\\') + 1);
+		return name;
+	}
+	
 	private static String moveFontToAssets(IProject project, String fontPath,
 			String fontName) {
 		String fontDestFileName = getAndroidProjectPath(project) + "/assets/fonts/" + fontName;
 		
 		System.out.println("DesfileNAme: " + fontDestFileName);
 		
+		
 		try {
-			FileUtils.copyFile(new File(fontPath), new File(fontDestFileName));
+			System.out.println("On add font: " + fontDestFileName);
+			File destFile = new File(fontDestFileName);
 			
-			String imgFile = fontPath.substring(0, fontPath.lastIndexOf('.')) + ".png";
-			String imgDestFileName = fontDestFileName.substring(0, fontDestFileName.lastIndexOf('.')) + ".png";
+			if (destFile.exists()) {
+				System.out.println("font file " + fontDestFileName + " existed!");
+			} else {
+				FileUtils.copyFile(new File(fontPath), destFile);
 			
-			FileUtils.copyFile(new File(imgFile), new File(imgDestFileName));
+				String imgFile = fontPath.substring(0, fontPath.lastIndexOf('.')) + ".png";
+				String imgDestFileName = fontDestFileName.substring(0, fontDestFileName.lastIndexOf('.')) + ".png";
+				
+				destFile = new File(imgDestFileName);
+				if (destFile.exists()) destFile.delete();
+				FileUtils.copyFile(new File(imgFile), destFile);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

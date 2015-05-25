@@ -6,11 +6,11 @@
    		black: { a: 1, b: 0, g: 0, r: 0 }
 	},
 	com.badlogic.gdx.graphics.g2d.BitmapFont: { 
-		default-font: { file: default.fnt }
+		default-font: { file: ../fonts/default.fnt }
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		default: {
-			font: default-font
+			font: ../fonts/default-font
 		}
 	},
 	com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {

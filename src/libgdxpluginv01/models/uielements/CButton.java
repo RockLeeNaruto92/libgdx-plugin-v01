@@ -216,12 +216,7 @@ public class CButton extends UIElement {
 		return el;
 	}
 	
-	private void generateStyleXml(Document doc, Element element, String tag, String value){
-		Element el = doc.createElement(tag);
-		el.setAttribute("path", value);
-		
-		element.appendChild(el);
-	}
+	
 	
 	@Override
 	public void restore(Element element) {

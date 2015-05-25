@@ -480,6 +480,15 @@ public abstract class UIElement {
 		return el.getTextContent();
 	}
 	
+	public void generateStyleXml(Document doc, Element element, String tag, String value){
+		if (value == null) return;
+		
+		Element el = doc.createElement(tag);
+		el.setAttribute("path", value);
+		
+		element.appendChild(el);
+	}
+	
 	public void restore(Element element){
 		int width = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_WIDTH));
 		int height = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_HEIGHT));

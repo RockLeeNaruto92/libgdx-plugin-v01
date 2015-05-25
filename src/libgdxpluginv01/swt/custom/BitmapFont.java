@@ -39,11 +39,19 @@ public class BitmapFont {
 	}
 	
 	private String getName(String path){
-		return path.substring(path.lastIndexOf('\\') + 1);
+		String name = path.substring(path.lastIndexOf('\\') + 1);
+		
+		if (name == path) 
+			return path.substring(path.lastIndexOf('/') + 1);
+		return name;
 	}
 	
 	private String getPath(String path){
-		return path.substring(0, path.lastIndexOf('\\') + 1);
+		String fPath = path.substring(0, path.lastIndexOf('\\') + 1);
+		
+		if (fPath == null || fPath.length() == 0)
+			return path.substring(0, path.lastIndexOf('/') + 1);
+		return fPath;
 	}
 	
 	public String getName(){
@@ -59,7 +67,7 @@ public class BitmapFont {
 		try {
 			scanner = new Scanner(new File(path + fontFileName));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error: " + fontFileName);
 			e.printStackTrace();
 		}
 		

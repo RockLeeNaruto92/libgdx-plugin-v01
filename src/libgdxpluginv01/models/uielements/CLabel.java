@@ -1,6 +1,7 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
@@ -318,7 +319,11 @@ public class CLabel extends UIElement {
 		public Image background;
 		
 		public LabelStyle(){
-			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
+			String defaultFontPath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/fonts/default.fnt";
+			
+			Resources.addFont(defaultFontPath);
+			font = Resources.getFontByPath(defaultFontPath);
+//			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
 //			font = new BitmapFont(Display.getCurrent(), "datas\\font.fnt");
 			fontColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		}
@@ -341,8 +346,11 @@ public class CLabel extends UIElement {
 		genenerateAttrXml(doc, el, UIElementPropertyType.WRAP, wrap);
 		genenerateAttrXml(doc, el, UIElementPropertyType.ELLIPSIS, ellipsis);
 		
-		// generate style xml
+		// generate style xml`
+		Element styleEl = doc.createElement("style");
 		
+		generateStyleXml(doc, styleEl, "background", Resources.getPathOfImage(style.background));
+		generateStyleXml(doc, styleEl, "font", Resources.getPathOfFont(style.font));
 		return el;
 	}
 }
