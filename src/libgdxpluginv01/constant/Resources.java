@@ -1,6 +1,7 @@
 package libgdxpluginv01.constant;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,18 +13,13 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import libgdxpluginv01.swt.custom.BitmapFont;
+import libgdxpluginv01.wizards.Constant;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.FileEditorInput;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -34,6 +30,7 @@ public class Resources {
 	private ArrayList<String> imagesPath = new ArrayList<>();
 	private ArrayList<BitmapFont> fonts = new ArrayList<>();
 	private ArrayList<Image> images = new ArrayList<>();
+	private ArrayList<String> imagesFileName = new ArrayList<>();
 	
 	private static IProject currentProject;
 	private static ArrayList<Resources> pluginResources = new ArrayList<>();
@@ -109,7 +106,35 @@ public class Resources {
 		
 		res.imagesPath.add(imgPath);
 		res.images.add(new Image(Display.getCurrent(), imgPath));
+		
+		String imgName = imgPath.substring(imgPath.lastIndexOf('\\') + 1);
+		if (res.imagesFileName.contains(imgName))
+			imgName += 1; // rename
+		res.imagesFileName.add(imgName);
+		System.out.println("New file name: " + imgName);
+		
+		// move to android-project/assets/imgs
+		moveImageToAssets(project, imgPath, imgName);
+		
 		System.out.println("Add new image: " + imgPath);
+	}
+	
+	private static void moveImageToAssets(IProject project, String imgPath,
+			String imgName) {
+		String destFileName = getAndroidProjectPath(project) + "/assets/imgs/" + imgName;
+		
+		System.out.println("DesfileNAme: " + destFileName);
+		
+		try {
+			FileUtils.copyFile(new File(imgPath), new File(destFileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Move " + imgPath+ " to " + destFileName);
+	}
+
+	private static String getAndroidProjectPath(IProject project){
+		return project.getLocation().toString() + Constant.EXTENSION_ANDROID;
 	}
 
 	public static void addImage(String imgPath){
