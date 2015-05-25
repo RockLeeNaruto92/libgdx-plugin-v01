@@ -126,6 +126,13 @@ public abstract class StyleProperty extends Property{
 				
 				if (fontFile == null) return;
 				
+				BitmapFont font = Resources.getFontByPath(fontFile);
+				
+				if (font == null){
+					Resources.addFont(fontFile);
+					font = Resources.getFontByPath(fontFile);
+				}
+				
 				setPropertyToView(getObject(), new Object[]{fontFile, new Integer(index)});
 			}
 		});

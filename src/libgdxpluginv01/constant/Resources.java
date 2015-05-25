@@ -31,6 +31,7 @@ public class Resources {
 	private ArrayList<BitmapFont> fonts = new ArrayList<>();
 	private ArrayList<Image> images = new ArrayList<>();
 	private ArrayList<String> imagesFileName = new ArrayList<>();
+	private ArrayList<String> fontsFileName = new ArrayList<>();
 	
 	private static IProject currentProject;
 	private static ArrayList<Resources> pluginResources = new ArrayList<>();
@@ -69,6 +70,12 @@ public class Resources {
 		if (res == null)
 			res = addNewResources(project);
 		
+		String fontName = fontPath.substring(fontPath.lastIndexOf('\\') + 1);
+		if (res.fontsFileName.contains(fontName))
+			fontName += 1;
+		
+		fontPath = moveFontToAssets(project, fontPath, fontName);
+		
 		if (res.fontsPath.contains(fontPath)) return;
 		
 		res.fontsPath.add(fontPath);
@@ -77,6 +84,27 @@ public class Resources {
 		System.out.println("Add new font: " + fontPath);
 	}
 	
+	private static String moveFontToAssets(IProject project, String fontPath,
+			String fontName) {
+		String fontDestFileName = getAndroidProjectPath(project) + "/assets/fonts/" + fontName;
+		
+		System.out.println("DesfileNAme: " + fontDestFileName);
+		
+		try {
+			FileUtils.copyFile(new File(fontPath), new File(fontDestFileName));
+			
+			String imgFile = fontPath.substring(0, fontPath.lastIndexOf('.')) + ".png";
+			String imgDestFileName = fontDestFileName.substring(0, fontDestFileName.lastIndexOf('.')) + ".png";
+			
+			FileUtils.copyFile(new File(imgFile), new File(imgDestFileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Move " + fontPath + " to " + fontDestFileName);
+		
+		return fontDestFileName;
+	}
+
 	public static void addFont(String fontPath){
 		// get current project
 		addFont(getCurrentProject(), fontPath);
@@ -102,24 +130,24 @@ public class Resources {
 		if (res == null)
 			res = addNewResources(project);
 		
+		String imgName = imgPath.substring(imgPath.lastIndexOf('\\') + 1);
+		if (res.imagesFileName.contains(imgName))
+			imgName += 1; // rename
+		res.imagesFileName.add(imgName);
+		
+		// move to android-project/assets/imgs
+		moveImageToAssets(project, imgPath, imgName);
+		
 		if (res.imagesPath.contains(imgPath)) return;
 		
 		res.imagesPath.add(imgPath);
 		res.images.add(new Image(Display.getCurrent(), imgPath));
 		
-		String imgName = imgPath.substring(imgPath.lastIndexOf('\\') + 1);
-		if (res.imagesFileName.contains(imgName))
-			imgName += 1; // rename
-		res.imagesFileName.add(imgName);
-		System.out.println("New file name: " + imgName);
-		
-		// move to android-project/assets/imgs
-		moveImageToAssets(project, imgPath, imgName);
 		
 		System.out.println("Add new image: " + imgPath);
 	}
 	
-	private static void moveImageToAssets(IProject project, String imgPath,
+	private static String moveImageToAssets(IProject project, String imgPath,
 			String imgName) {
 		String destFileName = getAndroidProjectPath(project) + "/assets/imgs/" + imgName;
 		
@@ -131,6 +159,7 @@ public class Resources {
 			e.printStackTrace();
 		}
 		System.out.println("Move " + imgPath+ " to " + destFileName);
+		return destFileName;
 	}
 
 	private static String getAndroidProjectPath(IProject project){
@@ -251,6 +280,7 @@ public class Resources {
 				Element image = doc.createElement("img");
 				
 				image.setAttribute("path", res.imagesPath.get(i));
+				image.setAttribute("name", res.imagesFileName.get(i));
 				imagesEl.appendChild(image);
 				
 				System.out.println("Generate image: " + res.imagesPath.get(i));
@@ -317,7 +347,7 @@ public class Resources {
 			for (int i = 0; i < nList.getLength(); i++){
 				Element el = (Element)nList.item(i);
 				
-				// read image path
+				// read image path	
 				addImage(project, el.getAttribute("path"));
 			}
 			
@@ -337,13 +367,6 @@ public class Resources {
 	}
 	
 	private static IProject getCurrentProject(){
-//		IWorkbench wb = PlatformUI.getWorkbench();
-//		IWorkbenchWindow window = wb.getActiveWorkbenchWindow();
-//		IWorkbenchPage page = window.getActivePage();
-//		IEditorPart editor = page.getActiveEditor();
-//		IEditorInput input = editor.getEditorInput();
-//		
-//		return ((FileEditorInput)input).getFile().getProject();
 		return currentProject;
 	}
 }

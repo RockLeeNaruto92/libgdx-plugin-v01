@@ -13,7 +13,7 @@
 			font: default-font
 		}
 	},
-	com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {`
+	com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		default: {
 			up: up,
 			down: down
