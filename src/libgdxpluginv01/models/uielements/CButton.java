@@ -169,8 +169,10 @@ public class CButton extends UIElement {
 		public float unpressedOffsetY;
 		
 		public ButtonStyle(){
-			String upPath = Utility.getFile("datas/default/ButtonStyle/up.png").toString();
-			String downPath = Utility.getFile("datas/default/ButtonStyle/down.png").toString();
+			/*String upPath = Utility.getFile("datas/default/ButtonStyle/up.png").toString();
+			String downPath = Utility.getFile("datas/default/ButtonStyle/down.png").toString();*/
+			String upPath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/up.png";
+			String downPath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/down.png";
 			Resources.addImage(upPath);
 			Resources.addImage(downPath);
 			up = Resources.getImageByPath(upPath);

@@ -130,13 +130,13 @@ public class Resources {
 		if (res == null)
 			res = addNewResources(project);
 		
-		String imgName = imgPath.substring(imgPath.lastIndexOf('\\') + 1);
+		String imgName = imgPath.substring(imgPath.lastIndexOf('/') + 1);
 		if (res.imagesFileName.contains(imgName))
 			imgName += 1; // rename
 		res.imagesFileName.add(imgName);
 		
 		// move to android-project/assets/imgs
-		moveImageToAssets(project, imgPath, imgName);
+		imgPath = moveImageToAssets(project, imgPath, imgName);
 		
 		if (res.imagesPath.contains(imgPath)) return;
 		
@@ -162,7 +162,7 @@ public class Resources {
 		return destFileName;
 	}
 
-	private static String getAndroidProjectPath(IProject project){
+	public static String getAndroidProjectPath(IProject project){
 		return project.getLocation().toString() + Constant.EXTENSION_ANDROID;
 	}
 
@@ -366,7 +366,7 @@ public class Resources {
 			restore(project);
 	}
 	
-	private static IProject getCurrentProject(){
+	public static IProject getCurrentProject(){
 		return currentProject;
 	}
 }
