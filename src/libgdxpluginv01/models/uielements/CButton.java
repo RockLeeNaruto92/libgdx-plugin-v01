@@ -2,7 +2,6 @@ package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Resources;
-import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
 
@@ -177,8 +176,6 @@ public class CButton extends UIElement {
 			Resources.addImage(downPath);
 			up = Resources.getImageByPath(upPath);
 			down = Resources.getImageByPath(downPath);
-//			up = new Image(Display.getCurrent(), "datas\\up.png");
-//			down = new Image(Display.getCurrent(), "datas\\down.png");
 			over = up;
 			checked = up;
 			checkedOver = up;

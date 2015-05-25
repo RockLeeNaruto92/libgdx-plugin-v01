@@ -143,7 +143,6 @@ public class Resources {
 		res.imagesPath.add(imgPath);
 		res.images.add(new Image(Display.getCurrent(), imgPath));
 		
-		
 		System.out.println("Add new image: " + imgPath);
 	}
 	
