@@ -1,7 +1,7 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
-import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.Scaling;
@@ -12,7 +12,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -174,7 +173,9 @@ public class CImage extends UIElement {
 
 	public Image getImage() {
 		if (image == null){
-			image = new Image(Display.getCurrent(), Utility.getFile("datas/default/Sprite/libgdx.png").toString());
+			String defaultImagePath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/libgdx.png";
+			Resources.addImage(defaultImagePath);
+			image = Resources.getImageByPath(defaultImagePath);
 		}
 		return image;
 	}
@@ -209,7 +210,21 @@ public class CImage extends UIElement {
 			genenerateAttrXml(doc, el, UIElementPropertyType.SCALING, scaling);
 		
 		// generate image path
+		genenerateAttrXml(doc, el, UIElementPropertyType.IMAGE, Resources.getPathOfImage(image));
 		
 		return el;
+	}
+
+	@Override
+	public void restore(Element element) {
+		String alignValue = readValue(element, UIElementPropertyType.ALIGN);
+		align = alignValue == null ? Align.left : Integer.parseInt(alignValue);
+		
+		String scalingValue = readValue(element, UIElementPropertyType.SCALING);
+		scaling = scalingValue == null ? Scaling.fit : Integer.parseInt(scalingValue);
+		
+		image = Resources.getImageByPath(readValue(element, UIElementPropertyType.IMAGE));
+		
+		super.restore(element);
 	}
 }

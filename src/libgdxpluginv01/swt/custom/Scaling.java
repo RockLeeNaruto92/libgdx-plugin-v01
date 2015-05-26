@@ -28,5 +28,4 @@ public class Scaling {
 	public static int getScalingIndex(int scaling){
 		return scaling;
 	}
-	
 }
