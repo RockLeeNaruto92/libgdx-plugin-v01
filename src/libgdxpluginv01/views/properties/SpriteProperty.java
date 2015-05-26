@@ -165,7 +165,7 @@ public class SpriteProperty extends UIElementProperty {
 		
 		System.out.println(bound);
 		System.out.println(getDrawImageArea());
-		e.gc.drawImage(object.getImage(), 0, 0, bound.width, bound.height, 0, 0, -getDrawImageArea().x, getDrawImageArea().y);
+		e.gc.drawImage(object.getImage(), 0, 0, bound.width, bound.height, 0, 0, getDrawImageArea().x, getDrawImageArea().y);
 //		transform.dispose();
 	}
 	

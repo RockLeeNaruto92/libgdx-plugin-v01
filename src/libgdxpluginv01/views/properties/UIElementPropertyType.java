@@ -21,5 +21,8 @@ public enum UIElementPropertyType {
 	STEP_SIZE,
 	VERTICAL,
 	TYPE,
-	SCALING
+	SCALING,
+	IMAGE,
+	FLIP_Y,
+	FLIP_X
 }

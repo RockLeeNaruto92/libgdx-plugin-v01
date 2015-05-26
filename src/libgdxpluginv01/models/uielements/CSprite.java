@@ -1,15 +1,17 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
-import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class CSprite extends UIElement {
 	private Image image;
@@ -76,7 +78,9 @@ public class CSprite extends UIElement {
 
 	public Image getImage() {
 		if (image == null){
-			image = new Image(Display.getCurrent(), Utility.getFile("datas/default/Sprite/libgdx.png").toString());
+			String defaultImagePath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/libgdx.png";
+			Resources.addImage(defaultImagePath);
+			image = Resources.getImageByPath(defaultImagePath);
 		}
 		return image;
 	}
@@ -99,5 +103,25 @@ public class CSprite extends UIElement {
 
 	public void setFlipY(boolean flipY) {
 		this.flipY = flipY;
+	}
+
+	@Override
+	public Element generateXml(Document doc, Element parentNode) {
+		Element el = super.generateXml(doc, parentNode);
+		
+		genenerateAttrXml(doc, el, UIElementPropertyType.IMAGE, Resources.getPathOfImage(image));
+		genenerateAttrXml(doc, el, UIElementPropertyType.FLIP_X, flipX);
+		genenerateAttrXml(doc, el, UIElementPropertyType.FLIP_Y, flipY);
+		
+		return el;
+	}
+
+	@Override
+	public void restore(Element element) {
+		super.restore(element);
+		
+		image = Resources.getImageByPath(readValue(element, UIElementPropertyType.IMAGE));
+		flipX = (readValue(element, UIElementPropertyType.FLIP_X) == "true") ? true : false;
+		flipY = (readValue(element, UIElementPropertyType.FLIP_Y) == "true") ? true : false;
 	}
 }
