@@ -202,6 +202,13 @@ public class CButton extends UIElement {
 			genenerateAttrXml(doc, el, UIElementPropertyType.CHECK, checked);
 		
 		// generate style xml
+		
+		if (style != null) el.appendChild(generateStyleEl(doc, el, style));
+		
+		return el;
+	}
+	
+	private Element generateStyleEl(Document doc, Element owner, ButtonStyle style) {
 		Element styleEl = doc.createElement("style");
 		
 		generateStyleXml(doc, styleEl, "up", Resources.getPathOfImage(style.up));
@@ -211,12 +218,8 @@ public class CButton extends UIElement {
 		generateStyleXml(doc, styleEl, "checkedOver", Resources.getPathOfImage(style.checkedOver));
 		generateStyleXml(doc, styleEl, "disabled", Resources.getPathOfImage(style.disabled));
 		
-		el.appendChild(styleEl);
-		
-		return el;
+		return styleEl;
 	}
-	
-	
 	
 	@Override
 	public void restore(Element element) {
@@ -243,7 +246,7 @@ public class CButton extends UIElement {
 		style.over = readStyleEl(styleEl, "over");
 	}
 	
-	private Image readStyleEl(Element styleEl, String tag){
+	protected Image readStyleEl(Element styleEl, String tag){
 		NodeList nList = styleEl.getElementsByTagName(tag);
 		Element tagEl = (Element)(nList.item(0));
 		

@@ -1,7 +1,7 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
-import libgdxpluginv01.constant.Utility;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
@@ -13,7 +13,9 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class CCheckbox extends CButton {
 	private CheckboxStyle style;
@@ -338,9 +340,17 @@ public class CCheckbox extends CButton {
 		public CheckboxStyle(){
 			super();
 			
-			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
-			checkboxOn = new Image(Display.getCurrent(), Utility.getFile("datas/default/Checkbox/on.png").toString());
-			checkboxOff = new Image(Display.getCurrent(), Utility.getFile("datas/default/Checkbox/off.png").toString());
+			String checkboxOnPath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/on.png";
+			String checkboxOffPath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/off.png";
+			String defaultFontPath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/fonts/default.fnt";
+			
+			Resources.addImage(checkboxOffPath);
+			Resources.addImage(checkboxOnPath);
+			Resources.addFont(defaultFontPath);
+			
+			font = Resources.getFontByPath(defaultFontPath);
+			checkboxOn = Resources.getImageByPath(checkboxOnPath);
+			checkboxOff = Resources.getImageByPath(checkboxOffPath);
 			
 			checkboxOver = checkboxOn;
 			checkboxOnDisabled = checkboxOn;
@@ -354,5 +364,82 @@ public class CCheckbox extends CButton {
 			this.checkboxOn = on;
 			this.checkboxOff = off;
 		}
+	}
+
+	@Override
+	public Element generateXml(Document doc, Element parentNode) {
+		Element el = super.generateXml(doc, parentNode);
+		
+		genenerateAttrXml(doc, el, UIElementPropertyType.ALIGN, align);
+		genenerateAttrXml(doc, el, UIElementPropertyType.FONT_SCALE_X, fontScaleX);
+		genenerateAttrXml(doc, el, UIElementPropertyType.FONT_SCALE_Y, fontScaleY);
+		genenerateAttrXml(doc, el, UIElementPropertyType.FONT_SCALE_Y, fontScaleY);
+		genenerateAttrXml(doc, el, UIElementPropertyType.TEXT, text);
+		
+		// generate style xml
+		
+		el.appendChild(generateStyleEl(doc, el));
+		
+		return el;
+	}
+
+	private Element generateStyleEl(Document doc, Element owner) {
+		Element styleEl = doc.createElement("style");
+		
+		generateStyleXml(doc, styleEl, "font", Resources.getPathOfFont(style.font));
+		generateStyleXml(doc, styleEl, "up", Resources.getPathOfImage(style.up));
+		generateStyleXml(doc, styleEl, "down", Resources.getPathOfImage(style.down));
+		generateStyleXml(doc, styleEl, "over", Resources.getPathOfImage(style.over));
+		generateStyleXml(doc, styleEl, "checked", Resources.getPathOfImage(style.checked));
+		generateStyleXml(doc, styleEl, "checkedOver", Resources.getPathOfImage(style.checkedOver));
+		generateStyleXml(doc, styleEl, "disabled", Resources.getPathOfImage(style.disabled));
+		
+		generateStyleXml(doc, styleEl, "checkboxOn", Resources.getPathOfImage(style.checkboxOn));
+		generateStyleXml(doc, styleEl, "checkboxOff", Resources.getPathOfImage(style.checkboxOff));
+		generateStyleXml(doc, styleEl, "checkboxOnDisabled", Resources.getPathOfImage(style.checkboxOnDisabled));
+		generateStyleXml(doc, styleEl, "checkboxOffDisabled", Resources.getPathOfImage(style.checkboxOffDisabled));
+		generateStyleXml(doc, styleEl, "checkboxOver", Resources.getPathOfImage(style.checkboxOver));
+		
+		return styleEl;
+	}
+
+	@Override
+	public void restore(Element element) {
+		// TODO Auto-generated method stub
+		setChecked((readValue(element, UIElementPropertyType.CHECK) == null) ? false : true);
+		setDisabled((readValue(element, UIElementPropertyType.DISABLE) == null) ? false : true);
+		
+		text = readValue(element, UIElementPropertyType.TEXT);
+		align = Integer.parseInt(readValue(element, UIElementPropertyType.ALIGN));
+		fontScaleX = Float.parseFloat(readValue(element, UIElementPropertyType.FONT_SCALE_X));
+		fontScaleY = Float.parseFloat(readValue(element, UIElementPropertyType.FONT_SCALE_Y));
+		
+		readStyle(element);
+	}
+
+	@Override
+	public void readStyle(Element element) {
+		NodeList nList = element.getElementsByTagName("style");
+		Element styleEl = (Element)(nList.item(0));
+		nList = styleEl.getElementsByTagName("font");
+		Element fontEl = (Element)(nList.item(0));
+		
+		if (style == null) style = new CheckboxStyle();
+		
+		style.font = Resources.getFontByPath(fontEl.getAttribute("path"));
+		
+		// read checkbox on
+		style.checkboxOn = readStyleEl(styleEl, "checkboxOn");
+		style.checkboxOff = readStyleEl(styleEl, "checkboxOff");
+		style.checkboxOnDisabled = readStyleEl(styleEl, "checkboxOnDisabled");
+		style.checkboxOffDisabled = readStyleEl(styleEl, "checkboxOffDisabled");
+		style.checkboxOver = readStyleEl(styleEl, "checkboxOver");
+		
+		style.up = readStyleEl(styleEl, "up");
+		style.down = readStyleEl(styleEl, "down");
+		style.checked = readStyleEl(styleEl, "checked");
+		style.checkedOver = readStyleEl(styleEl, "checkedOver");
+		style.disabled = readStyleEl(styleEl, "disabled");
+		style.over = readStyleEl(styleEl, "over");
 	}
 }

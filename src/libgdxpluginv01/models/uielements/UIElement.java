@@ -10,7 +10,6 @@ import libgdxpluginv01.swt.custom.CustomComposite;
 import libgdxpluginv01.views.properties.Error;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -473,7 +472,6 @@ public abstract class UIElement {
 	
 	public String readValue(Element parentNode, Object tag){
 		NodeList list = parentNode.getElementsByTagName(tag.toString());
-		
 		if (list.getLength() == 0) return null;
 		
 		Element el = (Element)list.item(0);
