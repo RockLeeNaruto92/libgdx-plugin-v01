@@ -3,6 +3,7 @@ package libgdxpluginv01.views.properties;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.CCheckbox;
 import libgdxpluginv01.models.uielements.CCheckbox.CheckboxStyle;
+import libgdxpluginv01.swt.custom.BitmapFont;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -58,7 +59,8 @@ public class CheckboxStyleProperty extends ButtonStyleProperty{
 		if (datas != null){
 			switch ((Integer)datas[1]) {
 			case 6:{
-				style.font.setFont((String)datas[0]);
+				style.font.dispose();
+				style.font = (BitmapFont)datas[0];
 				break;
 			}
 			case 7:{

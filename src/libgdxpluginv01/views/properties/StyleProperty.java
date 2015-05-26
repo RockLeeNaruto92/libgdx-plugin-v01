@@ -133,7 +133,7 @@ public abstract class StyleProperty extends Property{
 					font = Resources.getFontByPath(fontFile);
 				}
 				
-				setPropertyToView(getObject(), new Object[]{fontFile, new Integer(index)});
+				setPropertyToView(getObject(), new Object[]{font, new Integer(index)});
 			}
 		});
 		

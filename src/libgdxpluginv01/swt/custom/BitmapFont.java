@@ -278,13 +278,9 @@ public class BitmapFont {
 		return new Point(sumWidth, maxHeight);
 	}
 	
-	public void setFont(String fontFilePath){
-		this.fontFileName = getName(fontFilePath);
-		this.path = getPath(fontFilePath);
-		
+	public void setFont(BitmapFont font){
 		dispose();
-		readCharacters();
-		
+//		readCharacters();
 	}
 	
 	class CCharacter {

@@ -223,7 +223,7 @@ public class Resources {
 		
 		if (res == null) return null;
 		if (res.images.contains(image))
-			return res.imagesPath.get(res.images.indexOf(image));
+			return res.imagesFileName.get(res.images.indexOf(image));
 		return null;
 	}
 	
@@ -236,7 +236,7 @@ public class Resources {
 		
 		if (res == null) return null;
 		if (res.fonts.contains(font))
-			return res.fontsPath.get(res.fonts.indexOf(font));
+			return res.fontsFileName.get(res.fonts.indexOf(font));
 		return null;
 	}
 	

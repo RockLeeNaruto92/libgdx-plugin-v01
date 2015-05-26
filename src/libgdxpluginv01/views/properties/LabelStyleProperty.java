@@ -3,6 +3,7 @@ package libgdxpluginv01.views.properties;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.CLabel;
 import libgdxpluginv01.models.uielements.CLabel.LabelStyle;
+import libgdxpluginv01.swt.custom.BitmapFont;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -44,8 +45,10 @@ public class LabelStyleProperty extends StyleProperty {
 		LabelStyle style = obj.getStyle();
 		
 		if (datas != null){
-			if (datas[0] instanceof String)
-				style.font.setFont((String)datas[0]);
+			if (datas[0] instanceof BitmapFont){
+				style.font.dispose();
+				style.font = (BitmapFont)datas[0];
+			}
 			else if (datas[0] instanceof RGB){
 				style.fontColor.dispose();
 				style.fontColor = (Color) datas[0];

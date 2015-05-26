@@ -2,7 +2,6 @@ package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Resources;
-import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.Align;
 import libgdxpluginv01.swt.custom.BitmapFont;
@@ -19,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class CLabel extends UIElement {
 	private int labelAlign = Align.left;
@@ -323,8 +323,6 @@ public class CLabel extends UIElement {
 			
 			Resources.addFont(defaultFontPath);
 			font = Resources.getFontByPath(defaultFontPath);
-//			font = new BitmapFont(Display.getCurrent(), Utility.getFile("datas/default/Font/default.fnt").toString());
-//			font = new BitmapFont(Display.getCurrent(), "datas\\font.fnt");
 			fontColor = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
 		}
 		
@@ -352,7 +350,24 @@ public class CLabel extends UIElement {
 		generateStyleXml(doc, styleEl, "background", Resources.getPathOfImage(style.background));
 		generateStyleXml(doc, styleEl, "font", Resources.getPathOfFont(style.font));
 		
-		parentNode.appendChild(styleEl);
+		el.appendChild(styleEl);
 		return el;
+	}
+
+	@Override
+	public void restore(Element element) {
+		// TODO Auto-generated method stub
+		super.restore(element);
+
+		// read style
+		NodeList nList = element.getElementsByTagName("style");
+		Element styleEl = (Element)(nList.item(0));
+		
+		if (style == null) style = new LabelStyle();
+		
+		// read font
+		nList = styleEl.getElementsByTagName("font");
+		Element fontEl = (Element)(nList.item(0));
+		style.font = Resources.getFontByPath(fontEl.getAttribute("path"));
 	}
 }

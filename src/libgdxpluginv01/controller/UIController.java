@@ -643,7 +643,6 @@ public class UIController {
 				
 				addUIElement(uiElement);
 			}
-			
 		} catch (Exception e){
 			e.printStackTrace();
 		}
