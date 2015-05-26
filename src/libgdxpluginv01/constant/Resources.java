@@ -75,7 +75,10 @@ public class Resources {
 		
 		String newFontPath = getAndroidProjectPath(project) + "/assets/fonts/" + getName(fontPath);
 		
-		if (res.fontsFileName.contains(newFontPath)){
+		boolean isExistedInAndroid = new File(newFontPath).exists();
+		System.out.println("Exised in android? : " + isExistedInAndroid);
+		
+		if (res.fontsFileName.contains(newFontPath) && !isExistedInAndroid){
 			// rename of choosed font
 			// newFont.fnt ==> newFont1.fnt
 			newFontPath = newFontPath.substring(0, newFontPath.lastIndexOf(".")) + 1 + newFontPath.substring(newFontPath.lastIndexOf('.'));
@@ -85,12 +88,14 @@ public class Resources {
 		
 		// copy fontPath --> newFontPath
 		try {
-			FileUtils.copyFile(new File(fontPath), new File(newFontPath));
+			if (!isExistedInAndroid){
+				FileUtils.copyFile(new File(fontPath), new File(newFontPath));
 			
-			String imgFontPath = fontPath.substring(0, fontPath.lastIndexOf('.')) + ".png";
-			String newImgFontPath = newFontPath.substring(0, newFontPath.lastIndexOf('.')) + ".png";
+				String imgFontPath = fontPath.substring(0, fontPath.lastIndexOf('.')) + ".png";
+				String newImgFontPath = newFontPath.substring(0, newFontPath.lastIndexOf('.')) + ".png";
 			
-			FileUtils.copyFile(new File(imgFontPath), new File(newImgFontPath));
+				FileUtils.copyFile(new File(imgFontPath), new File(newImgFontPath));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -102,14 +107,6 @@ public class Resources {
 		System.out.println("Add new font: " + fontPath);
 	}
 	
-	private static String getParentFolder(String fullPath){
-		String folder = fullPath.substring(0, fullPath.lastIndexOf('/'));
-		
-		if (folder == null || folder.length() == 0)
-			folder = fullPath.substring(0, fullPath.lastIndexOf('\\'));
-		return folder;
-	}
-	
 	private static String getName(String fullPath){
 		String name = fullPath.substring(fullPath.lastIndexOf('/') + 1);
 		
@@ -118,37 +115,6 @@ public class Resources {
 		return name;
 	}
 	
-	private static String moveFontToAssets(IProject project, String fontPath,
-			String fontName) {
-		String fontDestFileName = getAndroidProjectPath(project) + "/assets/fonts/" + fontName;
-		
-		System.out.println("DesfileNAme: " + fontDestFileName);
-		
-		
-		try {
-			System.out.println("On add font: " + fontDestFileName);
-			File destFile = new File(fontDestFileName);
-			
-			if (destFile.exists()) {
-				System.out.println("font file " + fontDestFileName + " existed!");
-			} else {
-				FileUtils.copyFile(new File(fontPath), destFile);
-			
-				String imgFile = fontPath.substring(0, fontPath.lastIndexOf('.')) + ".png";
-				String imgDestFileName = fontDestFileName.substring(0, fontDestFileName.lastIndexOf('.')) + ".png";
-				
-				destFile = new File(imgDestFileName);
-				if (destFile.exists()) destFile.delete();
-				FileUtils.copyFile(new File(imgFile), destFile);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Move " + fontPath + " to " + fontDestFileName);
-		
-		return fontDestFileName;
-	}
-
 	public static void addFont(String fontPath){
 		// get current project
 		addFont(getCurrentProject(), fontPath);
@@ -174,35 +140,32 @@ public class Resources {
 		if (res == null)
 			res = addNewResources(project);
 		
-		String imgName = imgPath.substring(imgPath.lastIndexOf('/') + 1);
-		if (res.imagesFileName.contains(imgName))
-			imgName += 1; // rename
-		res.imagesFileName.add(imgName);
+		if (isExist(project, imgPath, "image")) return;
+		// NEu image path cua co trong imgFilePath va imgsFileNAme cua resources
 		
-		// move to android-project/assets/imgs
-		imgPath = moveImageToAssets(project, imgPath, imgName);
+		String newImagePath = getAndroidProjectPath(project) + "/assets/imgs/" + getName(imgPath);
+		System.out.println("newImagePath: " + newImagePath);
+		boolean isExistedInAndroid = new File(newImagePath).exists();
 		
-		if (res.imagesPath.contains(imgPath)) return;
-		
-		res.imagesPath.add(imgPath);
-		res.images.add(new Image(Display.getCurrent(), imgPath));
-		
-		System.out.println("Add new image: " + imgPath);
-	}
-	
-	private static String moveImageToAssets(IProject project, String imgPath,
-			String imgName) {
-		String destFileName = getAndroidProjectPath(project) + "/assets/imgs/" + imgName;
-		
-		System.out.println("DesfileNAme: " + destFileName);
+		if (res.imagesFileName.contains(newImagePath) && !isExistedInAndroid){
+			// rename of choosed image
+			// newImage.png ---> newImage1.png
+			newImagePath = newImagePath.substring(0, newImagePath.lastIndexOf(".")) + 1 + newImagePath.substring(newImagePath.lastIndexOf('.'));
+		}
 		
 		try {
-			FileUtils.copyFile(new File(imgPath), new File(destFileName));
+			if (!isExistedInAndroid)
+				FileUtils.copyFile(new File(imgPath), new File(newImagePath));
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Move " + imgPath+ " to " + destFileName);
-		return destFileName;
+		
+		res.imagesFileName.add(newImagePath);
+		res.imagesPath.add(imgPath);
+		res.images.add(new Image(Display.getCurrent(), newImagePath));
+		
+		System.out.println("Add new image: " + imgPath);
 	}
 
 	public static String getAndroidProjectPath(IProject project){
@@ -230,8 +193,11 @@ public class Resources {
 		Resources res = getResources(project);
 		
 		if (res == null) return null;
-		if (res.imagesPath.contains(imgPath))
+		if (res.imagesPath.contains(imgPath)){
+			System.out.println("on get image bypath: " + imgPath);
+			System.out.println(res.imagesPath.indexOf(imgPath));
 			return res.images.get(res.imagesPath.indexOf(imgPath));
+		}
 		return null;
 	}
 	
@@ -308,10 +274,10 @@ public class Resources {
 			for (int i = 0; i < res.fontsPath.size(); i++){
 				Element font = doc.createElement("font");
 				
-				font.setAttribute("path", res.fonts.get(i).getPath() + res.fonts.get(i).getName());
+				font.setAttribute("path", res.fontsFileName.get(i));
 				
 				fontsEl.appendChild(font);
-				System.out.println("Generate font: " + res.fonts.get(i).getPath());
+				System.out.println("Generate font: " + res.fontsFileName.get(i));
 			}
 			
 			rootEl.appendChild(fontsEl);
@@ -416,15 +382,21 @@ public class Resources {
 	private static boolean isExist(IProject project, String path, String compareTag){
 		switch (compareTag) {
 		case "font":{
-			Resources res = getResources(project);
+			
 			if (Resources.getFontByPath(project, path) != null) return true;
 			
+			Resources res = getResources(project);
 			if (res.fontsFileName.contains(path)) return true;
+			
 			break;
 		}
 		case "image":{
+			if (Resources.getImageByPath(project, path) != null) return true;
+			
 			Resources res = getResources(project);
-			return res.getImageByPath(path) == null;
+			if (res.imagesFileName.contains(path)) return true;
+			
+			break;
 		}
 		}
 		return false;
