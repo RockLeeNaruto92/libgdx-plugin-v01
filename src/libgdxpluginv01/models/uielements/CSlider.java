@@ -1,8 +1,10 @@
 package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
+import libgdxpluginv01.models.uielements.CButton.ButtonStyle;
 import libgdxpluginv01.views.properties.Error;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
 
@@ -12,6 +14,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class CSlider extends UIElement {
 	private boolean disabled;
@@ -243,11 +248,17 @@ public class CSlider extends UIElement {
 		public Image knobBefore, knobAfter, disabledKnobBefore, disabledKnobAfter;
 
 		public SliderStyle(){
-			background = new Image(Display.getCurrent(), Utility.getFile("datas/default/Slider/background.png").toString());
-			knob = new Image(Display.getCurrent(), Utility.getFile("datas/default/Slider/knob.png").toString());
+			String background = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/slider-background.png";
+			String knob = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/knob.png";
 			
-			disabledBackground = background;
-			disabledKnob = knob;
+			Resources.addImage(background);
+			Resources.addImage(knob);
+			
+			this.background = Resources.getImageByPath(background);
+			this.knob = Resources.getImageByPath(knob);
+			
+			disabledBackground = this.background;
+			disabledKnob = this.knob;
 		}
 		
 		public SliderStyle(Image background, Image knob) {
@@ -255,5 +266,58 @@ public class CSlider extends UIElement {
 			this.background = background;
 			this.knob = knob;
 		}
+	}
+
+	@Override
+	public Element generateXml(Document doc, Element parentNode) {
+		Element el = super.generateXml(doc, parentNode);
+		
+		genenerateAttrXml(doc, el, UIElementPropertyType.MAX, max);
+		genenerateAttrXml(doc, el, UIElementPropertyType.MIN, min);
+		genenerateAttrXml(doc, el, UIElementPropertyType.STEP_SIZE, stepSize);
+		genenerateAttrXml(doc, el, UIElementPropertyType.VALUE, value);
+		genenerateAttrXml(doc, el, UIElementPropertyType.VERTICAL, vertical);
+		
+		Element styleEl = doc.createElement("style");
+		generateStyleXml(doc, styleEl, "background", Resources.getPathOfImage(style.background));
+		generateStyleXml(doc, styleEl, "knob", Resources.getPathOfImage(style.knob));
+		generateStyleXml(doc, styleEl, "disabledBackground", Resources.getPathOfImage(style.disabledBackground));
+		generateStyleXml(doc, styleEl, "disabledKnob", Resources.getPathOfImage(style.disabledKnob));
+		
+		el.appendChild(styleEl);
+		
+		return el;
+	}
+
+	@Override
+	public void restore(Element element) {
+		super.restore(element);
+		
+		max = Float.parseFloat(readValue(element, UIElementPropertyType.MAX));
+		min = Float.parseFloat(readValue(element, UIElementPropertyType.MIN));
+		stepSize = Float.parseFloat(readValue(element, UIElementPropertyType.STEP_SIZE));
+		value = Float.parseFloat(readValue(element, UIElementPropertyType.VALUE));
+		vertical = readValue(element, UIElementPropertyType.VERTICAL) == "true" ? true : false;
+		
+		readStyle(element);
+	}
+	
+	public void readStyle(Element element){
+		NodeList nList = element.getElementsByTagName("style");
+		Element styleEl = (Element)(nList.item(0));
+		
+		if (style == null) style = new SliderStyle();
+		
+		style.background = readStyleEl(styleEl, "background");
+		style.knob = readStyleEl(styleEl, "knob");
+		style.disabledBackground = readStyleEl(styleEl, "disabledBackground");
+		style.disabledKnob = readStyleEl(styleEl, "disabledKnob");
+	}
+	
+	protected Image readStyleEl(Element styleEl, String tag){
+		NodeList nList = styleEl.getElementsByTagName(tag);
+		Element tagEl = (Element)(nList.item(0));
+		
+		return Resources.getImageByPath(tagEl.getAttribute("path"));
 	}
 }
