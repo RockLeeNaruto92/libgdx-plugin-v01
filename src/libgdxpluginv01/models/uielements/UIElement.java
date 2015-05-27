@@ -3,6 +3,7 @@ package libgdxpluginv01.models.uielements;
 import java.util.ArrayList;
 import java.util.List;
 
+import libgdxpluginv01.constant.MobileResolution;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
@@ -374,7 +375,8 @@ public abstract class UIElement {
 			setX(Parameter.DEFAULT_MOBILE_POSITION.x + Float.parseFloat((String)value));
 			break;
 		case LOCATION_Y:
-			setY(Float.parseFloat((String)value));
+			int defaultMobileY = Parameter.DEFAULT_MOBILE_POSITION.y + MobileResolution.IPHONE_6_PLUS.y;
+			setY(defaultMobileY - Float.parseFloat((String)value) - bound.height);
 			break;
 		case SIZE_WIDTH:
 			setWidth(Float.parseFloat((String)value));

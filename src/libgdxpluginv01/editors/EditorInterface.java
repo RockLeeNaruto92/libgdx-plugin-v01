@@ -110,8 +110,8 @@ public class EditorInterface extends EditorPart{
 				// draw mobile rectangle
 				e.gc.setLineWidth(Parameter.DEFAULT_MOBILE_WIDTH);
 				e.gc.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GREEN));
-				e.gc.fillRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x / 2, MobileResolution.IPHONE_6_PLUS.y / 2);
-				e.gc.drawRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x / 2, MobileResolution.IPHONE_6_PLUS.y / 2);
+				e.gc.fillRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x, MobileResolution.IPHONE_6_PLUS.y);
+				e.gc.drawRectangle(Parameter.DEFAULT_MOBILE_POSITION.x, Parameter.DEFAULT_MOBILE_POSITION.y, MobileResolution.IPHONE_6_PLUS.x, MobileResolution.IPHONE_6_PLUS.y);
 				
 				// draw rectangle selection
 				if (uiController.isSelecting()) {

@@ -1,5 +1,6 @@
 package libgdxpluginv01.views.properties;
 
+import libgdxpluginv01.constant.MobileResolution;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
@@ -104,9 +105,10 @@ public abstract class UIElementProperty extends Property{
 	public void setObjectPropertiesToView(UIElement object){
 		setUielement(object);
 		
+		int defaultMobileY = Parameter.DEFAULT_MOBILE_POSITION.y + MobileResolution.IPHONE_6_PLUS.y;
 		textName.setText(object.getName());
 		textLocationX.setText(object.getBound().x - Parameter.DEFAULT_MOBILE_POSITION.x + "");
-		textLocationY.setText(object.getBound().y + "");
+		textLocationY.setText(defaultMobileY - object.getBound().y - object.getBound().height + "");
 		textSizeWidth.setText(object.getBound().width + "");
 		textSizeHeight.setText(object.getBound().height + "");
 		checkboxVisible.setSelection(object.isVisible());
