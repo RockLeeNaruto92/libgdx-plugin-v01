@@ -27,7 +27,7 @@ public class CLabel extends UIElement {
 	private boolean ellipsis;
 	private String text;
 	
-	private LabelStyle style ;
+	private LabelStyle style;
 	
 	public CLabel(Composite root, Point location, UIController uiController,
 			int type) {
