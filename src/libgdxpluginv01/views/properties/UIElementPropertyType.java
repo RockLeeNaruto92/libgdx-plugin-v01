@@ -24,5 +24,9 @@ public enum UIElementPropertyType {
 	SCALING,
 	IMAGE,
 	FLIP_Y,
-	FLIP_X
+	FLIP_X,
+	PLAY_MODE,
+	FRAME_DURATION,
+	KEY_FRAMES,
+	COUNT
 }

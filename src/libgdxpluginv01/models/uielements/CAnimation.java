@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.PlayMode;
@@ -17,6 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class CAnimation extends UIElement {
 	private List<Image> keyFrames;
@@ -52,9 +54,12 @@ public class CAnimation extends UIElement {
 	}
 	
 	private void setDefaultKeyFrames(){
-		for (int i = 1; i < 5; i ++)
-//			keyFrames.add(new Image(Display.getCurrent(),  Utility.getFile("datas/default/Animation/bow" + i + ".png").toString()));
-			keyFrames.add(new Image(Display.getCurrent(), Utility.getFile("datas/default/Animation/bow" + i + ".png").toString()));
+		String framesPath = Resources.getAndroidProjectPath(Resources.getCurrentProject()) + "/assets/imgs/bow";
+		for (int i = 1; i < 5; i ++){
+			String path = framesPath + i + ".png";
+			Resources.addImage(path);
+			keyFrames.add(Resources.getImageByPath(path));
+		}
 	}
 
 	@Override
@@ -64,7 +69,6 @@ public class CAnimation extends UIElement {
 
 	@Override
 	public Point getDefaultSize() {
-		// TODO Auto-generated method stub
 		return Parameter.DEFAULT_ANIMATION_SIZE;
 	}
 
@@ -272,7 +276,48 @@ public class CAnimation extends UIElement {
 		Element el = super.generateXml(doc, parentNode);
 		
 //		genenerateAttrXml(doc, el, UIElementPropertyType., value);
+		genenerateAttrXml(doc, el, UIElementPropertyType.PLAY_MODE, playMode);
+		genenerateAttrXml(doc, el, UIElementPropertyType.FRAME_DURATION, frameDuration);
+		
+		generateKeyFrames(doc, el);
 		
 		return el;
+	}
+	
+	private void generateKeyFrames(Document doc, Element owner){
+		Element keyFramesEl = doc.createElement(UIElementPropertyType.KEY_FRAMES.toString());
+		
+		keyFramesEl.setAttribute(UIElementPropertyType.COUNT.toString(), count + "");
+		
+		for (Image frame : keyFrames) {
+			Element frameEl = doc.createElement("frame");
+			
+			frameEl.setAttribute("path", Resources.getPathOfImage(frame));
+			
+			keyFramesEl.appendChild(frameEl);
+		}
+		
+		owner.appendChild(keyFramesEl);
+	}
+
+	@Override
+	public void restore(Element element) {
+		super.restore(element);
+		
+		playMode = Integer.parseInt(readValue(element, UIElementPropertyType.PLAY_MODE));
+		frameDuration = Float.parseFloat(readValue(element, UIElementPropertyType.FRAME_DURATION));
+		
+		// read keys frame
+		Element keyFramesEl = (Element)(element.getElementsByTagName(UIElementPropertyType.KEY_FRAMES.toString()).item(0));
+		NodeList frames = keyFramesEl.getElementsByTagName("frame");
+		
+		for (int i = 0; i < frames.getLength(); i++){
+			Element frame = (Element)(frames.item(i));
+			
+			keyFrames.add(Resources.getImageByPath(frame.getAttribute("path")));
+		}
+		
+		count = frames.getLength();
+		System.out.println("Frames length: " + count);
 	}
 }
