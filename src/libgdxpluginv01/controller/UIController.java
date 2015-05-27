@@ -12,6 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import libgdxpluginv01.constant.MobileResolution;
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Resources;
 import libgdxpluginv01.constant.Utility;
@@ -633,8 +634,10 @@ public class UIController {
 				
 				// read type
 				int type = Integer.parseInt(readValue(element, UIElementPropertyType.TYPE));
-				int x = Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_X));
-				int y = Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_Y));
+				int defaultMobileY = Parameter.DEFAULT_MOBILE_POSITION.y + MobileResolution.IPHONE_6_PLUS.y;
+				
+				int x = Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_X)) + Parameter.DEFAULT_MOBILE_POSITION.x;
+				int y = defaultMobileY - Integer.parseInt(readValue(element, UIElementPropertyType.LOCATION_Y));
 				
 				UIElement uiElement = createUIElementWhenRestore(dragComposite, type, new Point(x, y));
 				uiElement.restore(element);

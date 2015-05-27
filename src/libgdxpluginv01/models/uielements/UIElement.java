@@ -450,10 +450,11 @@ public abstract class UIElement {
 	
 	public Element generateXml(Document doc, Element parentNode){
 		Element el = doc.createElement("element");
+		int defaultMobileY = Parameter.DEFAULT_MOBILE_POSITION.y + MobileResolution.IPHONE_6_PLUS.y;
 		
 		genenerateAttrXml(doc, el, UIElementPropertyType.TYPE, type);
-		genenerateAttrXml(doc, el, UIElementPropertyType.LOCATION_X, bound.x);
-		genenerateAttrXml(doc, el, UIElementPropertyType.LOCATION_Y, bound.y);
+		genenerateAttrXml(doc, el, UIElementPropertyType.LOCATION_X, bound.x - Parameter.DEFAULT_MOBILE_POSITION.x);
+		genenerateAttrXml(doc, el, UIElementPropertyType.LOCATION_Y, defaultMobileY - bound.y - bound.height);
 		genenerateAttrXml(doc, el, UIElementPropertyType.SIZE_WIDTH, bound.width);
 		genenerateAttrXml(doc, el, UIElementPropertyType.SIZE_HEIGHT, bound.height);
 		
@@ -493,7 +494,11 @@ public abstract class UIElement {
 		int width = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_WIDTH));
 		int height = Integer.parseInt(readValue(element, UIElementPropertyType.SIZE_HEIGHT));
 		
-		setSize(new Point(width, height));
+		bound.width = width;
+		bound.height = height;
+		bound.y -= height;
+		
+		setBound(bound);
 		
 		String visibleValue = readValue(element, UIElementPropertyType.VISIBLE);
 		visible = (visibleValue == null) ? true : false;
