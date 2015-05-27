@@ -105,7 +105,7 @@ public abstract class UIElementProperty extends Property{
 		setUielement(object);
 		
 		textName.setText(object.getName());
-		textLocationX.setText(object.getBound().x + "");
+		textLocationX.setText(object.getBound().x - Parameter.DEFAULT_MOBILE_POSITION.x + "");
 		textLocationY.setText(object.getBound().y + "");
 		textSizeWidth.setText(object.getBound().width + "");
 		textSizeHeight.setText(object.getBound().height + "");

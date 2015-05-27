@@ -371,7 +371,7 @@ public abstract class UIElement {
 	public void setPropertyValue(UIElementPropertyType type, Object value){
 		switch (type) {
 		case LOCATION_X:
-			setX(Float.parseFloat((String)value));
+			setX(Parameter.DEFAULT_MOBILE_POSITION.x + Float.parseFloat((String)value));
 			break;
 		case LOCATION_Y:
 			setY(Float.parseFloat((String)value));
