@@ -2,9 +2,7 @@ package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Resources;
-import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
-import libgdxpluginv01.models.uielements.CButton.ButtonStyle;
 import libgdxpluginv01.views.properties.Error;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
 
@@ -13,7 +11,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

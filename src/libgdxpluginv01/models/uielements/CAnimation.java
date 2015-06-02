@@ -5,7 +5,6 @@ import java.util.List;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Resources;
-import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.swt.custom.PlayMode;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
@@ -23,13 +22,12 @@ import org.w3c.dom.NodeList;
 public class CAnimation extends UIElement {
 	private List<Image> keyFrames;
 	private int count;
-	private Point origin;
+	private Point origin = new Point(0, 0);
 	private float frameDuration;
 	private int playMode = PlayMode.NORMAL;
 	private int lastFrameNumber;
 	private float lastStateTime;
 	private float stateTime = 0;
-	private float rotation;
 
 	private Runnable runable;
 
@@ -268,6 +266,45 @@ public class CAnimation extends UIElement {
 		while (keyFrames.size() != 0){
 			Image image = keyFrames.remove(0);
 			image.dispose();
+		}
+	}
+
+	@Override
+	public Object getPropertyValue(UIElementPropertyType type) {
+		Object result = super.getPropertyValue(type);
+		
+		if (result != null) return result;
+		
+		switch (type) {
+		case ROTATION:
+			return getRotation();
+		case PLAY_MODE:
+			return getPlayMode();
+		case COUNT: 
+			return getCount();
+		case FRAME_DURATION:
+			return getFrameDuration();
+		default:
+			return null;
+		}
+	}
+	
+	@Override
+	public void setPropertyValue(UIElementPropertyType type, Object value) {
+		super.setPropertyValue(type, value);
+		
+		switch (type) {
+		case ROTATION:
+			setRotation(Float.parseFloat(value.toString()));			
+			break;
+		case PLAY_MODE:
+			setPlayMode((int)value);
+			break;
+		case FRAME_DURATION:
+			setFrameDuration(Float.parseFloat(value.toString()));
+			break;
+		default:
+			break;
 		}
 	}
 

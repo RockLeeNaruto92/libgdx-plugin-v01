@@ -20,4 +20,8 @@ public class PlayMode {
 				Word.PLAY_MODE_RANDOM
 		};
 	}
+
+	public static int getPlayModeIndex(int playMode) {
+		return playMode;
+	}
 }

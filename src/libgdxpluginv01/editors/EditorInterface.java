@@ -9,6 +9,7 @@ import libgdxpluginv01.models.Element;
 import libgdxpluginv01.models.uielements.UIElementType;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -198,6 +199,8 @@ public class EditorInterface extends EditorPart{
 		createScrolledLayout(parent);
 		createDragComposite();
 		restore();
+		
+		// maximaze
 	}
 	
 	private void restore(){

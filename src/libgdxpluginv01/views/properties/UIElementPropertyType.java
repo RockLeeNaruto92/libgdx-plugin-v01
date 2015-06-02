@@ -28,5 +28,8 @@ public enum UIElementPropertyType {
 	PLAY_MODE,
 	FRAME_DURATION,
 	KEY_FRAMES,
-	COUNT
+	COUNT,
+	ROTATION,
+	ORIGIN_X,
+	ORIGIN_Y
 }

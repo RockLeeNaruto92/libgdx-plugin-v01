@@ -7,19 +7,16 @@ import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.CAnimation;
+import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.swt.custom.PlayMode;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
 public class AnimationProperty extends UIElementProperty {
@@ -94,217 +91,50 @@ public class AnimationProperty extends UIElementProperty {
 	}
 
 	private void createCountField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_KEY_FRAMES);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(getContainer(), SWT.NONE);
-		label.setText(Word.PROPERTY_COUNT);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textCount = new Text(getContainer(), SWT.BORDER);
-		textCount.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
-		textCount.setText("0");
-		
-		textCount.addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (getUielement() == null) return;
-				
-				CAnimation obj = (CAnimation)getUielement();
-				if (isValidCount(textCount.getText())){
-					// create or remove frame text
-					int value = Integer.parseInt(textCount.getText());
-					
-					if (value > obj.getCount()){
-						for (int i = 0; i < value - obj.getCount(); i++){
-							Composite frame = createAFrameField();
-							textFrames.add(frame);
-						}
-					} else {
-						for (int i = 0; i < obj.getCount() - value; i++){
-							Composite frame = textFrames.remove(textFrames.size() - 1);
-							frame.dispose();
-						}
-					}
-					
-					getContainer().layout();
-					getContainer().setSize(getDefaultSize());
-					
-					// set obj count
-					obj.setCount(value);
-					
-				} else {
-					MessageDialog.openError(obj.getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_COUNT);
-					textCount.setText(obj.getCount() + "");
-				}
-			}
-			
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		String[] labelNames = new String[]{Word.PROPERTY_FRAME, Word.PROPERTY_COUNT};
+		textCount = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.COUNT);
 	}
 
 	private void createPlayModeField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_PLAY_MODE);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		comboPlayMode = new Combo(getContainer(), SWT.READ_ONLY);
-		comboPlayMode.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 3));
-		comboPlayMode.setItems(PlayMode.getStrings());
-		comboPlayMode.select(0);
+		String[] labelNames = new String[]{Word.PROPERTY_PLAY_MODE};
+		comboPlayMode = Utility.createComboGridData2Columns(getContainer(), labelNames, PlayMode.getStrings(), this, UIElementPropertyType.PLAY_MODE);
 	}
 
 	private void createFrameDurationField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_FRAME_DURATION);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textFrameDuration = new Text(getContainer(), SWT.BORDER);
-		textFrameDuration.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
-		
-		textFrameDuration.addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (isValidFrameDuration(textFrameDuration.getText())){
-					
-				} else {
-					MessageDialog.openError(getUielement().getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_Y);
-					textFrameDuration.setText(getUielement().getBound().x + "");
-				}
-			}
-			
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				
-			}
-		});
-		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		String[] labelNames = new String[]{Word.PROPERTY_FRAME_DURATION};
+		textFrameDuration = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.FRAME_DURATION);
 	}
 
 	private void createRotationField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_ROTATION);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textRotation = new Text(getContainer(), SWT.BORDER);
-		textRotation.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
-		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		String[] labelNames = new String[]{Word.PROPERTY_ROTATION};
+		textRotation = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 0, this, UIElementPropertyType.ROTATION);
 	}
 
 	private void createOriginYField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText("");
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(getContainer(), SWT.NONE);
-		label.setText(Word.PROPERTY_Y);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		textOriginY = new Text(getContainer(), SWT.BORDER);
-		textOriginY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textOriginY.addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (getUielement() == null) return;
-				
-				if (isValidOriginY(textOriginY.getText())){
-				} else {
-					MessageDialog.openError(getUielement().getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_Y);
-					textOriginY.setText(((CAnimation)getUielement()).getOrigin().y + "");
-				}
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-			}
-		});
-		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
-		
+		String[] labelNames = new String[]{"", Word.PROPERTY_Y};
+		textOriginY = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 1, this, UIElementPropertyType.ORIGIN_Y);
 	}
 
 	private void createOriginXField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_ORIGIN);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(getContainer(), SWT.NONE);
-		label.setText(Word.PROPERTY_X);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		textOriginX = new Text(getContainer(), SWT.BORDER);
-		textOriginX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		textOriginX.addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (getUielement() == null) return;
-				
-				
-				if (isValidOriginX(textOriginX.getText())){
-				} else {
-					MessageDialog.openError(getUielement().getContainer().getShell(), Word.ERROR, Word.ERROR_INVALID_X);
-					textOriginX.setText(((CAnimation)getUielement()).getOrigin().x + "");
-				}
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-			}
-		});
-		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		String[] labelNames = new String[]{Word.PROPERTY_ORIGIN, Word.PROPERTY_X};
+		textOriginX = Utility.createTextGridData4Columns(getContainer(), labelNames, false, null, 1, this, UIElementPropertyType.ORIGIN_X);
 	}
 
 	@Override
 	public Point getDefaultSize() {
-		// TODO Auto-generated method stub
 		return getContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 	}
-	
-	private boolean isValidOriginX(String x){
-		return Utility.isInteger(x);
-	}
-	
-	private boolean isValidOriginY(String y){
-		return Utility.isInteger(y);
-	}
-	
-	private boolean isValidFrameDuration(String time){
-		return Utility.isFloat(time);
-	}
-	
-	private boolean isValidCount(String count){
-		return Utility.isInteger(count);
+
+	@Override
+	public void setObjectPropertiesToView(UIElement object) {
+		super.setObjectPropertiesToView(object);
+		
+		CAnimation anim = (CAnimation)object;
+		
+		textOriginX.setText(anim.getOrigin().x + "");
+		textOriginY.setText(anim.getOrigin().y + "");
+		textRotation.setText(anim.getRotation() + "");
+		textFrameDuration.setText(anim.getFrameDuration() + "");
+		comboPlayMode.select(PlayMode.getPlayModeIndex(anim.getPlayMode()));
 	}
 }
