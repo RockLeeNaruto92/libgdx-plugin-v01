@@ -201,6 +201,43 @@ public class CImage extends UIElement {
 	}
 
 	@Override
+	public Object getPropertyValue(UIElementPropertyType type) {
+		Object value = super.getPropertyValue(type);
+		
+		if (value != null) return value;
+		switch (type) {
+		case SCALING:
+			return scaling;
+		case ALIGN:
+			return align;
+		case IMAGE:
+			return image;
+		default:
+			return null;
+		}
+	}
+
+	@Override
+	public void setPropertyValue(UIElementPropertyType type, Object value) {
+		super.setPropertyValue(type, value);
+		
+		switch (type) {
+		case ALIGN:
+			setAlign(Align.getAlign((int)value));
+			break;
+		case SCALING:
+			setScaling((int)value);
+			break;
+		case IMAGE:
+			setImage((Image)((Object[])value)[0]);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	@Override
 	public Element generateXml(Document doc, Element parentNode) {
 		Element el = super.generateXml(doc, parentNode);
 		
