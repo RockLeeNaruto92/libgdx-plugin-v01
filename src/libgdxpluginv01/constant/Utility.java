@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
@@ -257,6 +258,34 @@ public class Utility {
 				uiController.setPropertyView(obj, true);
 			}
 		});
+	}
+	
+	public static ImageData flip(ImageData srcData, boolean vertical) {
+		int bytesPerPixel = srcData.bytesPerLine / srcData.width;
+		int destBytesPerLine = srcData.width * bytesPerPixel;
+		byte[] newData = new byte[srcData.data.length];
+		for (int srcY = 0; srcY < srcData.height; srcY++) {
+			for (int srcX = 0; srcX < srcData.width; srcX++) {
+				int destX = 0, destY = 0, destIndex = 0, srcIndex = 0;
+				if (vertical) {
+					destX = srcX;
+					destY = srcData.height - srcY - 1;
+				} else {
+					destX = srcData.width - srcX - 1;
+					destY = srcY;
+				}
+				destIndex = (destY * destBytesPerLine)
+						+ (destX * bytesPerPixel);
+				srcIndex = (srcY * srcData.bytesPerLine)
+						+ (srcX * bytesPerPixel);
+				System.arraycopy(srcData.data, srcIndex, newData, destIndex,
+						bytesPerPixel);
+			}
+		}
+		// destBytesPerLine is used as scanlinePad to ensure that no padding is
+		// required
+		return new ImageData(srcData.width, srcData.height, srcData.depth,
+				srcData.palette, srcData.scanlinePad, newData);
 	}
 	
 	public static boolean isInteger(String value){

@@ -2,11 +2,13 @@ package libgdxpluginv01.models.uielements;
 
 import libgdxpluginv01.constant.Parameter;
 import libgdxpluginv01.constant.Resources;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.controller.UIController;
 import libgdxpluginv01.views.properties.UIElementPropertyType;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Transform;
@@ -61,8 +63,16 @@ public class CSprite extends UIElement {
 		x = -size.x / 2 + (int)(length * Math.cos((45 - getRotation()) * Math.PI / 180));
 		y = -size.y / 2 + (int)(length * Math.sin((45 - getRotation()) * Math.PI / 180));
 		
-		e.gc.drawImage(image, 0, 0, bound.width, bound.height, x, y, size.x, size.y);
+		ImageData data = image.getImageData();
+		
+		if (flipX) data = Utility.flip(data, false);
+		if (flipY) data = Utility.flip(data, true);
+		
+		Image tempImage = new Image(Display.getCurrent(), data);
+		
+		e.gc.drawImage(tempImage, 0, 0, bound.width, bound.height, x, y, size.x, size.y);
 		transform.dispose();
+		tempImage.dispose();
 	}
 
 	@Override
