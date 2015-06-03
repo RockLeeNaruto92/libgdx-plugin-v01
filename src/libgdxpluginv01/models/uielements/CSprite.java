@@ -46,16 +46,22 @@ public class CSprite extends UIElement {
 	@Override
 	public void drawContent(PaintEvent e) {
 		Rectangle bound = getImage().getBounds();
+		int x = 0, y = 0;
 		
 		Transform transform = new Transform(Display.getCurrent());
 		
 		float cos = (float)Math.cos(Math.PI * getRotation() / 180);
 		float sin = (float)Math.sin(Math.PI * getRotation() / 180);
+		Point size = getSize();
+		double length = Math.sqrt(size.x * size.x + size.y * size.y) / 2;
 		
 		transform.setElements(cos, sin, -sin, cos, 0, 0);
 		e.gc.setTransform(transform);
 		
-		e.gc.drawImage(image, 0, 0, bound.width, bound.height, 0, 0, getSize().x, getSize().y);
+		x = -size.x / 2 + (int)(length * Math.cos((45 - getRotation()) * Math.PI / 180));
+		y = -size.y / 2 + (int)(length * Math.sin((45 - getRotation()) * Math.PI / 180));
+		
+		e.gc.drawImage(image, 0, 0, bound.width, bound.height, x, y, size.x, size.y);
 		transform.dispose();
 	}
 

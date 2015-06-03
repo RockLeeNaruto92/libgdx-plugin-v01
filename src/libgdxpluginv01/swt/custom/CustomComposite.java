@@ -1,5 +1,6 @@
 package libgdxpluginv01.swt.custom;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -19,6 +20,7 @@ public class CustomComposite extends Canvas{
 		setLayoutData(new FormData());
 		
 		setLocation(location);
+		setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 	
 	public CustomComposite(Composite parent, int style, Point location, Point size){

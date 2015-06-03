@@ -9,7 +9,6 @@ import libgdxpluginv01.models.Element;
 import libgdxpluginv01.models.uielements.UIElementType;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -56,6 +55,7 @@ public class EditorInterface extends EditorPart{
 	private void createDragComposite(){
 		dragComposite = new Canvas(root, SWT.NONE);
 		dragComposite.setLayout(new FormLayout());
+		dragComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		
 		dragComposite.getShell().setMinimumSize(Parameter.DEFAULT_DESIGN_PART_MIN_SIZE);
 		dragComposite.setSize(Parameter.DEFAULT_DESIGN_PART_MIN_SIZE);
@@ -71,6 +71,7 @@ public class EditorInterface extends EditorPart{
 		int style = SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL;
 		root = new ScrolledComposite(parent, style);
 		root.setLayout(new FillLayout());
+		root.setBackgroundMode(SWT.INHERIT_DEFAULT);
 	}
 	
 	private void addMouseListener(final Composite dragComposite){
@@ -196,6 +197,7 @@ public class EditorInterface extends EditorPart{
 
 	@Override
 	public void createPartControl(Composite parent) {
+		parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		createScrolledLayout(parent);
 		createDragComposite();
 		restore();

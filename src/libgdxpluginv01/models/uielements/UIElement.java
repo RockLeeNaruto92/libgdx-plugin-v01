@@ -59,7 +59,6 @@ public abstract class UIElement {
 		
 		container = new CustomComposite(root, SWT.NO_TRIM, location);
 		container.setLayout(new FillLayout());
-		container.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		Point defaultSize = getDefaultSize();
 		
