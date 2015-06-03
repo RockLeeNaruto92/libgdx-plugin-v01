@@ -165,7 +165,7 @@ public class CSprite extends UIElement {
 			setFlipY((boolean)value);
 			break;
 		case IMAGE:
-			setImage((Image)value);
+			setImage((Image)((Object[])value)[0]);
 			break;
 		default:
 			break;
@@ -190,5 +190,10 @@ public class CSprite extends UIElement {
 		image = Resources.getImageByPath(readValue(element, UIElementPropertyType.IMAGE));
 		flipX = (readValue(element, UIElementPropertyType.FLIP_X) == "true") ? true : false;
 		flipY = (readValue(element, UIElementPropertyType.FLIP_Y) == "true") ? true : false;
+	}
+
+	@Override
+	public Image getImageByIndex(int imgIndex) {
+		return image;
 	}
 }

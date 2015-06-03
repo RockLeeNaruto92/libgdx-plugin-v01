@@ -19,6 +19,7 @@ import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -144,6 +145,8 @@ public abstract class UIElement {
 		});
 
 	}
+	
+	public abstract Image getImageByIndex(int imgIndex);
 	
 	public abstract String getDefaultNamePattern();
 

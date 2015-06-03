@@ -227,4 +227,9 @@ public class CImage extends UIElement {
 		
 		super.restore(element);
 	}
+
+	@Override
+	public Image getImageByIndex(int imgIndex) {
+		return image;
+	}
 }

@@ -252,4 +252,9 @@ public class CButton extends UIElement {
 		
 		return Resources.getImageByPath(tagEl.getAttribute("path"));
 	}
+
+	@Override
+	public Image getImageByIndex(int imgIndex) {
+		return null;
+	}
 }

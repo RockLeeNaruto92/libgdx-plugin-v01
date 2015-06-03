@@ -357,4 +357,9 @@ public class CAnimation extends UIElement {
 		count = frames.getLength();
 		System.out.println("Frames length: " + count);
 	}
+
+	@Override
+	public Image getImageByIndex(int imgIndex) {
+		return keyFrames.get(imgIndex);
+	}
 }

@@ -15,6 +15,9 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
@@ -237,6 +240,60 @@ public class Utility {
 		});
 		
 		return combo;
+	}
+	
+	public static Composite createImageGridData(final Composite parent, String[] labelNames, final UIElementProperty property, final UIElementPropertyType type, final int imgIndex){
+		for (String string : labelNames) {
+			Label label = new Label(parent, SWT.NONE);
+			label.setText(string);
+			label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
+		}
+		
+		final Composite composite = new Composite(parent, SWT.BORDER);
+		final GridData data = createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, Parameter.PROPERTY_COLUMN_2_WIDTH, 1);
+		composite.setLayoutData(data);
+		composite.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent e) {
+				UIElement obj = property.getUielement();
+				
+				if (obj == null) return;
+				Image image = obj.getImageByIndex(imgIndex);
+				if (image == null) return;
+				
+				e.gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, 0, 0, data.widthHint, data.heightHint);
+			}
+		});
+		
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText(Word.PROPERTY_SET_IMAGE);
+		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 2));
+		
+		button.addListener(SWT.MouseDown, new Listener() {
+			@Override
+			public void handleEvent(Event e) {
+				String imageFile = Utility.openSelectFileDialog(parent, new String[]{"*.jpg", "*.png"});
+				
+				if (imageFile == null) return;
+				
+				Image image = Resources.getImageByPath(imageFile);
+				
+				if (image == null){
+					Resources.addImage(imageFile);
+					image = Resources.getImageByPath(imageFile);
+				}
+				
+				// set image property to ui element
+				UIElement element = property.getUielement();
+				if (element == null) return;
+				
+				element.setPropertyValue(type, new Object[]{image, imgIndex});
+				element.redraw();
+				composite.redraw();
+			}
+		});
+		
+		return composite;
 	}
 	
 	public static void createSetStyleButton(Composite parent, final UIElementProperty property){

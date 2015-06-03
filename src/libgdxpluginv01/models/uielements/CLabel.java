@@ -370,4 +370,9 @@ public class CLabel extends UIElement {
 		Element fontEl = (Element)(nList.item(0));
 		style.font = Resources.getFontByPath(fontEl.getAttribute("path"));
 	}
+
+	@Override
+	public Image getImageByIndex(int imgIndex) {
+		return null;
+	}
 }
