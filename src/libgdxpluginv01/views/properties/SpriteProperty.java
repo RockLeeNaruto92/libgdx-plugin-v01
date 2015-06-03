@@ -1,6 +1,7 @@
 package libgdxpluginv01.views.properties;
 
 import libgdxpluginv01.constant.Parameter;
+import libgdxpluginv01.constant.Utility;
 import libgdxpluginv01.constant.Word;
 import libgdxpluginv01.models.uielements.CSprite;
 import libgdxpluginv01.models.uielements.UIElement;
@@ -15,7 +16,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
 public class SpriteProperty extends UIElementProperty {
@@ -87,49 +87,18 @@ public class SpriteProperty extends UIElementProperty {
 	}
 
 	private void createFlipYField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText("");
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_Y);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		checkboxFlipY = new Button(getContainer(), SWT.CHECK);
-		checkboxFlipY.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 2));
+		String[] labelNames = new String[]{"", Word.PROPERTY_Y};
+		checkboxFlipY = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.FLIP_Y);
 	}
 
 	private void createFlipXField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_FLIP);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_X);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		checkboxFlipX = new Button(getContainer(), SWT.CHECK);
-		checkboxFlipX.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 2));
+		String[] labelNames = new String[]{Word.PROPERTY_FLIP, Word.PROPERTY_X};
+		checkboxFlipX = Utility.createCheckboxGridData4Columns(getContainer(), labelNames, this, UIElementPropertyType.FLIP_X);
 	}
 
 	private void createRotationField() {
-		Label label = new Label(getContainer(), SWT.NONE);
-		
-		label.setText(Word.PROPERTY_ROTATION);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		textRotation = new Text(getContainer(), SWT.BORDER);
-		textRotation.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 2));
-		
-		Slider slider = new Slider(getContainer(), SWT.HORIZONTAL);
-		slider.setMinimum(Parameter.LOCATION_RANGE_X.x);
-		slider.setMaximum(Parameter.LOCATION_RANGE_X.y);
-		slider.setIncrement(Parameter.SLIDER_STEP);
-		slider.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		String[] labelNames = new String[]{Word.PROPERTY_ROTATION};
+		textRotation = Utility.createTextGridData4Columns(getContainer(), labelNames, true, Parameter.ROTATION_RANGE, 1, this, UIElementPropertyType.ROTATION);
 	}
 	
 
@@ -177,5 +146,4 @@ public class SpriteProperty extends UIElementProperty {
 	public Point getDefaultSize() {
 		return getContainer().computeSize(SWT.DEFAULT, SWT.DEFAULT);
 	}
-
 }

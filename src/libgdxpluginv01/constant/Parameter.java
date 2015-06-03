@@ -20,6 +20,7 @@ public class Parameter {
 	public static final Point SIZE_RANGE_HEIGHT = new Point(0, 3000);
 	public static final Point FONT_SCALE_RANGE_X = new Point(0, 2);
 	public static final Point FONT_SCALE_RANGE_Y = new Point(0, 2);
+	public static final Point ROTATION_RANGE = new Point(0, 360);
 	
 	public static final int DEFAULT_SELECT_WIDTH = 1;
 	public static final int DEFAULT_MOBILE_WIDTH = 2;
