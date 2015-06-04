@@ -200,7 +200,7 @@ public class CAnimation extends UIElement {
 	}
 
 	public int getCount() {
-		return count;
+		return keyFrames.size();
 	}
 
 	public void setCount(int count) {
@@ -302,6 +302,10 @@ public class CAnimation extends UIElement {
 			break;
 		case FRAME_DURATION:
 			setFrameDuration(Float.parseFloat(value.toString()));
+			break;
+		case KEY_FRAMES:
+			Object[] datas = (Object[])value;
+			keyFrames.set((int)datas[1], (Image)datas[0]);
 			break;
 		default:
 			break;

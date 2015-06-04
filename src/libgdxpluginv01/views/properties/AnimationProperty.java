@@ -11,12 +11,12 @@ import libgdxpluginv01.models.uielements.UIElement;
 import libgdxpluginv01.swt.custom.PlayMode;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 public class AnimationProperty extends UIElementProperty {
@@ -55,37 +55,19 @@ public class AnimationProperty extends UIElementProperty {
 	private void createFramesField() {
 		textFrames = new ArrayList<Composite>();
 		
-		CAnimation obj = (CAnimation)getUielement();
-		
-		if (obj == null){
-			return;
-		}
-		
-		for (int i = 0; i < obj.getCount(); i++) {
-			textFrames.add(createAFrameField());
+		for (int i = 0; i < 4; i++){
+			textFrames.add(createAFrameField(i));
 		}
 	}
 	
-	private Composite createAFrameField(){
+	private Composite createAFrameField(int index){
 		Composite composite = new Composite(getContainer(), SWT.NONE);
-		composite.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH + Parameter.PROPERTY_COLUMN_2_WIDTH + Parameter.PROPERTY_COLUMN_3_WIDTH + Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 3));
+		composite.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH + Parameter.PROPERTY_COLUMN_2_WIDTH + Parameter.PROPERTY_COLUMN_3_WIDTH + Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 4));
 		composite.setLayout(new GridLayout(Parameter.PROPERTY_COLUMN_NUM, false));
 		
-		Label label = new Label(composite, SWT.NONE);
-		
-		label.setText("");
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_1_WIDTH, 0, 1));
-		
-		label = new Label(composite, SWT.NONE);
-		label.setText(Word.PROPERTY_FRAME);
-		label.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_2_WIDTH, 0, 1));
-		
-		final Text text = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
-		text.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_3_WIDTH, 0, 1));
-		
-		Button button = new Button(composite, SWT.PUSH);
-		button.setText(Word.PROPERTY_SET);
-		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 1));
+		String[] labelNames = {"", Word.PROPERTY_FRAME + " " + index};
+		Utility.createImageGridData(composite, labelNames, this, UIElementPropertyType.KEY_FRAMES, index);
+		textFrames.add(composite);
 		
 		return composite;
 	}
@@ -136,5 +118,20 @@ public class AnimationProperty extends UIElementProperty {
 		textRotation.setText(anim.getRotation() + "");
 		textFrameDuration.setText(anim.getFrameDuration() + "");
 		comboPlayMode.select(PlayMode.getPlayModeIndex(anim.getPlayMode()));
+		textCount.setText(anim.getCount() + "");
+		
+		// update frames
+		// 1. remove all old frames
+		System.out.println("Remove frames " + textFrames.size());
+		while (!textFrames.isEmpty()) textFrames.remove(0).dispose();
+		// 2. add new frames
+		List<Image> frames = anim.getKeyFrames();
+		for (int i = 0; i < frames.size(); i++){
+			Control[] changed = new Control[]{createAFrameField(i)};
+			textFrames.add((Composite)changed[0]);
+			System.out.println("Create new frame!");
+			getContainer().layout(changed);
+		}
+		System.out.println("Add frames " + textFrames.size() );
 	}
 }

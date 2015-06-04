@@ -267,7 +267,7 @@ public class Utility {
 		
 		Button button = new Button(parent, SWT.PUSH);
 		button.setText(Word.PROPERTY_SET_IMAGE);
-		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, 2));
+		button.setLayoutData(createLayoutData(Parameter.PROPERTY_COLUMN_4_WIDTH, 0, Parameter.PROPERTY_COLUMN_NUM - labelNames.length - 1));
 		
 		button.addListener(SWT.MouseDown, new Listener() {
 			@Override
