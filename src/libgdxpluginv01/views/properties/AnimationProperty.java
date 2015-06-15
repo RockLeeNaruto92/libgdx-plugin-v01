@@ -127,10 +127,10 @@ public class AnimationProperty extends UIElementProperty {
 		// 2. add new frames
 		List<Image> frames = anim.getKeyFrames();
 		for (int i = 0; i < frames.size(); i++){
-			Control[] changed = new Control[]{createAFrameField(i)};
-			textFrames.add((Composite)changed[0]);
-			System.out.println("Create new frame!");
-			getContainer().layout(changed);
+//			Control[] changed = new Control[]{createAFrameField(i)};
+//			textFrames.add((Composite)changed[0]);
+//			System.out.println("Create new frame!");
+//			getContainer().layout(changed);
 		}
 		System.out.println("Add frames " + textFrames.size() );
 	}
