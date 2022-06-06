@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Libgdx Visual Editor"
+            extensions="gdx"
+            icon="icons/sample.gif"
+            contributorClass="libgdxpluginv01.editors.LibgdxVisualEditorContributor"
+            class="libgdxpluginv01.editors.LibgdxVisualEditor"
+            id="libgdxpluginv01.editors.LibgdxVisualEditor">
+      </editor>
+      <editor 
+      		name="Editor Interface"
+      		class="libgdxpluginv01.editors.EditorInterface"
+      		id="libgdxpluginv01.editors.EditorInterface">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Libgdx Views"
+            id="libgdx-plugin-v01">
+      </category>
+      <view
+            name="Palette"
+            icon="icons/sample.gif"
+            category="libgdx-plugin-v01"
+            class="libgdxpluginv01.views.PaletteView"
+            id="libgdxpluginv01.views.PaletteView">
+      </view>
+      <view 
+      		name="Properties"
+      		icon="icons/sample.gif"
+      		category="libgdx-lugin-v01"
+      		class="libgdxpluginv01.views.PropertyView"
+      		id="libgdxpluginv01.views.PropertyView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.ProblemView"
+               relationship="right"
+               id="libgdxpluginv01.views.PaletteView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Libgdx Category"
+            id="libgdxpluginv01.commands.category">
+      </category>
+      <command
+            id="libgdxpluginv01.commands.Delete"
+            categoryId="libgdxpluginv01.commands.category"
+            schemeId="libgdxpluginv01.scheme"
+            name="Delete">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="libgdxpluginv01.commands.Delete"
+            class="libgdxpluginv01.commands.DeleteHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <schema
+      	 id="libgdxpluginv01.scheme"
+      	 name="libgdxpluginv01.scheme"
+      />
+      <key
+            commandId="libgdxpluginv01.commands.Delete"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="Delete"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Libgdx game mobile development"
+            id="PluginForLibgdx">
+      </category>
+      <wizard
+            name="Libgdx game mobile development"
+            icon="icons/sample.gif"
+            category="PluginForLibgdx"
+            class="libgdxpluginv01.wizards.LibgdxProjectCreationWizard"
+            id="libgdxpluginv01.wizards.LibgdxProjectCreationWizard">
+      </wizard>
+   </extension>
+</plugin>
